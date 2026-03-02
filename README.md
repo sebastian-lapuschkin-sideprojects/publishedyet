@@ -17,6 +17,8 @@ Repeating workflows during paper writing and revision are to check the bibtex en
     + batch - process whole bibtex files or lists of arxiv identifiers
     + enable functionality to "approve" of identified entries,
         - based on this create an own database of pre-approved entries
+        - that is either accept retreived entries
+        - or handle the edge case when an entry is not found, ie a searched for arxiv paper does not return with the same title and author list from dblp, when compared to the bibtex entry.
 
 ## Requirements
     ?
