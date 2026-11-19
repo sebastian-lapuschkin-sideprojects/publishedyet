@@ -12,6 +12,12 @@ The page: <https://sebastian-lapuschkin-sideprojects.github.io/publishedyet/>
 
 ## How this came about
 
+The core functionality is nothing new: tools that look up published versions of arXiv preprints have
+existed for ages, e.g. [rebiber](https://github.com/yuchenlin/rebiber),
+[arxivcheck](https://github.com/bibcure/arxivcheck) or [PaperMemory](https://github.com/vict0rsch/PaperMemory).
+publishedyet mainly differs in keeping a shared, reviewed database of the papers its users cite, with
+several publications per preprint, and in running entirely in the browser.
+
 This project is largely vibe coded. The idea and first steps towards it go back years, but they never
 got far for lack of time. It has now been finished with the help of a coding agent (Claude), which
 wrote most of the code while I decided what it should do and reviewed the result.
