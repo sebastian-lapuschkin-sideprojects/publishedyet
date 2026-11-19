@@ -53,6 +53,8 @@ class Ids(unittest.TestCase):
             'https://www.biorxiv.org/content/10.1101/2020.01.01.890160v2': 'doi:10.1101/2020.01.01.890160',
             '10.1101/gr.123456.111': None,     # a Cold Spring Harbor journal, not bioRxiv
             'pages = {1006--1019}': None,
+            'https://openreview.net/forum?id=AV5BgHyVdw': 'openreview:AV5BgHyVdw',
+            'url = {https://openreview.net/pdf?id=F76bwRSLeK}': 'openreview:F76bwRSLeK',
         }
         for text, expected in cases.items():
             self.assertEqual(py.find_preprint_id(text), expected, text)
@@ -164,6 +166,26 @@ class Discovery(unittest.TestCase):
         self.assertEqual(bib['journal'], 'Nature Machine Intelligence')
         self.assertEqual(bib['pages'], '1006--1019')
         self.assertEqual(bib['year'], '2023')
+
+
+class Dblp(unittest.TestCase):
+
+    def test_from_dblp(self):
+        # a row as DBLP_DETAILS returns it (taken from sparql.dblp.org)
+        row = {'pub': 'https://dblp.org/rec/journals/tnn/SamekBMLM17', 'type': 'http://purl.org/net/nknouf/ns/bibtex#Article',
+               'title': 'Evaluating the Visualization of What a Deep Neural Network Has Learned.', 'year': '2017',
+               'journal': 'IEEE Trans. Neural Networks Learn. Syst.', 'volume': '28', 'number': '11', 'pages': '2660-2673',
+               'doi': 'https://doi.org/10.1109/TNNLS.2016.2599820', 'url': 'https://doi.org/10.1109/TNNLS.2016.2599820',
+               'authors': '2:Alexander Binder|1:Wojciech Samek|5:Klaus-Robert Müller|3:Grégoire Montavon|4:Sebastian Lapuschkin'}
+        pub = py.from_dblp(row)
+        self.assertEqual(pub['dblp'], 'journals/tnn/SamekBMLM17')
+        self.assertEqual(pub['venue_type'], 'journal')
+        bib = pub['bibtex']
+        self.assertEqual(bib['author'][0], 'Wojciech Samek')
+        self.assertEqual(bib['author'][4], 'Klaus-Robert Müller')
+        self.assertEqual(bib['title'], 'Evaluating the Visualization of What a Deep Neural Network Has Learned')
+        self.assertEqual(bib['pages'], '2660--2673')
+        self.assertEqual(bib['doi'], '10.1109/TNNLS.2016.2599820')
 
 
 class Database(unittest.TestCase):

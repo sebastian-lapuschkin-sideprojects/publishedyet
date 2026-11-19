@@ -13,19 +13,21 @@ import re
 import html
 import difflib
 import unicodedata
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 
 OPENALEX = 'https://api.openalex.org'
 CROSSREF = 'https://api.crossref.org'
 BIORXIV = 'https://api.biorxiv.org'
+DBLP_SPARQL = 'https://sparql.dblp.org/sparql'
 
 
 # ---------------------------------------------------------------------------------------
 # preprint identifiers
 # ---------------------------------------------------------------------------------------
-# Preprints are named by prefixed ids: "arxiv:2402.05602", "arxiv:hep-th/9901001" or
-# "doi:10.1101/2020.01.01.890160" (bioRxiv / medRxiv). Version suffixes (v1, v2, ...)
-# are dropped: all versions of a preprint share one database record.
+# Preprints are named by prefixed ids: "arxiv:2402.05602", "arxiv:hep-th/9901001",
+# "doi:10.1101/2020.01.01.890160" (bioRxiv / medRxiv) or "openreview:AV5BgHyVdw" (papers
+# that are only on OpenReview). Version suffixes (v1, v2, ...) are dropped: all versions
+# of a preprint share one database record.
 
 ARXIV_NEW = r'\d{4}\.\d{4,5}'                        # since 2007, e.g. 2402.05602
 ARXIV_OLD = r'[a-z][a-z-]*(?:\.[a-z]{2})?/\d{7}'      # before, e.g. hep-th/9901001, math.GT/0309136
@@ -38,6 +40,7 @@ BARE_ARXIV = re.compile(r'^(?:arxiv:)?({}|{})(?:v\d+)?$'.format(ARXIV_NEW, ARXIV
 ARXIV_IN_TEXT = re.compile(r'(?:arxiv(?:\.org/(?:abs|pdf))?[\s:./]*|abs/|eprint\s*=\s*"?\s*)({}|{})(?:v\d+)?'
                            .format(ARXIV_NEW, ARXIV_OLD), re.IGNORECASE)
 BIORXIV_IN_TEXT = re.compile('(' + BIORXIV_DOI + ')', re.IGNORECASE)
+OPENREVIEW_IN_TEXT = re.compile(r'(?:openreview:|openreview\.net/(?:forum|pdf)\?id=)([\w-]{6,})', re.IGNORECASE)
 
 
 def canonical_arxiv(arxiv_id):
@@ -60,6 +63,9 @@ def find_preprint_id(text):
     match = BIORXIV_IN_TEXT.search(text)
     if match:
         return 'doi:' + match.group(1)
+    match = OPENREVIEW_IN_TEXT.search(text)
+    if match:
+        return 'openreview:' + match.group(1)
     return None
 
 
@@ -70,18 +76,21 @@ def db_path(pid):
         return 'arxiv/{}.json'.format(ident)                      # arxiv/hep-th/9901001.json
     if kind == 'arxiv':
         return 'arxiv/{}/{}.json'.format(ident[:4], ident)        # arxiv/2402/2402.05602.json
+    if kind == 'openreview':
+        return 'openreview/{}.json'.format(ident)                 # openreview/AV5BgHyVdw.json
     prefix, suffix = ident.split('/', 1)
     return 'doi/{}/{}.json'.format(prefix, suffix.replace('/', '_'))  # doi/10.1101/2020.01.01.890160.json
 
 
 def preprint_doi(pid):
     kind, ident = pid.split(':', 1)
-    return '10.48550/arXiv.' + ident if kind == 'arxiv' else ident
+    return {'arxiv': '10.48550/arXiv.' + ident, 'doi': ident}.get(kind)
 
 
 def preprint_url(pid):
     kind, ident = pid.split(':', 1)
-    return 'https://arxiv.org/abs/' + ident if kind == 'arxiv' else 'https://doi.org/' + ident
+    return {'arxiv': 'https://arxiv.org/abs/', 'doi': 'https://doi.org/',
+            'openreview': 'https://openreview.net/forum?id='}[kind] + ident
 
 
 def preprint_year(pid):
@@ -97,7 +106,7 @@ def preprint_year(pid):
 
 def preprint_label(pid):
     kind, ident = pid.split(':', 1)
-    return 'arXiv:' + ident if kind == 'arxiv' else ident
+    return {'arxiv': 'arXiv:', 'openreview': 'OpenReview:'}.get(kind, '') + ident
 
 
 # ---------------------------------------------------------------------------------------
@@ -293,6 +302,8 @@ def render_preprint(pre, key, style='scholar'):
                                                   primaryClass=pre.get('primary_class'), url=url))
         return render_entry('article', key, dict(common, journal='CoRR', volume='abs/' + ident,
                                                  eprinttype='arXiv', eprint=ident, url=url))
+    if kind == 'openreview':
+        return render_entry('misc', key, dict(common, howpublished='OpenReview', url=preprint_url(pre['id'])))
     server = pre.get('server', 'bioRxiv')
     url = 'https://doi.org/' + ident
     if style == 'scholar':
@@ -373,6 +384,8 @@ def replacement(item, record, choice, preprint_style=None, key_style='scholar'):
     if record is None and item['fields'] is None:
         return None
     pre = record['preprint'] if record else preprint_from_fields(item['id'], item['fields'])
+    if not pre.get('title'):
+        return None   # nothing known about this preprint
     return render_preprint(pre, key or new_key({'preprint': pre}, 'preprint', key_style), preprint_style or 'scholar')
 
 
@@ -476,6 +489,78 @@ def from_openalex(work):
     return {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'openalex', 'bibtex': bib}
 
 
+# DBLP blocks scripts on its website and API, but its SPARQL endpoint is open. Two queries per
+# preprint: the publications of the arXiv version's first author, then details of the matches.
+DBLP_CANDIDATES = '''PREFIX dblp: <https://dblp.org/rdf/schema#>
+SELECT DISTINCT ?corr ?corrtitle ?pub ?title WHERE {
+  ?corr dblp:publishedInJournalVolume "abs/%s" ; dblp:title ?corrtitle ; dblp:hasSignature ?first .
+  ?first dblp:signatureOrdinal ?n ; dblp:signatureCreator ?author . FILTER(STR(?n) = "1")
+  ?pub dblp:authoredBy ?author ; dblp:title ?title .
+  FILTER(?pub != ?corr)
+}'''
+DBLP_DETAILS = '''PREFIX dblp: <https://dblp.org/rdf/schema#>
+SELECT ?pub ?type ?title ?year ?journal ?volume ?number ?pages ?doi ?url ?booktitle ?series ?seriesvolume ?publisher
+       (GROUP_CONCAT(CONCAT(STR(?n), ":", ?name); separator="|") AS ?authors) WHERE {
+  VALUES ?pub { %s }
+  ?pub dblp:bibtexType ?type ; dblp:title ?title ; dblp:yearOfPublication ?year ;
+       dblp:hasSignature ?s . ?s dblp:signatureOrdinal ?n ; dblp:signatureDblpName ?name .
+  OPTIONAL { ?pub dblp:publishedInJournal ?journal }
+  OPTIONAL { ?pub dblp:publishedInJournalVolume ?volume }
+  OPTIONAL { ?pub dblp:publishedInJournalVolumeIssue ?number }
+  OPTIONAL { ?pub dblp:pagination ?pages }
+  OPTIONAL { ?pub dblp:doi ?doi }
+  OPTIONAL { ?pub dblp:primaryDocumentPage ?url }
+  OPTIONAL { ?pub dblp:publishedAsPartOf ?book . ?book dblp:title ?booktitle
+             OPTIONAL { ?book dblp:publishedInSeries ?series } OPTIONAL { ?book dblp:publishedInSeriesVolume ?seriesvolume }
+             OPTIONAL { ?book dblp:publishedBy ?publisher } }
+} GROUP BY ?pub ?type ?title ?year ?journal ?volume ?number ?pages ?doi ?url ?booktitle ?series ?seriesvolume ?publisher'''
+
+
+def dblp_query(query, *values):
+    return DBLP_SPARQL + '?' + urlencode({'query': query % values, 'format': 'json'})
+
+
+def sparql_rows(result):
+    # SPARQL json results as a list of {variable: value}
+    return [dict((name, cell['value']) for name, cell in row.items())
+            for row in ((result or {}).get('results') or {}).get('bindings', [])]
+
+
+def from_dblp(row):
+    # a row of DBLP_DETAILS as a publication of our database format
+    kind = row['type'].split('#')[-1].lower()
+    authors = sorted((int(part.split(':', 1)[0]), part.split(':', 1)[1]) for part in row['authors'].split('|'))
+    bib = {'type': kind if kind in ('article', 'inproceedings', 'incollection') else 'misc',
+           'author': [re.sub(r'\s+\d{4}$', '', name) for _, name in authors],   # 'Wei Wang 0001' -> 'Wei Wang'
+           'title': row['title'].rstrip('.'), 'journal': row.get('journal'), 'booktitle': row.get('booktitle'),
+           'series': row.get('series'), 'volume': row.get('volume') or row.get('seriesvolume'),
+           'number': row.get('number'), 'pages': (row.get('pages') or '').replace('-', '--'), 'year': row['year'],
+           'publisher': row.get('publisher'), 'doi': doi_of(row.get('doi')), 'url': row.get('url')}
+    bib = dict((name, value) for name, value in bib.items() if value)
+    venue_type = {'article': 'journal', 'incollection': 'book'}.get(bib['type'], 'conference')
+    if 'workshop' in bib.get('booktitle', '').lower():
+        venue_type = 'workshop'
+    return {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'dblp',
+            'dblp': row['pub'].split('/rec/')[-1], 'bibtex': bib}
+
+
+async def dblp_publications(pid, get_json):
+    # the arXiv preprint as DBLP knows it (or None), and its published versions in DBLP
+    rows = sparql_rows(await get_json(dblp_query(DBLP_CANDIDATES, pid.split(':', 1)[1])))
+    if not rows:
+        return None, []
+    corr = rows[0]['corr']
+    matches = [row['pub'] for row in rows if same_paper({'title': row['corrtitle']}, row['title'], [])][:5]
+    details = sparql_rows(await get_json(dblp_query(DBLP_DETAILS, ' '.join('<{}>'.format(uri) for uri in [corr] + matches))))
+    found = {}
+    for row in details:
+        found.setdefault(row['pub'], from_dblp(row))
+    preprint = found.pop(corr, None)
+    publications = [pub for pub in found.values()
+                    if pub['bibtex']['type'] != 'misc' and pub['bibtex'].get('journal') != 'CoRR']
+    return preprint, publications
+
+
 def same_paper(pre, title, authors):
     # does a search hit look like the preprint? Same title, and the first author is among its authors.
     if difflib.SequenceMatcher(None, plain(pre.get('title')), plain(title)).ratio() < 0.9:
@@ -488,16 +573,24 @@ def same_paper(pre, title, authors):
 
 async def discover(pid, get_json, known=None):
     """
-    Search online for published versions of a preprint: OpenAlex (which often merges a
-    preprint with its published version), title searches in OpenAlex and Crossref, and
-    the bioRxiv API, which links bioRxiv preprints to their journal articles.
+    Search online for published versions of a preprint: DBLP (for arXiv preprints; it knows
+    CS venues without DOIs), OpenAlex (which often merges a preprint with its published
+    version), title searches in OpenAlex and Crossref, and the bioRxiv API, which links
+    bioRxiv preprints to their journal articles.
     known: what we already know about the preprint, e.g. from the user's bibtex entry.
     Returns a record in database format, marked as unconfirmed.
     """
     pre = dict(known or {'id': pid})
     dois, works = [], []      # found publications: DOIs (details come from Crossref), OpenAlex works
 
-    work = await get_json('{}/works/doi:{}'.format(OPENALEX, preprint_doi(pid)))
+    dblp = []
+    if pid.startswith('arxiv:'):
+        corr, dblp = await dblp_publications(pid, get_json)
+        if corr:   # DBLP has the names right (umlauts, accents)
+            pre['title'] = pre.get('title') or corr['bibtex']['title']
+            pre['authors'] = pre.get('authors') or corr['bibtex']['author']
+
+    work = await get_json('{}/works/doi:{}'.format(OPENALEX, preprint_doi(pid))) if preprint_doi(pid) else None
     if work:
         pre['title'] = pre.get('title') or strip_tags(work.get('title'))
         pre['authors'] = pre.get('authors') or [a['author']['display_name'] for a in work.get('authorships', [])]
@@ -551,7 +644,13 @@ async def discover(pid, get_json, known=None):
             if hit and hit.get('type') in CROSSREF_TYPES:
                 items[doi.lower()] = hit
 
-    publications = [from_crossref(hit) for hit in items.values()]
+    publications = list(dblp)
+    known_dois = [(pub['bibtex'].get('doi') or '').lower() for pub in dblp]
+    for doi, hit in items.items():
+        if doi in known_dois:   # DBLP has it already; Crossref can still tell the publisher
+            dblp[known_dois.index(doi)]['bibtex'].setdefault('publisher', hit.get('publisher'))
+        else:
+            publications.append(from_crossref(hit))
     seen = [(plain(p['bibtex'].get('title')), p['bibtex'].get('year')) for p in publications]
     for work in works:
         pub = from_openalex(work)
@@ -576,8 +675,8 @@ def check_record(record):
     problems = []
     pre = record.get('preprint') or {}
     pid = pre.get('id') or ''
-    if ':' not in pid or find_preprint_id(pid.split(':', 1)[1]) != pid:
-        problems.append('preprint id {!r} is not a valid id (like arxiv:2402.05602 or doi:10.1101/...)'.format(pid))
+    if find_preprint_id(pid) != pid:
+        problems.append('preprint id {!r} is not a valid id (like arxiv:2402.05602, doi:10.1101/... or openreview:...)'.format(pid))
     for name in ('title', 'authors', 'year'):
         if not pre.get(name):
             problems.append('preprint: {} is missing'.format(name))
