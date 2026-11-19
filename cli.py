@@ -138,7 +138,17 @@ async def preprint_metadata(pid):
     return record['preprint']
 
 
+def tidy(data, order):
+    # the same keys in the same order in every file, so that diffs show only real changes
+    result = dict((key, data[key]) for key in order if key in data)
+    result.update((key, value) for key, value in data.items() if key not in result)
+    return result
+
+
 def save(record, db):
+    record = {'preprint': tidy(record['preprint'], ['id', 'title', 'authors', 'year', 'primary_class', 'server']),
+              'publications': [tidy(pub, ['relation', 'venue_type', 'venue_short', 'archival', 'preferred', 'dblp', 'source', 'bibtex'])
+                               for pub in record['publications']]}
     path = os.path.join(db, py.db_path(record['preprint']['id']))
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as f:

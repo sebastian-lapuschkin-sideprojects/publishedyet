@@ -358,8 +358,7 @@ def proposal_url(pid, record, choice):
         pub.pop('preferred', None)
         if i == choice:
             pub['preferred'] = True
-    title = '[db] ' + py.preprint_label(pid)
-    query = {'template': 'db-entry.yml', 'title': title, 'entry': json.dumps(record, indent=2, ensure_ascii=False)}
+    query = {'template': 'db-entry.yml', 'title': proposal_title(pid, record), 'entry': json.dumps(record, indent=2, ensure_ascii=False)}
     original = json.loads(json.dumps(state['originals'].get(pid)))
     if original:
         for i, pub in enumerate(original['publications']):   # the database's implicit preferred one, made explicit
@@ -368,6 +367,19 @@ def proposal_url(pid, record, choice):
                 pub['preferred'] = True
         query['notes'] = 'Changes to the database entry:\n' + '\n'.join('- ' + line for line in changes(original, record))
     return REPO + '/issues/new?' + urlencode(query)
+
+
+def proposal_title(pid, record):
+    # e.g. '[db] arXiv:1512.00172 -> CVPR 2016: Analyzing Classifiers: Fisher Vectors and Deep Neural Networks'
+    venues = []
+    for pub in record['publications']:
+        bib = pub['bibtex']
+        venue = pub.get('venue_short') or bib.get(venue_field(bib['type'])) or 'new publication'
+        venues.append('{} {}'.format(venue if len(venue) <= 40 else venue[:37] + '...', bib.get('year', '')).strip())
+    paper = (record['preprint'].get('title') or '').replace('{', '').replace('}', '')
+    if len(paper) > 70:
+        paper = paper[:67] + '...'
+    return '[db] {} -> {}: {}'.format(py.preprint_label(pid), ', '.join(venues) or 'no publication', paper).rstrip(': ')
 
 
 def changes(old, new):
