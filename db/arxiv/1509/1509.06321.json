@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:1509.06321",
+    "title": "Evaluating the visualization of what a Deep Neural Network has learned",
+    "authors": [
+      "Wojciech Samek",
+      "Alexander Binder",
+      "Grégoire Montavon",
+      "Sebastian Bach",
+      "Klaus-Robert Müller"
+    ],
+    "year": "2015",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "archival": true,
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Wojciech Samek",
+          "Alexander Binder",
+          "Grégoire Montavon",
+          "Sebastian Lapuschkin",
+          "Klaus-Robert Müller"
+        ],
+        "title": "Evaluating the Visualization of What a Deep Neural Network Has Learned",
+        "journal": "IEEE Transactions on Neural Networks and Learning Systems",
+        "volume": "28",
+        "number": "11",
+        "pages": "2660--2673",
+        "year": "2017",
+        "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+        "doi": "10.1109/TNNLS.2016.2599820",
+        "url": "https://doi.org/10.1109/TNNLS.2016.2599820"
+      },
+      "dblp": "journals/tnn/SamekBMLM17"
+    }
+  ]
+}

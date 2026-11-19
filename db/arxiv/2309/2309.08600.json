@@ -1,0 +1,38 @@
+{
+  "preprint": {
+    "id": "arxiv:2309.08600",
+    "title": "Sparse Autoencoders Find Highly Interpretable Features in Language Models",
+    "authors": [
+      "Hoagy Cunningham",
+      "Aidan Ewart",
+      "Logan Riggs",
+      "Robert Huben",
+      "Lee Sharkey"
+    ],
+    "year": "2023",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "archival": true,
+      "source": "dblp, written as on OpenReview",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Robert Huben",
+          "Hoagy Cunningham",
+          "Logan Riggs Smith",
+          "Aidan Ewart",
+          "Lee Sharkey"
+        ],
+        "title": "Sparse Autoencoders Find Highly Interpretable Features in Language Models",
+        "booktitle": "The Twelfth International Conference on Learning Representations",
+        "year": "2024",
+        "url": "https://openreview.net/forum?id=F76bwRSLeK"
+      },
+      "dblp": "conf/iclr/HubenCRES24"
+    }
+  ]
+}
