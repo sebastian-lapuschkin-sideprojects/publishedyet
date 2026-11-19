@@ -1,0 +1,2 @@
+# GitHub users whose database proposals become pull requests right away (one name per line).
+# The repo owner and collaborators are trusted anyway; everybody else needs the label `approved`.

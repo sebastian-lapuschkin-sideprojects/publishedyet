@@ -1,22 +1,43 @@
 # Turns a database proposal (an issue made from the db-entry template) into a pull request.
 # Needs: Settings > Actions > General > "Allow GitHub Actions to create and approve pull requests".
+#
+# Against spam, pull requests are opened right away only for trusted proposers: the owner,
+# collaborators, and the GitHub users listed in .github/trusted-proposers.txt. For everybody
+# else the entry is checked and the proposer told the result; the pull request follows once a
+# maintainer adds the label `approved` to the issue (only people with repo rights can set labels).
 name: database proposal
 on:
   issues:
-    types: [opened, edited]
+    types: [opened, edited, labeled]
 permissions:
   contents: write
   pull-requests: write
   issues: write
 jobs:
   propose:
-    if: contains(github.event.issue.labels.*.name, 'db-proposal')
+    # labelling only matters when the label is `approved`
+    if: >-
+      contains(github.event.issue.labels.*.name, 'db-proposal') &&
+      (github.event.action != 'labeled' || github.event.label.name == 'approved')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Is the proposer trusted, or the issue approved?
+        id: trust
+        env:
+          AUTHOR: ${{ github.event.issue.user.login }}
+          ASSOCIATION: ${{ github.event.issue.author_association }}
+          APPROVED: ${{ contains(github.event.issue.labels.*.name, 'approved') }}
+        run: |
+          if [ "$APPROVED" = "true" ] || [ "$ASSOCIATION" = "OWNER" ] || [ "$ASSOCIATION" = "MEMBER" ] \
+             || [ "$ASSOCIATION" = "COLLABORATOR" ] || grep -qxF "$AUTHOR" .github/trusted-proposers.txt; then
+            echo "open=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "open=no" >> "$GITHUB_OUTPUT"
+          fi
       - name: Write the entry into the database
         id: entry
         env:
@@ -27,7 +48,15 @@ jobs:
         run: |
           python cli.py fix demo/refs.bib -o demo/refs_fixed.bib --preprint-style scholar > /dev/null
           python -m unittest discover tests
+      - name: Tell an untrusted proposer that a maintainer will look at it
+        if: steps.trust.outputs.open == 'no' && github.event.action == 'opened'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$NUMBER" --body "Thanks for the proposal! The entry is valid. A maintainer will look at it; once they add the label \`approved\`, a pull request is opened automatically."
       - name: Open a pull request
+        if: steps.trust.outputs.open == 'yes'
         env:
           GH_TOKEN: ${{ github.token }}
           NUMBER: ${{ github.event.issue.number }}
