@@ -234,7 +234,7 @@ def last_name_words(author):
 # ---------------------------------------------------------------------------------------
 
 FIELD_ORDER = ['author', 'title', 'editor', 'journal', 'booktitle', 'series', 'volume', 'number', 'pages',
-               'year', 'month', 'publisher', 'address', 'howpublished', 'doi', 'url',
+               'year', 'month', 'publisher', 'address', 'howpublished', 'issn', 'doi', 'url',
                'eprinttype', 'archiveprefix', 'eprint', 'primaryclass', 'note']
 STOPWORDS = {'a', 'an', 'and', 'as', 'at', 'by', 'for', 'from', 'in', 'into', 'of', 'on', 'or',
              'the', 'to', 'via', 'with', 'without'}
@@ -594,8 +594,8 @@ PMLR_BIBTEX = re.compile(r'<code class="citecode" id="bibtex">(.*?)</code>', re.
 async def venue_bibtex(pub, get_text):
     """
     Where we can, cite a publication the way its venue asks for: PMLR's paper pages (ICML,
-    AISTATS, COLT, ...) carry their BibTeX, and ICLR's on OpenReview follows a fixed pattern
-    that we write from DBLP's data (OpenReview itself blocks automated requests).
+    AISTATS, COLT, ...) carry their BibTeX, and ICLR's and TMLR's on OpenReview follow fixed
+    patterns that we write from DBLP's data (OpenReview itself blocks automated requests).
     """
     bib = pub['bibtex']
     url = bib.get('url') or ''
@@ -611,6 +611,14 @@ async def venue_bibtex(pub, get_text):
             ('type', 'inproceedings'), ('author', bib.get('author')), ('title', bib.get('title')),
             ('booktitle', bib['booktitle'].split(', ICLR')[0]), ('year', bib.get('year')), ('url', bib.get('url'))] if value)
         pub['source'] = 'dblp, written as on OpenReview'
+    elif (pub.get('dblp') or '').startswith('journals/tmlr/'):
+        # as OpenReview writes TMLR papers; its note (e.g. 'Survey Certification') is not known to DBLP
+        pub['bibtex'] = dict((name, value) for name, value in [
+            ('type', 'article'), ('author', bib.get('author')), ('title', bib.get('title')),
+            ('journal', 'Transactions on Machine Learning Research'), ('issn', '2835-8856'),
+            ('year', bib.get('year')), ('url', bib.get('url'))] if value)
+        pub['source'] = 'dblp, written as on OpenReview'
+        pub['venue_short'] = 'TMLR'
     return pub
 
 
@@ -737,11 +745,13 @@ EXPECTED = {'article': ['volume', 'pages'], 'inproceedings': ['pages'], 'incolle
 
 def missing_fields(pub):
     # fields a complete entry of its kind would have but this one lacks. Papers on OpenReview
-    # (ICLR) and non-archival ones have no page numbers, so those are not asked for.
+    # (ICLR, TMLR) have neither volumes nor page numbers, non-archival ones no page numbers.
     bib = pub['bibtex']
     names = ['author', 'title', 'year', VENUE_FIELD.get(bib['type'])] + EXPECTED.get(bib['type'], [])
-    if 'openreview.net' in (bib.get('url') or '') or not pub.get('archival', True):
-        names.remove('pages') if 'pages' in names else None
+    if 'openreview.net' in (bib.get('url') or ''):
+        names = [name for name in names if name not in ('volume', 'pages')]
+    elif not pub.get('archival', True):
+        names = [name for name in names if name != 'pages']
     missing = [name for name in names if name and not bib.get(name)]
     if not bib.get('doi') and not bib.get('url'):
         missing.append('doi or url')

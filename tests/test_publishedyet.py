@@ -222,6 +222,18 @@ class VenueBibtex(unittest.TestCase):
         self.assertNotIn('publisher', pub['bibtex'])
 
 
+    def test_tmlr_as_on_openreview(self):
+        pub = {'dblp': 'journals/tmlr/BereskaG24', 'venue_short': 'Trans. Mach. Learn. Res.', 'bibtex': {
+            'type': 'article', 'author': ['Leonard F. Bereska', 'Stratis Gavves'], 'title': 'Mechanistic Interpretability for AI Safety - A Review',
+            'journal': 'Trans. Mach. Learn. Res.', 'volume': '2024', 'year': '2024', 'url': 'https://openreview.net/forum?id=ePUVetPKu6'}}
+        asyncio.run(py.venue_bibtex(pub, None))
+        self.assertEqual(pub['bibtex']['journal'], 'Transactions on Machine Learning Research')
+        self.assertEqual(pub['bibtex']['issn'], '2835-8856')
+        self.assertNotIn('volume', pub['bibtex'])
+        self.assertEqual(pub['venue_short'], 'TMLR')
+        self.assertEqual(py.missing_fields(pub), [])
+
+
 class Completeness(unittest.TestCase):
 
     def test_missing_fields(self):
