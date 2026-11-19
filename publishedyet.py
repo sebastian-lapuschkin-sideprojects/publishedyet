@@ -694,8 +694,13 @@ async def discover(pid, get_json, known=None, get_text=None):
     publications = list(dblp)
     known_dois = [(pub['bibtex'].get('doi') or '').lower() for pub in dblp]
     for doi, hit in items.items():
-        if doi in known_dois:   # DBLP has it already; Crossref can still tell the publisher
-            dblp[known_dois.index(doi)]['bibtex'].setdefault('publisher', hit.get('publisher'))
+        if doi in known_dois:   # in DBLP too: names of people from DBLP, name of the venue from its publisher
+            pub, theirs = dblp[known_dois.index(doi)], from_crossref(hit)['bibtex']
+            venue = VENUE_FIELD.get(pub['bibtex']['type'])
+            if venue and theirs.get(CROSSREF_TYPES[hit['type']][1]):
+                pub['bibtex'][venue] = theirs[CROSSREF_TYPES[hit['type']][1]]
+                pub['source'] = 'dblp, venue name from crossref'
+            pub['bibtex'].setdefault('publisher', hit.get('publisher'))
         else:
             publications.append(from_crossref(hit))
     seen = [(plain(p['bibtex'].get('title')), p['bibtex'].get('year')) for p in publications]

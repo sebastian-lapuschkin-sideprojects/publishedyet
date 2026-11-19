@@ -232,12 +232,31 @@ class Completeness(unittest.TestCase):
         self.assertEqual(py.missing_fields(workshop), ['doi or url'])
 
 
+class Demo(unittest.TestCase):
+
+    def test_demo_is_up_to_date(self):
+        # demo/refs_fixed.bib is what `cli.py fix demo/refs.bib --preprint-style scholar` makes with the database
+        root = os.path.dirname(HERE)
+        with open(os.path.join(root, 'demo', 'refs.bib'), encoding='utf-8') as f:
+            text = f.read()
+        changes = []
+        for item in py.scan(text):
+            path = os.path.join(root, 'db', py.db_path(item['id']))
+            record = json.load(open(path, encoding='utf-8')) if os.path.exists(path) else None
+            choice = py.preferred(record)
+            new = py.replacement(item, record, choice, 'scholar')
+            if new:
+                changes.append((item['entry'], new, py.describe(record, choice)))
+        with open(os.path.join(root, 'demo', 'refs_fixed.bib'), encoding='utf-8') as f:
+            self.assertEqual(py.fix_bib(text, changes), f.read())
+
+
 class Database(unittest.TestCase):
 
     def test_all_records(self):
         db = os.path.join(os.path.dirname(HERE), 'db')
         for folder, _, names in os.walk(db):
-            for name in names:
+            for name in [n for n in names if n.endswith('.json')]:
                 path = os.path.join(folder, name)
                 with open(path, encoding='utf-8') as f:
                     record = json.load(f)
