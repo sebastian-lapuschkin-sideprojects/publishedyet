@@ -10,6 +10,16 @@ the file as comments.
 
 The page: <https://sebastian-lapuschkin-sideprojects.github.io/publishedyet/>
 
+## How this came about
+
+This project is largely vibe coded. The idea and first steps towards it go back years, but they never
+got far for lack of time. It exists now because an AI coding assistant (Claude) wrote most of the
+code, while I decided what it should do and reviewed the result.
+
+It is still deliberately a program and not an AI agent: the same input gives the same output, the
+code can be read and tested, and no language model is involved when it runs. An agent asked to clean
+up a bibliography can do much of the same, but less consistently.
+
 ## Your data stays with you
 
 The page runs entirely in your browser (Python via [Pyodide](https://pyodide.org)). Your BibTeX file
