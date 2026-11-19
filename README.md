@@ -169,6 +169,7 @@ Settings > Actions > General, "Allow GitHub Actions to create and approve pull r
 ## Files
 
     index.html, style.css   the page (the only JavaScript is the Pyodide loader in index.html)
+    favicon.svg, *.png      the icon: the question (preprint) split from its answer (published)
     web.py                  the page's logic, in Python
     publishedyet.py         the core: reading and writing BibTeX, database lookup, online search
     cli.py                  the command line tool
