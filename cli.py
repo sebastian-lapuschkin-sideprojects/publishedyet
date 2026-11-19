@@ -225,22 +225,31 @@ async def from_issue(args):
     print(os.path.relpath(path))
 
 
+def readable(names):
+    # 'Achtibat, Reduan' -> 'Reduan Achtibat', joined with commas, braces removed
+    names = [' '.join(reversed([part.strip() for part in name.split(',', 1)])) for name in names or []]
+    return ', '.join(names).replace('{', '').replace('}', '')
+
+
 def summary(record, path, existed):
-    # the text of the pull request: what merging it does to the database, with links to check it
+    # the text of the pull request: what merging it does to the database, with titles, authors and links to check it
     pre = record['preprint']
+    unbrace = lambda text: (text or '').replace('{', '').replace('}', '')
     lines = ['**{}** `{}`'.format('Changes the database entry' if existed else 'Adds a new file to the database:', path), '',
-             'Preprint: [{}]({}), *{}* ({})'.format(py.preprint_label(pre['id']), py.preprint_url(pre['id']),
-                                                   (pre.get('title') or '').replace('{', '').replace('}', ''), pre.get('year')),
-             '', 'Publications:']
+             '**Preprint:** [{}]({}) ({})'.format(py.preprint_label(pre['id']), py.preprint_url(pre['id']), pre.get('year')),
+             '- Title: ' + unbrace(pre.get('title')),
+             '- Authors: ' + readable(pre.get('authors')),
+             '', '**Publications:**']
     for i, pub in enumerate(record['publications']):
         bib = pub['bibtex']
         venue = bib.get(py.VENUE_FIELD.get(bib['type'], 'howpublished')) or ''
         notes = [pub.get('venue_type'), 'archival' if pub.get('archival', True) else 'non-archival',
                  'extended version' if pub.get('relation') == 'extended' else None,
                  'preferred' if py.preferred(record) == i else None]
-        lines.append('- **{} {}**: {} ({})'.format(pub.get('venue_short') or '', bib.get('year', ''), venue,
-                                                  ', '.join(note for note in notes if note)).replace('** ', '**', 1))
-        lines.append('  *{}*'.format(bib.get('title', '').replace('{', '').replace('}', '')))
+        name = '{} {}'.format(pub.get('venue_short') or '', bib.get('year', '')).strip()
+        lines.append('- **{}**: {} ({})'.format(name, venue, ', '.join(note for note in notes if note)))
+        lines.append('  - Title: ' + unbrace(bib.get('title')))
+        lines.append('  - Authors: ' + readable(bib.get('author')))
         links = []
         if bib.get('url'):
             links.append('[paper]({})'.format(bib['url']))
@@ -249,7 +258,7 @@ def summary(record, path, existed):
         if pub.get('dblp'):
             links.append('[DBLP](https://dblp.org/rec/{})'.format(pub['dblp']))
         if links:
-            lines.append('  ' + ' · '.join(links))
+            lines.append('  - Links: ' + ' · '.join(links))
     if not record['publications']:
         lines.append('- none')
     if existed:
