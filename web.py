@@ -243,8 +243,7 @@ def edit_panel(i):
     out = [select(i, 'bib', 'type', bib['type'], py.BIBTEX_TYPES),
            select(i, 'meta', 'venue_type', pub.get('venue_type'), py.VENUE_TYPES),
            select(i, 'meta', 'relation', pub.get('relation'), py.RELATIONS),
-           '<div class="fld"><label class="cap"><input type="checkbox" data-i="{}" data-target="meta" data-field="archival"{}> archival</label></div>'
-           .format(i, ' checked' if pub.get('archival', True) else ''),
+           select(i, 'meta', 'archival', 'yes' if pub.get('archival', True) else 'no', ['yes', 'no']),
            field(i, 'meta', 'venue_short', pub.get('venue_short', ''), wide=False, note='e.g. ICML, shown on the tile')]
     names = [venue_field(bib['type']) if name == 'venue' else name for name in FIELDS]
     names += [name for name in bib if name not in names and name != 'type']
@@ -288,7 +287,9 @@ def on_results_change(event):
     choice = state['choices'].get(pid, 'preprint')
     name = target.getAttribute('data-field')
     where = target.getAttribute('data-target')
-    value = target.checked if target.type == 'checkbox' else target.value.strip()
+    value = target.value.strip()
+    if name == 'archival':
+        value = value == 'yes'   # stored as true / false
     if name in ('author', 'authors'):
         value = [n.strip() for n in re.split(r'\n|\s+and\s+', value) if n.strip()]
     if where == 'pre':
