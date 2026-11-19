@@ -23,7 +23,7 @@
     {
       "relation": "same",
       "venue_type": "conference",
-      "venue_short": "xAI (2)",
+      "venue_short": "xAI",
       "archival": true,
       "preferred": true,
       "dblp": "conf/xai/TinauerDSSADPLS24",

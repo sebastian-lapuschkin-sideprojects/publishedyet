@@ -15,7 +15,7 @@
     {
       "relation": "same",
       "venue_type": "conference",
-      "venue_short": "MICCAI (2)",
+      "venue_short": "MICCAI",
       "archival": true,
       "preferred": true,
       "dblp": "conf/miccai/PahdeDSL23",

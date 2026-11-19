@@ -18,7 +18,7 @@
     {
       "relation": "same",
       "venue_type": "conference",
-      "venue_short": "ACL (1)",
+      "venue_short": "ACL",
       "archival": true,
       "preferred": true,
       "dblp": "conf/acl/OstermannGBHLSS26",

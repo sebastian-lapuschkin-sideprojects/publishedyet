@@ -25,7 +25,7 @@
     {
       "relation": "same",
       "venue_type": "workshop",
-      "venue_short": "ECCV Workshops (20)",
+      "venue_short": "ECCV Workshops",
       "archival": true,
       "preferred": true,
       "dblp": "conf/eccv/MekalaPBCDWWYLMELPS24",

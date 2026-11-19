@@ -560,7 +560,8 @@ def from_dblp(row):
     pub = {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'dblp',
            'dblp': row['pub'].split('/rec/')[-1], 'bibtex': bib}
     if row.get('short'):
-        pub['venue_short'] = row['short']   # DBLP's short name of the venue: 'ICML', 'CVPR', 'Pattern Recognit.'
+        # DBLP's short name of the venue ('ICML', 'CVPR', 'Pattern Recognit.'), without volume numbers like 'xAI (2)'
+        pub['venue_short'] = re.sub(r'\s*\(\d+\)$', '', row['short'])
     return pub
 
 

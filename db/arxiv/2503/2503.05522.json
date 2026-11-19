@@ -15,7 +15,7 @@
     {
       "relation": "same",
       "venue_type": "conference",
-      "venue_short": "xAI (1)",
+      "venue_short": "xAI",
       "archival": true,
       "preferred": true,
       "dblp": "conf/xai/ErogullariLSP25",
