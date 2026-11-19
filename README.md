@@ -13,9 +13,9 @@ The page: <https://sebastian-lapuschkin-sideprojects.github.io/publishedyet/>
 ## Your data stays with you
 
 The page runs entirely in your browser (Python via [Pyodide](https://pyodide.org)). Your BibTeX file
-is not uploaded anywhere. Only preprint ids leave your computer: to this site's database and, if you
-search online, to [DBLP](https://sparql.dblp.org), [OpenAlex](https://openalex.org),
-[Crossref](https://www.crossref.org) and the [bioRxiv API](https://api.biorxiv.org). So the tool is fine to use on unpublished manuscripts.
+is not uploaded anywhere. Only preprint ids and the titles of those preprints leave your computer: to
+this site's database and to [DBLP](https://sparql.dblp.org), [OpenAlex](https://openalex.org),
+[Crossref](https://www.crossref.org), the [bioRxiv API](https://api.biorxiv.org) and PMLR. So the tool is fine to use on unpublished manuscripts.
 
 ## How it works
 

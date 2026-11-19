@@ -220,6 +220,18 @@ class VenueBibtex(unittest.TestCase):
         self.assertNotIn('publisher', pub['bibtex'])
 
 
+class Completeness(unittest.TestCase):
+
+    def test_missing_fields(self):
+        article = {'bibtex': {'type': 'article', 'author': ['A'], 'title': 'T', 'journal': 'J', 'year': '2020', 'doi': '10.1/x'}}
+        self.assertEqual(py.missing_fields(article), ['volume', 'pages'])
+        iclr = {'bibtex': {'type': 'inproceedings', 'author': ['A'], 'title': 'T', 'booktitle': 'ICLR', 'year': '2024',
+                           'url': 'https://openreview.net/forum?id=x'}}
+        self.assertEqual(py.missing_fields(iclr), [])
+        workshop = {'archival': False, 'bibtex': {'type': 'inproceedings', 'author': ['A'], 'title': 'T', 'booktitle': 'W', 'year': '2024'}}
+        self.assertEqual(py.missing_fields(workshop), ['doi or url'])
+
+
 class Database(unittest.TestCase):
 
     def test_all_records(self):

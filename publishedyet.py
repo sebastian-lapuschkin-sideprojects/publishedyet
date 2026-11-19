@@ -719,6 +719,22 @@ VENUE_TYPES = ('journal', 'conference', 'workshop', 'book', 'other')
 RELATIONS = ('same', 'extended')
 
 
+EXPECTED = {'article': ['volume', 'pages'], 'inproceedings': ['pages'], 'incollection': ['pages']}
+
+
+def missing_fields(pub):
+    # fields a complete entry of its kind would have but this one lacks. Papers on OpenReview
+    # (ICLR) and non-archival ones have no page numbers, so those are not asked for.
+    bib = pub['bibtex']
+    names = ['author', 'title', 'year', VENUE_FIELD.get(bib['type'])] + EXPECTED.get(bib['type'], [])
+    if 'openreview.net' in (bib.get('url') or '') or not pub.get('archival', True):
+        names.remove('pages') if 'pages' in names else None
+    missing = [name for name in names if name and not bib.get(name)]
+    if not bib.get('doi') and not bib.get('url'):
+        missing.append('doi or url')
+    return missing
+
+
 def check_record(record):
     # returns a list of problems with a database record (empty if all is fine)
     problems = []

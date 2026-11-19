@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>publishedyet: about</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<script>
+  try { var theme = localStorage.getItem('publishedyet-theme'); if (theme) document.documentElement.setAttribute('data-theme', theme); } catch (e) {}
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap bar">
+  <a class="brand" href="./">publishedyet<span class="q">?</span></a>
+  <nav>
+    <a href="about.html">about</a>
+    <a href="https://github.com/sebastian-lapuschkin-sideprojects/publishedyet">github</a>
+    <button class="tbtn" id="theme" title="light / dark" aria-label="switch light or dark">◐</button>
+  </nav>
+</div></header>
+
+<main class="wrap prose">
+  <div class="eyebrow">about</div>
+  <h1>How publishedyet works</h1>
+  <p>During revisions, references to preprints go stale: the paper has appeared in a journal or at a
+    conference in the meantime. publishedyet finds such preprints in a BibTeX file or a list of ids,
+    shows their known publications, and returns a fixed BibTeX file.</p>
+
+  <h2>What it takes off your hands</h2>
+  <p>The chores of cleaning up a bibliography before submission or during a revision:</p>
+  <ul>
+    <li>finding out, for every cited preprint, whether it has been published since: at a conference,
+      in a journal, as a workshop paper, or as an extended version;</li>
+    <li>replacing outdated preprint entries by the published version, under the same citation key, so
+      the <code>.tex</code> files stay as they are, and keeping the old entries as comments;</li>
+    <li>choosing between several publications of one preprint (say a workshop paper and its journal
+      extension), with a preferred one suggested;</li>
+    <li>writing the preprints that remain in one uniform style instead of a mix of Google Scholar,
+      arXiv and DBLP entries;</li>
+    <li>giving new entries citation keys in one style (Google Scholar's <code>author2024word</code> or DBLP's);</li>
+    <li>citing papers the way their venue asks (PMLR's entries for ICML, OpenReview's form for ICLR);</li>
+    <li>getting names right where sources mangle them (umlauts and accents, hyphenated first names
+      such as Klaus-Robert, which BibTeX shortens to K.-R.);</li>
+    <li>spotting entries that lack pages, volume or a DOI;</li>
+    <li>showing exactly what changed, as a diff;</li>
+    <li>pointing co-authors to the references in their paper that need updating (share links);</li>
+    <li>and doing each lookup only once: confirmed results go into a shared database that everybody's
+      next run uses.</li>
+  </ul>
+
+  <h2>Everything runs in your browser</h2>
+  <p>The page runs Python in your browser (<a href="https://pyodide.org">Pyodide</a>); there is no
+    server behind it. Your BibTeX file is not uploaded anywhere. What leaves your computer are the
+    preprint ids and, for searching, the titles of those preprints: to this site's database, and to
+    DBLP, OpenAlex, Crossref, the bioRxiv API and PMLR, all of which are public services.</p>
+
+  <h2>1. Reading the input</h2>
+  <p>publishedyet recognises arXiv ids (new ones like <code>2402.05602</code>, old ones like
+    <code>hep-th/9901001</code>, with or without version), bioRxiv and medRxiv DOIs
+    (<code>10.1101/…</code> or just <code>2020.07.23.217034</code>) and OpenReview links. In a BibTeX
+    file, an entry counts as a preprint if it mentions such an id (as eprint, DOI, link or
+    "arXiv preprint arXiv:…") and names no other venue. Entries that are published already are left alone.
+    Anything in a list of ids that cannot be read is shown with a warning.</p>
+
+  <h2>2. The database</h2>
+  <p>Each preprint is first looked up in this site's own database: one file per preprint, with the
+    publications people have confirmed, complete BibTeX data for each, and one marked as preferred.
+    Database entries are checked by a person before they go in.</p>
+
+  <h2>3. Searching online</h2>
+  <p>Preprints not in the database are searched for right away, in these places:</p>
+  <ul>
+    <li><b>DBLP</b> (computer science): the arXiv version's record leads to its first author; among
+      that author's publications, those with the same title (at least 90&nbsp;% similar) count as published versions.</li>
+    <li><b>OpenAlex</b>: often merges a preprint with its published version, which shows up when
+      looking the preprint up by its DOI. Otherwise a title search.</li>
+    <li><b>Crossref</b>: a title search among journal articles, proceedings papers and book chapters.</li>
+    <li><b>bioRxiv</b>: its API names the journal article a preprint turned into.</li>
+  </ul>
+  <p>A search hit counts as the same paper if its title is at least 90&nbsp;% similar to the
+    preprint's and the preprint's first author is among its authors. Details then come from DBLP or
+    from Crossref (via the DOI). Where possible, the venue's own BibTeX is used: PMLR's for ICML and
+    other PMLR conferences, and the form OpenReview uses for ICLR.</p>
+  <p>Matches found online are marked <i>found online</i> until someone confirms them for the database.
+    Entries missing data that a complete citation would have (pages, volume, …) are marked <i>incomplete</i>.</p>
+  <p>Not found automatically: non-archival workshop papers, journal extensions with a new title, papers
+    only on OpenReview, and conference papers outside computer science without a DOI. These need a database entry.</p>
+
+  <h2>4. Choosing and exporting</h2>
+  <p>Each preprint gets a card: choose a publication, keep the preprint, correct any field with
+    <i>edit</i>, or add a publication by hand. The fixed BibTeX file keeps your citation keys, so your
+    <code>.tex</code> files need no change. Replaced entries stay in the file as comments (with their
+    <code>@</code> removed, since BibTeX has no comment character and would otherwise still read them).
+    Preprints that stay can be rewritten in one uniform style (Google Scholar, arXiv or DBLP).</p>
+
+  <h2>5. Giving back</h2>
+  <p><i>propose</i> opens a prefilled GitHub issue with the entry. A GitHub action turns it into a pull
+    request, which a maintainer reviews before the entry goes into the database. <i>share link</i>
+    copies a link that opens this page with the same preprints, for pointing co-authors to references
+    that need updating.</p>
+</main>
+
+<footer class="site"><div class="wrap">
+  publishedyet: keeps the references of a paper up to date. Data from its own database, DBLP, OpenAlex, Crossref, bioRxiv and PMLR.
+</div></footer>
+<script>
+  document.getElementById('theme').onclick = function () {
+    var root = document.documentElement;
+    var now = root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = now === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('publishedyet-theme', next); } catch (e) {}
+  };
+</script>
+</body>
+</html>

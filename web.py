@@ -205,16 +205,20 @@ def tiles(i):
         meta = [pub.get('venue_type'), bib.get('year'), None if pub.get('archival', True) else 'non-archival',
                 'extended' if pub.get('relation') == 'extended' else None]
         preview = '{}\n{}\n{} {}'.format(' and '.join(bib.get('author', [])), bib.get('title', ''), venue, bib.get('year', ''))
-        out.append(tile(i, n, venue, meta, link, choice == n, preview))
+        missing = py.missing_fields(pub)
+        if missing:
+            preview += '\n\nmissing: ' + ', '.join(missing)
+        out.append(tile(i, n, venue, meta, link, choice == n, preview, incomplete=bool(missing)))
     if state['status'][pid] not in ('looking', 'searching', 'unknown'):
         out.append('<div class="tile ghost" data-action="add" data-i="{}">+ add publication</div>'.format(i))
     return ''.join(out)
 
 
-def tile(i, choice, name, meta, link, chosen, preview):
+def tile(i, choice, name, meta, link, chosen, preview, incomplete=False):
     go = ' <a class="go" href="{}" target="_blank" title="open">↗</a>'.format(escape(link)) if link else ''
-    return '<div class="tile{}" data-action="choose" data-i="{}" data-choice="{}" title="{}"><div class="name">{}{}</div><div class="meta">{}</div></div>'.format(
-        ' chosen' if chosen else '', i, choice, escape(preview), escape(name), go, escape(' · '.join(m for m in meta if m)))
+    flag = ' · <span class="incomplete">incomplete</span>' if incomplete else ''
+    return '<div class="tile{}" data-action="choose" data-i="{}" data-choice="{}" title="{}"><div class="name">{}{}</div><div class="meta">{}{}</div></div>'.format(
+        ' chosen' if chosen else '', i, choice, escape(preview), escape(name), go, escape(' · '.join(m for m in meta if m)), flag)
 
 
 # ----- the edit panel --------------------------------------------------------------------
@@ -247,9 +251,9 @@ def edit_panel(i):
             out.append(field(i, 'bib', name, '\n'.join(value), rows=max(2, min(len(value), 6)), note='one per line'))
         else:
             out.append(field(i, 'bib', name, value, wide=name in WIDE or name == venue_field(bib['type'])))
-    problems = [p for p in py.check_record(dict(record, unconfirmed=False)) if p.startswith('publication {}'.format(choice + 1))]
-    if problems:
-        out.append('<p class="problems wide">{}</p>'.format('<br>'.join(escape(p) for p in problems)))
+    missing = py.missing_fields(pub)
+    if missing:
+        out.append('<p class="problems wide">missing: {}</p>'.format(escape(', '.join(missing))))
     out.append('<div class="wide controls"><button class="small" data-action="remove" data-i="{}">remove this publication</button></div>'.format(i))
     return ''.join(out)
 
