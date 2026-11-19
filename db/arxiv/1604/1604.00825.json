@@ -1,0 +1,44 @@
+{
+  "preprint": {
+    "id": "arxiv:1604.00825",
+    "title": "Layer-wise Relevance Propagation for Neural Networks with Local Renormalization Layers",
+    "authors": [
+      "Alexander Binder",
+      "Grégoire Montavon",
+      "Sebastian Bach",
+      "Klaus-Robert Müller",
+      "Wojciech Samek"
+    ],
+    "year": "2016"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ICANN",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/icann/BinderMLMS16",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Alexander Binder",
+          "Grégoire Montavon",
+          "Sebastian Lapuschkin",
+          "Klaus-Robert Müller",
+          "Wojciech Samek"
+        ],
+        "title": "Layer-Wise Relevance Propagation for Neural Networks with Local Renormalization Layers",
+        "booktitle": "Artificial Neural Networks and Machine Learning – ICANN 2016",
+        "series": "Lecture Notes in Computer Science",
+        "volume": "9887",
+        "pages": "63--71",
+        "year": "2016",
+        "publisher": "Springer",
+        "doi": "10.1007/978-3-319-44781-0_8",
+        "url": "https://doi.org/10.1007/978-3-319-44781-0_8"
+      }
+    }
+  ]
+}
