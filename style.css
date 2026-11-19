@@ -72,7 +72,7 @@ h3 { font-size: 1.05rem; margin: 1.4rem 0 .5rem; }
 .bar-top .done { font: .75rem var(--mono); color: var(--teal); }
 .card { background: var(--raised); border: 1px solid var(--line); border-radius: 12px; margin: 0 0 .7rem; }
 .card.alt { background: var(--zebra); }
-.card .top { display: grid; grid-template-columns: 12rem minmax(0, 1fr) 11rem 10rem; gap: .8rem; align-items: center;
+.card .top { display: grid; grid-template-columns: 12rem minmax(0, 1fr) 11rem 14rem; gap: .8rem; align-items: center;
              padding: .55rem .9rem; border-bottom: 1px solid var(--line); }
 .card .who { min-width: 0; }
 .card .id { display: block; font: .8rem var(--mono); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -118,6 +118,7 @@ h3 { font-size: 1.05rem; margin: 1.4rem 0 .5rem; }
 #diff .hunk { background: var(--hunk); color: var(--muted); }
 .icon { width: .85em; height: .85em; vertical-align: -.1em; fill: none; stroke: currentColor; stroke-width: 2.2;
         stroke-linecap: round; stroke-linejoin: round; }
-.pick { display: flex; align-items: center; cursor: pointer; }
+.pick { display: flex; align-items: center; gap: .1rem; cursor: pointer; font: .72rem var(--mono); color: var(--muted);
+        border-left: 1px solid var(--line); padding-left: .55rem; margin-left: .2rem; white-space: nowrap; }
 .pick input { margin: 0 0 0 .2rem; accent-color: var(--accent); cursor: pointer; }
 .card.left-out .opts, .card.left-out .who, .card.left-out .title { opacity: .45; }

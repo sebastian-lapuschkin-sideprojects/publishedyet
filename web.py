@@ -166,7 +166,7 @@ def card_top(i):
     if status == 'online' or pid in state['edited'] or (status == 'db' and choice != py.preferred(record)):
         actions.append('<a class="act" href="{}" target="_blank" title="send this entry to the database (opens a GitHub issue)">propose</a>'
                        .format(escape(proposal_url(pid, record, choice))))
-    actions.append('<label class="pick" title="include this entry in the export"><input type="checkbox" data-action="pick" data-i="{}"{}></label>'
+    actions.append('<label class="pick" title="include this entry in the export">export: <input type="checkbox" data-action="pick" data-i="{}"{}></label>'
                    .format(i, '' if i in state['left_out'] else ' checked'))
     label, kind = STATUS[status]
     if pid in state['edited']:
