@@ -1,0 +1,37 @@
+{
+  "preprint": {
+    "id": "arxiv:1611.08191",
+    "title": "Interpreting the Predictions of Complex ML Models by Layer-wise Relevance Propagation",
+    "authors": [
+      "Wojciech Samek",
+      "Grégoire Montavon",
+      "Alexander Binder",
+      "Sebastian Lapuschkin",
+      "Klaus-Robert Müller"
+    ],
+    "year": "2016"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "workshop",
+      "archival": false,
+      "preferred": true,
+      "source": "by hand",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Wojciech Samek",
+          "Grégoire Montavon",
+          "Alexander Binder",
+          "Sebastian Lapuschkin",
+          "Klaus-Robert Müller"
+        ],
+        "title": "Interpreting the Predictions of Complex ML Models by Layer-wise Relevance Propagation",
+        "booktitle": "NIPS 2016 Workshop on Interpretable Machine Learning in Complex Systems",
+        "year": "2016",
+        "url": "https://arxiv.org/abs/1611.08191"
+      }
+    }
+  ]
+}
