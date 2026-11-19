@@ -160,14 +160,12 @@ Proposals from the page arrive as issues labelled `db-proposal`. The action
 (`.github/workflows/db-proposal.yml`) checks the entry, comments on the issue if something is missing,
 and opens a pull request; merging it publishes the entry.
 
-Against spam, the pull request is opened right away only for trusted proposers: the owner,
-collaborators, and the GitHub users listed in `.github/trusted-proposers.txt`. For everybody else
-the action confirms that the entry is valid and waits until a maintainer adds the label `approved`
-to the issue (only people with repo rights can set labels). In an emergency, GitHub's interaction
-limits (Settings > Moderation) restrict who may open issues at all.
+Anybody with a GitHub account can propose; the last barrier is the merge, which only people with
+write access to the repository can do (the owner and the collaborators added under Settings >
+Collaborators). Against a flood of spam, GitHub's interaction limits (Settings > Moderation)
+restrict for a while who may open issues.
 
-Setup once on GitHub: Pages from branch `main`, folder `/`; labels `db-proposal` and `approved`; and
-under Settings > Actions > General, "Allow GitHub Actions to create and approve pull requests".
+Setup once on GitHub: Pages from branch `main`, folder `/`; a label `db-proposal`; and under Settings > Actions > General, "Allow GitHub Actions to create and approve pull requests".
 
 ## Not yet
 
