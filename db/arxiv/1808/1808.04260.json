@@ -21,11 +21,11 @@
     {
       "relation": "same",
       "venue_type": "journal",
-      "venue_short": "J. Mach. Learn. Res.",
+      "venue_short": "JMLR",
       "archival": true,
       "preferred": true,
       "dblp": "journals/jmlr/AlberLSHSMSMDK19",
-      "source": "dblp",
+      "source": "dblp, journal name written out",
       "bibtex": {
         "type": "article",
         "author": [
@@ -41,7 +41,7 @@
           "Pieter-Jan Kindermans"
         ],
         "title": "iNNvestigate Neural Networks!",
-        "journal": "J. Mach. Learn. Res.",
+        "journal": "Journal of Machine Learning Research",
         "volume": "20",
         "pages": "93:1--93:8",
         "year": "2019",
