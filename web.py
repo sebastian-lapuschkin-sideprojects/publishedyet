@@ -127,7 +127,7 @@ def show():
     unreadable = sum(1 for item in state['items'] if item['id'] is None)
     if unreadable:
         counts += ', {} not readable'.format(unreadable)
-    button = '<button class="small" data-action="share" title="copy a link that opens this page with these preprints">{} share link</button>'.format(LINK_ICON)
+    button = '<button class="small" data-action="share" title="copy a link that opens this page with the ticked preprints">{} share link</button>'.format(LINK_ICON)
     el('results').innerHTML = '<div class="bar-top"><span class="cap">{}</span>{}</div>'.format(counts, button) + \
         ''.join(card(i) for i in range(len(state['items'])))
     show_export()
@@ -176,7 +176,7 @@ def card_top(i):
     if status == 'online' or pid in state['edited'] or (status == 'db' and choice != py.preferred(record)):
         actions.append('<a class="act" href="{}" target="_blank" title="send this entry to the database (opens a GitHub issue)">propose</a>'
                        .format(escape(proposal_url(pid, record, choice))))
-    actions.append('<label class="pick" title="include this entry in the export">export: <input type="checkbox" data-action="pick" data-i="{}"{}></label>'
+    actions.append('<label class="pick" title="include this entry in the export and in share links">export/share: <input type="checkbox" data-action="pick" data-i="{}"{}></label>'
                    .format(i, '' if i in state['left_out'] else ' checked'))
     label, kind = STATUS[status]
     if pid in state['edited']:
@@ -399,8 +399,10 @@ async def on_results_click(event):
         return
     action = target.getAttribute('data-action')
     if action == 'share':
-        js.navigator.clipboard.writeText(share_link())
-        target.innerHTML = LINK_ICON + ' link copied'
+        link = share_link()
+        if link:
+            js.navigator.clipboard.writeText(link)
+        target.innerHTML = LINK_ICON + (' link copied' if link else ' nothing ticked')
         return
     i = int(target.getAttribute('data-i'))
     item = state['items'][i]
@@ -461,9 +463,13 @@ async def on_file(event):
 
 
 def share_link():
-    # this page with the preprints in the address: .../publishedyet/#2402.05602,1509.06321
-    # Preprints with a published version chosen go in; if there are none, all of them.
-    ids = [pid for pid in state['status'] if state['choices'].get(pid, 'preprint') != 'preprint'] or list(state['status'])
+    # this page with the ticked preprints in the address: .../publishedyet/#2402.05602,1509.06321
+    ids = []
+    for i, item in enumerate(state['items']):
+        if item['id'] and i not in state['left_out'] and item['id'] not in ids:
+            ids.append(item['id'])
+    if not ids:
+        return None
     plain_ids = [pid.split(':', 1)[1] if pid.startswith(('arxiv:', 'doi:')) else pid for pid in ids]
     return js.location.origin + js.location.pathname + '#' + ','.join(plain_ids)
 

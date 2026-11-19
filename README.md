@@ -46,9 +46,9 @@ this site's database and to [DBLP](https://sparql.dblp.org), [OpenAlex](https://
    preprint. "edit" shows every field of the chosen entry for correcting; "+ add publication" adds one
    by hand. Remaining preprints can be
    rewritten in one uniform style: Google Scholar, arXiv (`@misc`) or DBLP (CoRR).
-4. **Export.** The chosen entries (untick a card to leave it out), and for a BibTeX file the fixed file plus a diff of what changed.
+4. **Export.** The chosen entries (untick "export/share" on a card to leave it out), and for a BibTeX file the fixed file plus a diff of what changed.
    Entries that were not in your file get Google Scholar style keys (`he2016deep`) or DBLP keys.
-5. **Share.** "share link" copies a link that opens the page with the same preprints, e.g.
+5. **Share.** "share link" copies a link that opens the page with the ticked preprints, e.g.
    `https://sebastian-lapuschkin-sideprojects.github.io/publishedyet/#2402.05602,1509.06321`
    (or `.../publishedyet/2402.05602,1509.06321`). Handy for pointing co-authors to references that
    need updating. Local edits are not part of the link; propose them for the database instead.
