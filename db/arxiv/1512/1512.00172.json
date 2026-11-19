@@ -1,0 +1,42 @@
+{
+  "preprint": {
+    "id": "arxiv:1512.00172",
+    "title": "Analyzing Classifiers: Fisher Vectors and Deep Neural Networks",
+    "authors": [
+      "Sebastian Bach",
+      "Alexander Binder",
+      "Grégoire Montavon",
+      "Klaus-Robert Müller",
+      "Wojciech Samek"
+    ],
+    "year": "2015"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "archival": true,
+      "source": "dblp, venue name from crossref",
+      "dblp": "conf/cvpr/LapuschkinBMMS16",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Sebastian Lapuschkin",
+          "Alexander Binder",
+          "Grégoire Montavon",
+          "Klaus-Robert Müller",
+          "Wojciech Samek"
+        ],
+        "title": "Analyzing Classifiers: Fisher Vectors and Deep Neural Networks",
+        "booktitle": "2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "pages": "2912--2920",
+        "year": "2016",
+        "publisher": "IEEE Computer Society",
+        "doi": "10.1109/CVPR.2016.318",
+        "url": "https://doi.org/10.1109/CVPR.2016.318"
+      },
+      "venue_short": "CVPR",
+      "preferred": true
+    }
+  ]
+}
