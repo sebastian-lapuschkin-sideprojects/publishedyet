@@ -452,7 +452,7 @@ def from_crossref(item):
             bib['year'] = str(year)
             break
     bib.update({'volume': item.get('volume'), 'number': item.get('issue'),
-                'pages': (item.get('page') or '').replace('-', '--'), 'publisher': item.get('publisher'),
+                'pages': (item.get('page') or item.get('article-number') or '').replace('-', '--'), 'publisher': item.get('publisher'),
                 'doi': item['DOI'], 'url': 'https://doi.org/' + item['DOI']})
     bib = dict((name, value) for name, value in bib.items() if value)
     return {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'crossref', 'bibtex': bib}
