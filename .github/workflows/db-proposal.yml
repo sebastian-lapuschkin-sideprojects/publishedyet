@@ -1,0 +1,43 @@
+# Turns a database proposal (an issue made from the db-entry template) into a pull request.
+# Needs: Settings > Actions > General > "Allow GitHub Actions to create and approve pull requests".
+name: database proposal
+on:
+  issues:
+    types: [opened, edited]
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+jobs:
+  propose:
+    if: contains(github.event.issue.labels.*.name, 'db-proposal')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Write the entry into the database
+        id: entry
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: python cli.py from-issue 2> problems.txt
+      - name: Open a pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+          TITLE: ${{ github.event.issue.title }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "db/issue-$NUMBER"
+          git add db
+          git commit -m "$TITLE (#$NUMBER)"
+          git push --force origin "db/issue-$NUMBER"
+          gh pr create --title "$TITLE" --body "Proposed in #$NUMBER. Closes #$NUMBER." || echo "the pull request exists already; its branch is updated"
+      - name: Tell the proposer what is wrong
+        if: failure() && steps.entry.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: gh issue comment "$NUMBER" --body-file problems.txt

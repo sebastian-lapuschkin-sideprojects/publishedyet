@@ -1,0 +1,22 @@
+name: Database entry
+description: Propose a new or corrected entry (preprint -> publications) for the database
+title: "[db] "
+labels: [db-proposal]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The entry below is filled in by the publishedyet page. Check and complete it, then submit.
+        A GitHub action turns it into a pull request, and a maintainer reviews it before it goes into the database.
+        Format: see the README. `relation` is `same` or `extended`, `venue_type` one of journal, conference, workshop, book, other.
+  - type: textarea
+    id: entry
+    attributes:
+      label: Entry
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)

@@ -1,0 +1,126 @@
+{
+ "message": {
+  "DOI": "10.1038/s42256-023-00711-8",
+  "type": "journal-article",
+  "title": [
+   "From attribution maps to human-understandable explanations through Concept Relevance Propagation"
+  ],
+  "author": [
+   {
+    "ORCID": "https://orcid.org/0009-0008-0052-3836",
+    "authenticated-orcid": false,
+    "given": "Reduan",
+    "family": "Achtibat",
+    "sequence": "first",
+    "affiliation": [],
+    "role": [
+     {
+      "vocabulary": "crossref",
+      "role": "author"
+     }
+    ]
+   },
+   {
+    "given": "Maximilian",
+    "family": "Dreyer",
+    "sequence": "additional",
+    "affiliation": [],
+    "role": [
+     {
+      "vocabulary": "crossref",
+      "role": "author"
+     }
+    ]
+   },
+   {
+    "given": "Ilona",
+    "family": "Eisenbraun",
+    "sequence": "additional",
+    "affiliation": [],
+    "role": [
+     {
+      "vocabulary": "crossref",
+      "role": "author"
+     }
+    ]
+   },
+   {
+    "given": "Sebastian",
+    "family": "Bosse",
+    "sequence": "additional",
+    "affiliation": [],
+    "role": [
+     {
+      "vocabulary": "crossref",
+      "role": "author"
+     }
+    ]
+   },
+   {
+    "given": "Thomas",
+    "family": "Wiegand",
+    "sequence": "additional",
+    "affiliation": [],
+    "role": [
+     {
+      "vocabulary": "crossref",
+      "role": "author"
+     }
+    ]
+   },
+   {
+    "ORCID": "https://orcid.org/0000-0002-6283-3265",
+    "authenticated-orcid": false,
+    "given": "Wojciech",
+    "family": "Samek",
+    "sequence": "additional",
+    "affiliation": [],
+    "role": [
+     {
+      "vocabulary": "crossref",
+      "role": "author"
+     }
+    ]
+   },
+   {
+    "ORCID": "https://orcid.org/0000-0002-0762-7258",
+    "authenticated-orcid": false,
+    "given": "Sebastian",
+    "family": "Lapuschkin",
+    "sequence": "additional",
+    "affiliation": [],
+    "role": [
+     {
+      "vocabulary": "crossref",
+      "role": "author"
+     }
+    ]
+   }
+  ],
+  "container-title": [
+   "Nature Machine Intelligence"
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2023,
+     9,
+     20
+    ]
+   ]
+  },
+  "published-online": {
+   "date-parts": [
+    [
+     2023,
+     9,
+     20
+    ]
+   ]
+  },
+  "volume": "5",
+  "issue": "9",
+  "page": "1006-1019",
+  "publisher": "Springer Science and Business Media LLC"
+ }
+}

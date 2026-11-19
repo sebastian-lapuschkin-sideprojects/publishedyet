@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>publishedyet</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>publishedyet</h1>
+  <p class="lead">Has the preprint you cite been published by now? Paste arXiv / bioRxiv ids or a whole BibTeX file.</p>
+  <p class="privacy">Everything runs in your browser; your file is not uploaded anywhere. Only preprint ids leave
+    your computer: to this site's database and, if you search online, to OpenAlex, Crossref and bioRxiv.</p>
+
+  <textarea id="input" spellcheck="false" placeholder="2402.05602&#10;10.1101/2020.01.01.890160&#10;... or paste your .bib file here"></textarea>
+  <div class="controls">
+    <label class="file">open a .bib file <input type="file" id="file" accept=".bib,.txt"></label>
+    <button id="run" disabled>Loading Python ...</button>
+  </div>
+
+  <div id="results"></div>
+
+  <section id="export" hidden>
+    <h2>Export</h2>
+    <div class="options">
+      <label>Preprints
+        <select id="preprint-style">
+          <option value="">keep as they are</option>
+          <option value="scholar">Google Scholar style</option>
+          <option value="arxiv">arXiv style (@misc)</option>
+          <option value="dblp">DBLP style (CoRR)</option>
+        </select>
+      </label>
+      <label>Keys of entries not from your file
+        <select id="key-style">
+          <option value="scholar">Google Scholar (author, year, word)</option>
+          <option value="dblp">DBLP</option>
+        </select>
+      </label>
+    </div>
+    <h3>Chosen entries</h3>
+    <textarea id="entries" readonly spellcheck="false"></textarea>
+    <div class="controls"><button data-copy="entries">Copy</button></div>
+    <div id="fixed-box">
+      <h3>Your fixed .bib file</h3>
+      <p class="hint">Replaced entries stay in the file as comments.</p>
+      <textarea id="fixed" readonly spellcheck="false"></textarea>
+      <div class="controls"><button data-copy="fixed">Copy</button> <button id="download">Download</button></div>
+      <h3>What changed</h3>
+      <div id="diff"></div>
+    </div>
+  </section>
+
+  <footer>Code and database: <a href="https://github.com/sebastian-lapuschkin-sideprojects/publishedyet">github.com/sebastian-lapuschkin-sideprojects/publishedyet</a></footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js"></script>
+<script>
+  // Load Python (Pyodide) and hand over to web.py. This is all the JavaScript there is.
+  async function start() {
+    const pyodide = await loadPyodide();
+    for (const name of ['publishedyet.py', 'web.py']) {
+      pyodide.FS.writeFile(name, await (await fetch(name, {cache: 'no-cache'})).text());
+    }
+    await pyodide.runPythonAsync('import web; await web.start()');
+  }
+  start();
+</script>
+</body>
+</html>
