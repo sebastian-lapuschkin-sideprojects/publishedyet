@@ -3,7 +3,7 @@
 Has the preprint you cite been published by now?
 
 - Keep your BibTeX files up to date with minimal effort.
-- Track a database of cited papers to give back to the community.
+- Benefit from a shared database of cited papers, and add to it.
 - Cite the correct, peer-reviewed works.
 
 During revisions, references to arXiv or bioRxiv preprints often go stale: the paper has since
