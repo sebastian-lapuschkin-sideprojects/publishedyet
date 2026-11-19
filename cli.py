@@ -217,7 +217,34 @@ async def from_issue(args):
     problems = py.check_record(record)
     if problems:
         sys.exit('The entry has problems:\n- ' + '\n- '.join(problems))
-    print(save(record, args.db))
+    path = os.path.join(args.db, py.db_path(record['preprint']['id']))
+    existed = os.path.exists(path)
+    save(record, args.db)
+    with open(os.environ.get('PR_BODY', 'pr_body.md'), 'w', encoding='utf-8') as f:
+        f.write(summary(record, os.path.relpath(path), existed))
+    print(os.path.relpath(path))
+
+
+def summary(record, path, existed):
+    # the text of the pull request: what merging it does to the database
+    pre = record['preprint']
+    lines = ['**{}** `{}`'.format('Changes the database entry' if existed else 'Adds a new file to the database:', path), '',
+             'Preprint: {}, *{}* ({})'.format(py.preprint_label(pre['id']), pre.get('title'), pre.get('year')), '',
+             'Publications:']
+    for i, pub in enumerate(record['publications']):
+        bib = pub['bibtex']
+        venue = bib.get(py.VENUE_FIELD.get(bib['type'], 'howpublished')) or ''
+        notes = [pub.get('venue_type'), 'archival' if pub.get('archival', True) else 'non-archival',
+                 'extended version' if pub.get('relation') == 'extended' else None,
+                 'preferred' if py.preferred(record) == i else None]
+        lines.append('- {} {}: {} ({})'.format(pub.get('venue_short') or '', bib.get('year', ''), venue,
+                                              ', '.join(note for note in notes if note)).replace('-  ', '- '))
+    if not record['publications']:
+        lines.append('- none')
+    if existed:
+        lines += ['', 'The diff under "Files changed" shows what changes.']
+    lines += ['', 'Merging puts this into the database; the page uses it a few minutes later.']
+    return '\n'.join(lines) + '\n'
 
 
 def main():

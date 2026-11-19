@@ -21,6 +21,7 @@ jobs:
         id: entry
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
+          PR_BODY: ${{ runner.temp }}/pr_body.md
         run: python cli.py from-issue 2> problems.txt
       - name: Update the demo and run the tests
         run: |
@@ -31,14 +32,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           NUMBER: ${{ github.event.issue.number }}
           TITLE: ${{ github.event.issue.title }}
+          PR_BODY: ${{ runner.temp }}/pr_body.md
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git switch -c "db/issue-$NUMBER"
           git add db demo
+          if ! git diff --cached --quiet -- demo; then
+            printf '\nAlso refreshes `demo/refs_fixed.bib`, which uses this entry.\n' >> "$PR_BODY"
+          fi
+          printf '\nProposed in #%s. Closes #%s.\n' "$NUMBER" "$NUMBER" >> "$PR_BODY"
           git commit -m "$TITLE (#$NUMBER)"
           git push --force origin "db/issue-$NUMBER"
-          gh pr create --title "$TITLE" --body "Proposed in #$NUMBER. Closes #$NUMBER." || echo "the pull request exists already; its branch is updated"
+          # a new pull request, or (issue edited) the existing one with new title and text
+          gh pr create --title "$TITLE" --body-file "$PR_BODY" || gh pr edit "db/issue-$NUMBER" --title "$TITLE" --body-file "$PR_BODY"
       - name: Tell the proposer what is wrong
         if: failure() && steps.entry.outcome == 'failure'
         env:
