@@ -72,7 +72,8 @@ async def run(event=None):
     state.update(text=text, items=py.scan(text), records={}, status={}, choices={}, originals={}, edited=set(),
                  editing=set(), left_out=set())
     for item in state['items']:
-        state['status'][item['id']] = 'looking'
+        if item['id']:
+            state['status'][item['id']] = 'looking'
     show()
     for pid in list(state['status']):
         record = await get_json(DB + py.db_path(pid))
@@ -113,6 +114,9 @@ def show():
         return
     counts = '{} preprint(s), {} in the database'.format(
         len(state['status']), sum(1 for status in state['status'].values() if status == 'db'))
+    unreadable = sum(1 for item in state['items'] if item['id'] is None)
+    if unreadable:
+        counts += ', {} not readable'.format(unreadable)
     button = '<button class="small" data-action="share" title="copy a link that opens this page with these preprints">{} share link</button>'.format(LINK_ICON)
     el('results').innerHTML = '<div class="bar-top"><span class="cap">{}</span>{}</div>'.format(counts, button) + \
         ''.join(card(i) for i in range(len(state['items'])))
@@ -120,11 +124,21 @@ def show():
 
 
 def card(i):
+    if state['items'][i]['id'] is None:
+        return unreadable_card(i)
     edit = '<div class="edit" id="edit-{}">{}</div>'.format(i, edit_panel(i)) if i in state['editing'] else ''
     classes = ' alt' if i % 2 else ''
     classes += ' left-out' if i in state['left_out'] else ''
     return '<div class="card{4}" id="card-{0}"><div class="top" id="top-{0}">{1}</div><div class="opts" id="opts-{0}">{2}</div>{3}</div>'.format(
         i, card_top(i), tiles(i), edit, classes)
+
+
+def unreadable_card(i):
+    # something in the input that is no id we know; shown so it does not get lost silently
+    return ('<div class="card{0}"><div class="top"><div class="who"><span class="id" title="{1}">{1}</span></div>'
+            '<div class="title warn">could not read this as an arXiv, bioRxiv or OpenReview id</div>'
+            '<span class="pill warn">not an id</span><span class="actions"></span></div></div>').format(
+        ' alt' if i % 2 else '', escape(state['items'][i]['text']))
 
 
 def refresh(pid):
@@ -157,8 +171,12 @@ def card_top(i):
     label, kind = STATUS[status]
     if pid in state['edited']:
         label, kind = (label + ' / edited' if status in ('db', 'online') else 'edited'), 'online'
-    return '<div class="who">{}</div><div class="title" title="{}">{}</div><span class="pill {}">{}</span><span class="actions">{}</span>'.format(
-        who, escape(title), escape(title), kind, label, ''.join(actions))
+    title_class = 'title'
+    if status == 'none' and not title and pid not in state['edited']:   # no source knows this id at all
+        label, kind, title_class = 'unknown id', 'warn', 'title warn'
+        title = 'no source knows this preprint; please check the id'
+    return '<div class="who">{}</div><div class="{}" title="{}">{}</div><span class="pill {}">{}</span><span class="actions">{}</span>'.format(
+        who, title_class, escape(title), escape(title), kind, label, ''.join(actions))
 
 
 def tiles(i):
@@ -286,7 +304,7 @@ def show_export():
     entries, changes = [], []
     for i, item in enumerate(state['items']):
         pid = item['id']
-        if state['status'][pid] in ('looking', 'searching', 'unknown') or i in state['left_out']:
+        if pid is None or state['status'][pid] in ('looking', 'searching', 'unknown') or i in state['left_out']:
             continue
         record = state['records'].get(pid)
         choice = state['choices'].get(pid, 'preprint')

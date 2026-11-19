@@ -98,7 +98,8 @@ class Bibtex(unittest.TestCase):
 
     def test_scan_ids(self):
         items = py.scan('2402.05602, https://arxiv.org/abs/2402.05602v2\n10.1101/2020.01.01.890160 nonsense')
-        self.assertEqual([item['id'] for item in items], ['arxiv:2402.05602', 'doi:10.1101/2020.01.01.890160'])
+        self.assertEqual([item['id'] for item in items], ['arxiv:2402.05602', 'doi:10.1101/2020.01.01.890160', None])
+        self.assertEqual(items[2]['text'], 'nonsense')
 
     def test_published_entries_are_not_preprints(self):
         entry = '@article{k, title={T}, journal={Nature Communications}, eprint={1902.10178}, archivePrefix={arXiv}}'

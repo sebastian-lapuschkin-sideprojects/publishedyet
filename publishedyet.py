@@ -344,8 +344,9 @@ def looks_like_preprint(fields):
 def scan(text):
     """
     Find the preprints in the user's input: a bibtex file or a list of ids / links.
-    Returns a list of items {'id', 'key', 'entry', 'fields'}. key, entry and fields are
-    None for bare ids, which are not part of a bibtex file.
+    Returns a list of items {'id', 'key', 'entry', 'fields', 'text'}. key, entry and fields
+    are None for bare ids, which are not part of a bibtex file. In a list of ids, anything
+    that is not an id becomes an item with id None, so it can be pointed out.
     """
     items = []
     entries = split_entries(text)
@@ -355,13 +356,15 @@ def scan(text):
         fields = parse_fields(entry['text'])
         pid = find_preprint_id(entry['text'])
         if pid and looks_like_preprint(fields):
-            items.append({'id': pid, 'key': entry['key'], 'entry': entry, 'fields': fields})
+            items.append({'id': pid, 'key': entry['key'], 'entry': entry, 'fields': fields, 'text': entry['key']})
     if entries:
         return items
     for token in re.split(r'[\s,;]+', text):
-        pid = find_preprint_id(token) if token else None
-        if pid and pid not in [item['id'] for item in items]:
-            items.append({'id': pid, 'key': None, 'entry': None, 'fields': None})
+        if not token:
+            continue
+        pid = find_preprint_id(token)
+        if pid is None or pid not in [item['id'] for item in items]:
+            items.append({'id': pid, 'key': None, 'entry': None, 'fields': None, 'text': token})
     return items
 
 

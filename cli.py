@@ -71,6 +71,9 @@ def status(record):
 
 async def show(args):
     for item in py.scan(' '.join(args.ids)):
+        if item['id'] is None:
+            print('{}  is not an arXiv, bioRxiv or OpenReview id\n'.format(item['text']))
+            continue
         record = await lookup(item['id'], args)
         print('{}  {}'.format(py.preprint_label(item['id']), status(record)))
         choice = py.preferred(record)
