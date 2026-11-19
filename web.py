@@ -8,6 +8,7 @@ all fields of the chosen option, and "+ add" adds a publication by hand.
 
 import re
 import json
+import asyncio
 from html import escape
 from urllib.parse import urlencode
 
@@ -21,14 +22,17 @@ REPO = 'https://github.com/sebastian-lapuschkin-sideprojects/publishedyet'
 DB = 'db/'
 STATUS = {  # status of a preprint: (label, css class); edits add " / edited"
     'looking': ('looking up', 'busy'), 'searching': ('searching', 'busy'), 'db': ('in database', 'db'),
-    'online': ('found online', 'online'), 'none': ('nothing found', 'none'), 'unknown': ('not searched', 'none'),
+    'online': ('found online', 'online'), 'none': ('nothing found', 'none'), 'unknown': ('waiting', 'busy'),
 }
+LINK_ICON = ('<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>'
+             '<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>')   # the "link" icon of Feather (MIT)
 FIELDS = ['author', 'title', 'venue', 'year', 'volume', 'number', 'pages', 'publisher', 'series', 'editor', 'month', 'doi', 'url']
 WIDE = ('author', 'title', 'venue', 'editor', 'url')
 
 # what the page knows. Per preprint id: status, records, choices, originals (database records as
-# loaded), edited (ids changed by the user). editing holds the numbers of cards with an open panel.
-state = {'text': '', 'items': [], 'records': {}, 'status': {}, 'choices': {}, 'originals': {}, 'edited': set(), 'editing': set()}
+# loaded), edited (ids changed by the user). Per card number: editing (panel open), left_out (not exported).
+state = {'text': '', 'items': [], 'records': {}, 'status': {}, 'choices': {}, 'originals': {}, 'edited': set(),
+         'editing': set(), 'left_out': set()}
 
 
 def el(name):
@@ -65,7 +69,8 @@ def editable(item):
 
 async def run(event=None):
     text = el('input').value
-    state.update(text=text, items=py.scan(text), records={}, status={}, choices={}, originals={}, edited=set(), editing=set())
+    state.update(text=text, items=py.scan(text), records={}, status={}, choices={}, originals={}, edited=set(),
+                 editing=set(), left_out=set())
     for item in state['items']:
         state['status'][item['id']] = 'looking'
     show()
@@ -76,22 +81,27 @@ async def run(event=None):
         state['status'][pid] = 'db' if record else 'unknown'
         state['choices'][pid] = py.preferred(record)
     show()
-    # a single preprint is searched online right away; for more, the user presses a button
-    if len(state['status']) == 1 and state['status'][state['items'][0]['id']] == 'unknown':
-        await search([state['items'][0]['id']])
+    await search([pid for pid, status in state['status'].items() if status == 'unknown'])
 
 
 async def search(pids):
-    for pid in pids:
-        state['status'][pid] = 'searching'
-        show()
-        item = next(item for item in state['items'] if item['id'] == pid)
-        known = py.preprint_from_fields(pid, item['fields']) if item['fields'] else None
-        record = await py.discover(pid, get_json, known)
-        state['records'][pid] = record
-        state['status'][pid] = 'online' if record['publications'] else 'none'
-        state['choices'][pid] = py.preferred(record)
-        show()
+    # search online for preprints not in the database, three at a time
+    queue = list(pids)
+
+    async def worker():
+        while queue:
+            pid = queue.pop(0)
+            state['status'][pid] = 'searching'
+            show()
+            item = next(item for item in state['items'] if item['id'] == pid)
+            known = py.preprint_from_fields(pid, item['fields']) if item['fields'] else None
+            record = await py.discover(pid, get_json, known)
+            state['records'][pid] = record
+            state['status'][pid] = 'online' if record['publications'] else 'none'
+            state['choices'][pid] = py.preferred(record)
+            show()
+
+    await asyncio.gather(*[worker() for _ in range(3)])
 
 
 # ----- showing ---------------------------------------------------------------------------
@@ -101,11 +111,9 @@ def show():
         el('results').innerHTML = '<p class="hint">No arXiv, bioRxiv or OpenReview preprints found in the input.</p>'
         el('export').hidden = True
         return
-    unknown = [pid for pid, status in state['status'].items() if status == 'unknown']
     counts = '{} preprint(s), {} in the database'.format(
         len(state['status']), sum(1 for status in state['status'].values() if status == 'db'))
-    button = '<button class="small" data-action="search-all">search online for the {} not in the database</button>'.format(len(unknown)) if unknown else ''
-    button += ' <button class="small" data-action="share" title="copy a link that opens this page with these preprints">share link</button>'
+    button = '<button class="small" data-action="share" title="copy a link that opens this page with these preprints">{} share link</button>'.format(LINK_ICON)
     el('results').innerHTML = '<div class="bar-top"><span class="cap">{}</span>{}</div>'.format(counts, button) + \
         ''.join(card(i) for i in range(len(state['items'])))
     show_export()
@@ -113,8 +121,10 @@ def show():
 
 def card(i):
     edit = '<div class="edit" id="edit-{}">{}</div>'.format(i, edit_panel(i)) if i in state['editing'] else ''
-    return '<div class="card{4}"><div class="top" id="top-{0}">{1}</div><div class="opts" id="opts-{0}">{2}</div>{3}</div>'.format(
-        i, card_top(i), tiles(i), edit, ' alt' if i % 2 else '')
+    classes = ' alt' if i % 2 else ''
+    classes += ' left-out' if i in state['left_out'] else ''
+    return '<div class="card{4}" id="card-{0}"><div class="top" id="top-{0}">{1}</div><div class="opts" id="opts-{0}">{2}</div>{3}</div>'.format(
+        i, card_top(i), tiles(i), edit, classes)
 
 
 def refresh(pid):
@@ -133,17 +143,17 @@ def card_top(i):
     status = state['status'][pid]
     choice = state['choices'].get(pid, 'preprint')
     title = preprint_of(item, record).get('title', '').replace('{', '').replace('}', '')
-    who = '<a class="id" href="{}" target="_blank">{}</a>'.format(py.preprint_url(pid), escape(py.preprint_label(pid)))
+    who = '<a class="id" href="{0}" target="_blank" title="{1}">{1}</a>'.format(py.preprint_url(pid), escape(py.preprint_label(pid)))
     if item['key']:
         who += '<div class="key" title="key in your file">{}</div>'.format(escape(item['key']))
     actions = []
-    if status == 'unknown':
-        actions.append('<button class="small" data-action="search" data-i="{}">search</button>'.format(i))
-    if status not in ('looking', 'searching'):
+    if status not in ('looking', 'searching', 'unknown'):
         actions.append('<button class="small" data-action="edit" data-i="{}">{}</button>'.format(i, 'close' if i in state['editing'] else 'edit'))
     if status == 'online' or pid in state['edited'] or (status == 'db' and choice != py.preferred(record)):
         actions.append('<a class="act" href="{}" target="_blank" title="send this entry to the database (opens a GitHub issue)">propose</a>'
                        .format(escape(proposal_url(pid, record, choice))))
+    actions.append('<label class="pick" title="include this entry in the export"><input type="checkbox" data-action="pick" data-i="{}"{}></label>'
+                   .format(i, '' if i in state['left_out'] else ' checked'))
     label, kind = STATUS[status]
     if pid in state['edited']:
         label, kind = (label + ' / edited', kind) if status in ('db', 'online') else ('edited', 'online')
@@ -168,7 +178,7 @@ def tiles(i):
                 'extended' if pub.get('relation') == 'extended' else None]
         preview = '{}\n{}\n{} {}'.format(' and '.join(bib.get('author', [])), bib.get('title', ''), venue, bib.get('year', ''))
         out.append(tile(i, n, venue, meta, link, choice == n, preview))
-    if state['status'][pid] not in ('looking', 'searching'):
+    if state['status'][pid] not in ('looking', 'searching', 'unknown'):
         out.append('<div class="tile ghost" data-action="add" data-i="{}">+ add publication</div>'.format(i))
     return ''.join(out)
 
@@ -274,9 +284,9 @@ def show_export():
     preprint_style = el('preprint-style').value or None
     key_style = el('key-style').value
     entries, changes = [], []
-    for item in state['items']:
+    for i, item in enumerate(state['items']):
         pid = item['id']
-        if state['status'][pid] in ('looking', 'searching'):
+        if state['status'][pid] in ('looking', 'searching', 'unknown') or i in state['left_out']:
             continue
         record = state['records'].get(pid)
         choice = state['choices'].get(pid, 'preprint')
@@ -353,12 +363,9 @@ async def on_results_click(event):
     if not target:
         return
     action = target.getAttribute('data-action')
-    if action == 'search-all':
-        await search([pid for pid, status in state['status'].items() if status == 'unknown'])
-        return
     if action == 'share':
         js.navigator.clipboard.writeText(share_link())
-        target.textContent = 'link copied'
+        target.innerHTML = LINK_ICON + ' link copied'
         return
     i = int(target.getAttribute('data-i'))
     item = state['items'][i]
@@ -366,8 +373,10 @@ async def on_results_click(event):
     if action == 'choose':
         choice = target.getAttribute('data-choice')
         state['choices'][pid] = choice if choice == 'preprint' else int(choice)
-    elif action == 'search':
-        await search([pid])
+    elif action == 'pick':
+        state['left_out'] ^= {i}
+        el('card-{}'.format(i)).classList.toggle('left-out', i in state['left_out'])
+        show_export()
         return
     elif action == 'edit':
         state['editing'] ^= {i}
@@ -431,4 +440,3 @@ async def start():
     if shared:
         el('input').value = '\n'.join(part for part in re.split(r'[,\s]+', shared) if part)
         await run()
-        await search([pid for pid, status in state['status'].items() if status == 'unknown'])

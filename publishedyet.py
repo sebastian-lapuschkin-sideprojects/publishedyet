@@ -40,6 +40,7 @@ BARE_ARXIV = re.compile(r'^(?:arxiv:)?({}|{})(?:v\d+)?$'.format(ARXIV_NEW, ARXIV
 ARXIV_IN_TEXT = re.compile(r'(?:arxiv(?:\.org/(?:abs|pdf))?[\s:./]*|abs/|eprint\s*=\s*"?\s*)({}|{})(?:v\d+)?'
                            .format(ARXIV_NEW, ARXIV_OLD), re.IGNORECASE)
 BIORXIV_IN_TEXT = re.compile('(' + BIORXIV_DOI + ')', re.IGNORECASE)
+BARE_BIORXIV = re.compile(r'^(\d{4}\.\d{2}\.\d{2}\.\d{6,})(?:v\d+)?$')   # 2020.07.23.217034v2
 OPENREVIEW_IN_TEXT = re.compile(r'(?:openreview:|openreview\.net/(?:forum|pdf)\?id=)([\w-]{6,})', re.IGNORECASE)
 
 
@@ -57,6 +58,9 @@ def find_preprint_id(text):
     match = BARE_ARXIV.match(text.strip())
     if match:
         return canonical_arxiv(match.group(1))
+    match = BARE_BIORXIV.match(text.strip())
+    if match:
+        return 'doi:10.1101/' + match.group(1)
     match = ARXIV_IN_TEXT.search(text)
     if match:
         return canonical_arxiv(match.group(1))
@@ -621,7 +625,8 @@ async def discover(pid, get_json, known=None):
     items = {}   # doi -> crossref work
     if pre.get('title'):
         query = quote(plain(pre['title']))
-        found = await get_json('{}/works?filter=title.search:{}&per-page=10'.format(OPENALEX, query))
+        # OpenAlex title searches use up a small free daily allowance; skip them when we have results already
+        found = None if dblp or dois or works else await get_json('{}/works?filter=title.search:{}&per-page=10'.format(OPENALEX, query))
         for hit in (found or {}).get('results', []):
             source = (hit.get('primary_location') or {}).get('source') or {}
             authors = [a['author']['display_name'] for a in hit.get('authorships', [])]

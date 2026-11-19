@@ -24,13 +24,13 @@ search online, to [DBLP](https://sparql.dblp.org), [OpenAlex](https://openalex.o
 2. **Online search for the rest.** For preprints not in the database, the page asks DBLP (through its
    SPARQL endpoint; it knows CS venues without DOIs, such as ICML and ICLR, and spells names right),
    OpenAlex (which often merges a preprint with its published version), searches titles in OpenAlex
-   and Crossref, and asks bioRxiv, which links its preprints to their journal articles. A single id is searched right
-   away; for a whole file there is a button. Matches found online are marked *not confirmed yet*.
+   and Crossref, and asks bioRxiv, which links its preprints to their journal articles. This happens right away on every
+   run, three preprints at a time. Matches found online are marked *not confirmed yet*.
 3. **You choose and correct.** One card per preprint: click a publication to use it, or keep the
    preprint. "edit" shows every field of the chosen entry for correcting; "+ add publication" adds one
    by hand. Remaining preprints can be
    rewritten in one uniform style: Google Scholar, arXiv (`@misc`) or DBLP (CoRR).
-4. **Export.** The chosen entries, and for a BibTeX file the fixed file plus a diff of what changed.
+4. **Export.** The chosen entries (untick a card to leave it out), and for a BibTeX file the fixed file plus a diff of what changed.
    Entries that were not in your file get Google Scholar style keys (`he2016deep`) or DBLP keys.
 5. **Share.** "share link" copies a link that opens the page with the same preprints, e.g.
    `https://sebastian-lapuschkin-sideprojects.github.io/publishedyet/#2402.05602,1509.06321`

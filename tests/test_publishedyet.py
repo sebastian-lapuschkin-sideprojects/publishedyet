@@ -52,6 +52,7 @@ class Ids(unittest.TestCase):
             '10.1101/2020.01.01.890160': 'doi:10.1101/2020.01.01.890160',
             'https://www.biorxiv.org/content/10.1101/2020.01.01.890160v2': 'doi:10.1101/2020.01.01.890160',
             '10.1101/gr.123456.111': None,     # a Cold Spring Harbor journal, not bioRxiv
+            '2020.07.23.217034v2': 'doi:10.1101/2020.07.23.217034',
             'pages = {1006--1019}': None,
             'https://openreview.net/forum?id=AV5BgHyVdw': 'openreview:AV5BgHyVdw',
             'url = {https://openreview.net/pdf?id=F76bwRSLeK}': 'openreview:F76bwRSLeK',
