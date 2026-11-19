@@ -14,27 +14,31 @@ The page: <https://sebastian-lapuschkin-sideprojects.github.io/publishedyet/>
 
 The page runs entirely in your browser (Python via [Pyodide](https://pyodide.org)). Your BibTeX file
 is not uploaded anywhere. Only preprint ids leave your computer: to this site's database and, if you
-search online, to [OpenAlex](https://openalex.org), [Crossref](https://www.crossref.org) and the
-[bioRxiv API](https://api.biorxiv.org). So the tool is fine to use on unpublished manuscripts.
+search online, to [DBLP](https://sparql.dblp.org), [OpenAlex](https://openalex.org),
+[Crossref](https://www.crossref.org) and the [bioRxiv API](https://api.biorxiv.org). So the tool is fine to use on unpublished manuscripts.
 
 ## How it works
 
 1. **Database first.** One json file per preprint (`db/`), with the publications people have
    confirmed, each with complete BibTeX data and one marked as preferred.
-2. **Online search for the rest.** For preprints not in the database, the page asks OpenAlex (which
-   often merges a preprint with its published version), searches titles in OpenAlex and Crossref, and
-   asks bioRxiv, which links its preprints to their journal articles. A single id is searched right
+2. **Online search for the rest.** For preprints not in the database, the page asks DBLP (through its
+   SPARQL endpoint; it knows CS venues without DOIs, such as ICML and ICLR, and spells names right),
+   OpenAlex (which often merges a preprint with its published version), searches titles in OpenAlex
+   and Crossref, and asks bioRxiv, which links its preprints to their journal articles. A single id is searched right
    away; for a whole file there is a button. Matches found online are marked *not confirmed yet*.
-3. **You choose.** Click a publication to use it, or keep the preprint. Remaining preprints can be
+3. **You choose and correct.** One card per preprint: click a publication to use it, or keep the
+   preprint. "edit" shows every field of the chosen entry for correcting; "+ add publication" adds one
+   by hand. Remaining preprints can be
    rewritten in one uniform style: Google Scholar, arXiv (`@misc`) or DBLP (CoRR).
 4. **Export.** The chosen entries, and for a BibTeX file the fixed file plus a diff of what changed.
    Entries that were not in your file get Google Scholar style keys (`he2016deep`) or DBLP keys.
 5. **Give back.** Confirm a match found online, correct an entry, or add a publication by hand: the
    page opens a prefilled GitHub issue. A GitHub action turns it into a pull request for review.
 
-Known gaps of the online search: DBLP and OpenReview block automated requests, and Semantic
-Scholar limits them heavily. So conference papers without a DOI (ICML, ICLR, many workshops) are
-mostly not found online and need a database entry.
+Known gaps of the online search: OpenReview blocks automated requests, and DBLP only covers computer
+science. Non-archival workshop papers and journal extensions with a new title are not found
+automatically and need a database entry. Papers that only exist on OpenReview get ids like
+`openreview:AV5BgHyVdw`.
 
 ## Command line
 
