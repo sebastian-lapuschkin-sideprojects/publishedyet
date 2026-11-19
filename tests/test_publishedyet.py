@@ -253,6 +253,9 @@ class Completeness(unittest.TestCase):
         iclr = {'bibtex': {'type': 'inproceedings', 'author': ['A'], 'title': 'T', 'booktitle': 'ICLR', 'year': '2024',
                            'url': 'https://openreview.net/forum?id=x'}}
         self.assertEqual(py.missing_fields(iclr), [])
+        iclr26 = {'bibtex': {'type': 'inproceedings', 'author': ['A'], 'title': 'T', 'booktitle': 'ICLR', 'year': '2026',
+                             'url': 'https://proceedings.iclr.cc/paper_files/paper/2026/hash/x-Abstract-Conference.html'}}
+        self.assertEqual(py.missing_fields(iclr26), [])
         workshop = {'archival': False, 'bibtex': {'type': 'inproceedings', 'author': ['A'], 'title': 'T', 'booktitle': 'W', 'year': '2024'}}
         self.assertEqual(py.missing_fields(workshop), ['doi or url'])
 

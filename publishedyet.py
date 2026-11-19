@@ -715,6 +715,16 @@ async def discover(pid, get_json, known=None, get_text=None):
     publications = list(dblp)
     known_dois = [(pub['bibtex'].get('doi') or '').lower() for pub in dblp]
     for doi, hit in items.items():
+        # DBLP sometimes lacks the DOI that Crossref has (NeurIPS since 2024): the same paper if title and year agree
+        twin = [n for n, pub in enumerate(dblp) if not pub['bibtex'].get('doi')
+                and plain(pub['bibtex'].get('title')) == plain(strip_tags((hit.get('title') or [''])[0]))
+                and pub['bibtex'].get('year') == from_crossref(hit)['bibtex'].get('year')]
+        if twin and doi not in known_dois:
+            ours = dblp[twin[0]]['bibtex']
+            for name in ('doi', 'url', 'pages', 'volume', 'publisher'):
+                if from_crossref(hit)['bibtex'].get(name):
+                    ours[name] = from_crossref(hit)['bibtex'][name]
+            known_dois[twin[0]] = doi
         if doi in known_dois:   # in DBLP too: names of people from DBLP, name of the venue from its publisher
             pub, theirs = dblp[known_dois.index(doi)], from_crossref(hit)['bibtex']
             venue = VENUE_FIELD.get(pub['bibtex']['type'])
@@ -749,11 +759,11 @@ EXPECTED = {'article': ['volume', 'pages'], 'inproceedings': ['pages'], 'incolle
 
 
 def missing_fields(pub):
-    # fields a complete entry of its kind would have but this one lacks. Papers on OpenReview
-    # (ICLR, TMLR) have neither volumes nor page numbers, non-archival ones no page numbers.
+    # fields a complete entry of its kind would have but this one lacks. Papers on OpenReview or in
+    # ICLR's proceedings (ICLR, TMLR) have neither volumes nor page numbers, non-archival ones no pages.
     bib = pub['bibtex']
     names = ['author', 'title', 'year', VENUE_FIELD.get(bib['type'])] + EXPECTED.get(bib['type'], [])
-    if 'openreview.net' in (bib.get('url') or ''):
+    if any(site in (bib.get('url') or '') for site in ('openreview.net', 'proceedings.iclr.cc')):
         names = [name for name in names if name not in ('volume', 'pages')]
     elif not pub.get('archival', True):
         names = [name for name in names if name != 'pages']
