@@ -23,6 +23,7 @@
     {
       "relation": "same",
       "venue_type": "conference",
+      "venue_short": "ICML",
       "archival": true,
       "dblp": "conf/icml/RadfordKHRGASAM21",
       "source": "bibtex",

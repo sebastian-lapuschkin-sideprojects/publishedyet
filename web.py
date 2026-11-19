@@ -202,13 +202,15 @@ def tiles(i):
         bib = pub['bibtex']
         venue = bib.get(venue_field(bib['type'])) or bib.get('title') or 'new publication'
         link = bib.get('url') or ('https://doi.org/' + bib['doi'] if bib.get('doi') else '')
-        meta = [pub.get('venue_type'), bib.get('year'), None if pub.get('archival', True) else 'non-archival',
+        short = pub.get('venue_short')   # 'ICML 2024' reads faster than the full proceedings title
+        meta = [pub.get('venue_type'), None if short else bib.get('year'), None if pub.get('archival', True) else 'non-archival',
                 'extended' if pub.get('relation') == 'extended' else None]
         preview = '{}\n{}\n{} {}'.format(' and '.join(bib.get('author', [])), bib.get('title', ''), venue, bib.get('year', ''))
         missing = py.missing_fields(pub)
         if missing:
             preview += '\n\nmissing: ' + ', '.join(missing)
-        out.append(tile(i, n, venue, meta, link, choice == n, preview, incomplete=bool(missing)))
+        name = '{} {}'.format(short, bib.get('year', '')).strip() if short else venue
+        out.append(tile(i, n, name, meta, link, choice == n, preview, incomplete=bool(missing)))
     if state['status'][pid] not in ('looking', 'searching', 'unknown'):
         out.append('<div class="tile ghost" data-action="add" data-i="{}">+ add publication</div>'.format(i))
     return ''.join(out)
@@ -242,7 +244,8 @@ def edit_panel(i):
            select(i, 'meta', 'venue_type', pub.get('venue_type'), py.VENUE_TYPES),
            select(i, 'meta', 'relation', pub.get('relation'), py.RELATIONS),
            '<div class="fld"><label class="cap"><input type="checkbox" data-i="{}" data-target="meta" data-field="archival"{}> archival</label></div>'
-           .format(i, ' checked' if pub.get('archival', True) else '')]
+           .format(i, ' checked' if pub.get('archival', True) else ''),
+           field(i, 'meta', 'venue_short', pub.get('venue_short', ''), wide=False, note='e.g. ICML, shown on the tile')]
     names = [venue_field(bib['type']) if name == 'venue' else name for name in FIELDS]
     names += [name for name in bib if name not in names and name != 'type']
     for name in names:

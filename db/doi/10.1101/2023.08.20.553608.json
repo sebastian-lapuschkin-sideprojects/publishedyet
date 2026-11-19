@@ -18,6 +18,7 @@
     {
       "relation": "same",
       "venue_type": "journal",
+      "venue_short": "Genome Biol",
       "archival": true,
       "source": "crossref",
       "bibtex": {

@@ -16,7 +16,9 @@
     {
       "relation": "same",
       "venue_type": "journal",
+      "venue_short": "IEEE Trans. Neural Networks Learn. Syst.",
       "archival": true,
+      "dblp": "journals/tnn/SamekBMLM17",
       "source": "dblp, venue name from crossref",
       "bibtex": {
         "type": "article",
@@ -36,8 +38,7 @@
         "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
         "doi": "10.1109/TNNLS.2016.2599820",
         "url": "https://doi.org/10.1109/TNNLS.2016.2599820"
-      },
-      "dblp": "journals/tnn/SamekBMLM17"
+      }
     }
   ]
 }

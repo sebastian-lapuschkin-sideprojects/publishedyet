@@ -178,9 +178,11 @@ class Dblp(unittest.TestCase):
                'title': 'Evaluating the Visualization of What a Deep Neural Network Has Learned.', 'year': '2017',
                'journal': 'IEEE Trans. Neural Networks Learn. Syst.', 'volume': '28', 'number': '11', 'pages': '2660-2673',
                'doi': 'https://doi.org/10.1109/TNNLS.2016.2599820', 'url': 'https://doi.org/10.1109/TNNLS.2016.2599820',
+               'short': 'IEEE Trans. Neural Networks Learn. Syst.',
                'authors': '2:Alexander Binder|1:Wojciech Samek|5:Klaus-Robert Müller|3:Grégoire Montavon|4:Sebastian Lapuschkin'}
         pub = py.from_dblp(row)
         self.assertEqual(pub['dblp'], 'journals/tnn/SamekBMLM17')
+        self.assertEqual(pub['venue_short'], 'IEEE Trans. Neural Networks Learn. Syst.')
         self.assertEqual(pub['venue_type'], 'journal')
         bib = pub['bibtex']
         self.assertEqual(bib['author'][0], 'Wojciech Samek')

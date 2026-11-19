@@ -475,7 +475,11 @@ def from_crossref(item):
                 'pages': (item.get('page') or item.get('article-number') or '').replace('-', '--'), 'publisher': item.get('publisher'),
                 'doi': item['DOI'], 'url': 'https://doi.org/' + item['DOI']})
     bib = dict((name, value) for name, value in bib.items() if value)
-    return {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'crossref', 'bibtex': bib}
+    pub = {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'crossref', 'bibtex': bib}
+    short = strip_tags((item.get('short-container-title') or [''])[0])
+    if short:
+        pub['venue_short'] = short
+    return pub
 
 
 def from_openalex(work):
@@ -506,11 +510,12 @@ SELECT DISTINCT ?corr ?corrtitle ?pub ?title WHERE {
   FILTER(?pub != ?corr)
 }'''
 DBLP_DETAILS = '''PREFIX dblp: <https://dblp.org/rdf/schema#>
-SELECT ?pub ?type ?title ?year ?journal ?volume ?number ?pages ?doi ?url ?booktitle ?series ?seriesvolume ?publisher
+SELECT ?pub ?type ?title ?year ?short ?journal ?volume ?number ?pages ?doi ?url ?booktitle ?series ?seriesvolume ?publisher
        (GROUP_CONCAT(CONCAT(STR(?n), ":", ?name); separator="|") AS ?authors) WHERE {
   VALUES ?pub { %s }
   ?pub dblp:bibtexType ?type ; dblp:title ?title ; dblp:yearOfPublication ?year ;
        dblp:hasSignature ?s . ?s dblp:signatureOrdinal ?n ; dblp:signatureDblpName ?name .
+  OPTIONAL { ?pub dblp:publishedIn ?short }
   OPTIONAL { ?pub dblp:publishedInJournal ?journal }
   OPTIONAL { ?pub dblp:publishedInJournalVolume ?volume }
   OPTIONAL { ?pub dblp:publishedInJournalVolumeIssue ?number }
@@ -520,7 +525,7 @@ SELECT ?pub ?type ?title ?year ?journal ?volume ?number ?pages ?doi ?url ?bookti
   OPTIONAL { ?pub dblp:publishedAsPartOf ?book . ?book dblp:title ?booktitle
              OPTIONAL { ?book dblp:publishedInSeries ?series } OPTIONAL { ?book dblp:publishedInSeriesVolume ?seriesvolume }
              OPTIONAL { ?book dblp:publishedBy ?publisher } }
-} GROUP BY ?pub ?type ?title ?year ?journal ?volume ?number ?pages ?doi ?url ?booktitle ?series ?seriesvolume ?publisher'''
+} GROUP BY ?pub ?type ?title ?year ?short ?journal ?volume ?number ?pages ?doi ?url ?booktitle ?series ?seriesvolume ?publisher'''
 
 
 def dblp_query(query, *values):
@@ -547,8 +552,11 @@ def from_dblp(row):
     venue_type = {'article': 'journal', 'incollection': 'book'}.get(bib['type'], 'conference')
     if 'workshop' in bib.get('booktitle', '').lower():
         venue_type = 'workshop'
-    return {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'dblp',
-            'dblp': row['pub'].split('/rec/')[-1], 'bibtex': bib}
+    pub = {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'dblp',
+           'dblp': row['pub'].split('/rec/')[-1], 'bibtex': bib}
+    if row.get('short'):
+        pub['venue_short'] = row['short']   # DBLP's short name of the venue: 'ICML', 'CVPR', 'Pattern Recognit.'
+    return pub
 
 
 async def dblp_publications(pid, get_json):

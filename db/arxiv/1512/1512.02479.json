@@ -16,6 +16,7 @@
     {
       "relation": "same",
       "venue_type": "journal",
+      "venue_short": "Pattern Recognit.",
       "archival": true,
       "source": "crossref",
       "bibtex": {

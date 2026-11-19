@@ -96,6 +96,7 @@ On the page, paste the contents of `demo/refs.bib` into the text field.
     {
       "relation": "same",
       "venue_type": "conference",
+      "venue_short": "ICML",
       "archival": true,
       "dblp": "conf/icml/AchtibatHDJWLS24",
       "source": "bibtex",
@@ -129,6 +130,7 @@ On the page, paste the contents of `demo/refs.bib` into the text field.
 - `relation`: `same` (the preprint as published) or `extended` (e.g. a journal extension).
 - `venue_type`: `journal`, `conference`, `workshop`, `book` or `other`; `archival`: true or false.
 - `preferred`: at most one publication; without it, the first one is preferred.
+- `venue_short` (optional): a short name of the venue, e.g. `ICML`; shown on the page, not part of the BibTeX.
 - `dblp` (optional): the DBLP key, used for DBLP style citation keys.
 - `bibtex`: the entry type plus BibTeX fields; `author` is a list.
 

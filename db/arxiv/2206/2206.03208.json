@@ -18,6 +18,7 @@
     {
       "relation": "same",
       "venue_type": "journal",
+      "venue_short": "Nat Mach Intell",
       "archival": true,
       "source": "crossref",
       "bibtex": {

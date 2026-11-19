@@ -15,6 +15,7 @@
     {
       "relation": "same",
       "venue_type": "conference",
+      "venue_short": "CVPR",
       "archival": true,
       "source": "crossref",
       "bibtex": {
