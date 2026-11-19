@@ -1,0 +1,33 @@
+{
+  "preprint": {
+    "id": "arxiv:2204.10965",
+    "title": "CLIP-Dissect: Automatic Description of Neuron Representations in Deep Vision Networks",
+    "authors": [
+      "Tuomas P. Oikarinen",
+      "Tsui-Wei Weng"
+    ],
+    "year": "2022"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ICLR",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/iclr/OikarinenW23",
+      "source": "dblp, written as on OpenReview",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Tuomas P. Oikarinen",
+          "Tsui-Wei Weng"
+        ],
+        "title": "CLIP-Dissect: Automatic Description of Neuron Representations in Deep Vision Networks",
+        "booktitle": "The Eleventh International Conference on Learning Representations",
+        "year": "2023",
+        "url": "https://openreview.net/forum?id=iPWiwWHc1V"
+      }
+    }
+  ]
+}
