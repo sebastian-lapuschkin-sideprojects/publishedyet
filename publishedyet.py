@@ -568,6 +568,44 @@ async def dblp_publications(pid, get_json):
     return preprint, publications
 
 
+def from_bibtex(text):
+    # the first entry of a bibtex text as a publication of our database format
+    entries = [entry for entry in split_entries(text) if entry['key']]
+    if not entries:
+        return None
+    bib = {'type': entries[0]['type']}
+    bib.update((name, value) for name, value in parse_fields(entries[0]['text']).items() if name in FIELD_ORDER)
+    bib['author'] = split_authors(bib.get('author'))
+    venue_type = {'article': 'journal', 'inproceedings': 'conference', 'incollection': 'book'}.get(bib['type'], 'other')
+    return {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'bibtex', 'bibtex': bib}
+
+
+PMLR_BIBTEX = re.compile(r'<code class="citecode" id="bibtex">(.*?)</code>', re.DOTALL)
+
+
+async def venue_bibtex(pub, get_text):
+    """
+    Where we can, cite a publication the way its venue asks for: PMLR's paper pages (ICML,
+    AISTATS, COLT, ...) carry their BibTeX, and ICLR's on OpenReview follows a fixed pattern
+    that we write from DBLP's data (OpenReview itself blocks automated requests).
+    """
+    bib = pub['bibtex']
+    url = bib.get('url') or ''
+    if url.startswith('https://proceedings.mlr.press/') and get_text:
+        match = PMLR_BIBTEX.search(await get_text(url) or '')
+        own = from_bibtex(html.unescape(match.group(1))) if match else None
+        if own:
+            own['bibtex']['url'] = url
+            pub.update(source='pmlr', bibtex=own['bibtex'])
+    elif (pub.get('dblp') or '').startswith('conf/iclr/') and bib.get('booktitle'):
+        # 'The Twelfth International Conference on Learning Representations, ICLR 2024, Vienna, ...'
+        pub['bibtex'] = dict((name, value) for name, value in [
+            ('type', 'inproceedings'), ('author', bib.get('author')), ('title', bib.get('title')),
+            ('booktitle', bib['booktitle'].split(', ICLR')[0]), ('year', bib.get('year')), ('url', bib.get('url'))] if value)
+        pub['source'] = 'dblp, written as on OpenReview'
+    return pub
+
+
 def same_paper(pre, title, authors):
     # does a search hit look like the preprint? Same title, and the first author is among its authors.
     if difflib.SequenceMatcher(None, plain(pre.get('title')), plain(title)).ratio() < 0.9:
@@ -578,13 +616,14 @@ def same_paper(pre, title, authors):
     return first in [''.join(last_name_words(name)) for name in authors]
 
 
-async def discover(pid, get_json, known=None):
+async def discover(pid, get_json, known=None, get_text=None):
     """
     Search online for published versions of a preprint: DBLP (for arXiv preprints; it knows
     CS venues without DOIs), OpenAlex (which often merges a preprint with its published
     version), title searches in OpenAlex and Crossref, and the bioRxiv API, which links
     bioRxiv preprints to their journal articles.
     known: what we already know about the preprint, e.g. from the user's bibtex entry.
+    get_text (optional) reads web pages, for the venues' own BibTeX (see venue_bibtex).
     Returns a record in database format, marked as unconfirmed.
     """
     pre = dict(known or {'id': pid})
@@ -665,6 +704,8 @@ async def discover(pid, get_json, known=None):
         if (plain(pub['bibtex'].get('title')), pub['bibtex'].get('year')) not in seen:
             publications.append(pub)
             seen.append((plain(pub['bibtex'].get('title')), pub['bibtex'].get('year')))
+    for pub in publications:
+        await venue_bibtex(pub, get_text)
     return {'preprint': pre, 'publications': publications, 'unconfirmed': True}
 
 

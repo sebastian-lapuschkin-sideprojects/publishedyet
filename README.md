@@ -102,6 +102,11 @@ By default it uses the `db/` folder next to it (`--db` takes another folder or t
 
 ## Maintaining the database
 
+Convention: store a publication the way its venue asks to be cited, i.e. the venue's own BibTeX
+where there is one (PMLR's for ICML, AISTATS, COLT; OpenReview's for ICLR; the publisher's via its
+DOI otherwise). The online search already does this for PMLR (it reads the paper's PMLR page) and
+for ICLR (written from DBLP's data in OpenReview's form); other matches carry DBLP's or Crossref's data.
+
     python cli.py add 2402.05602 --doi 10.xxxx/yyyy        # details from Crossref
     python cli.py add 2402.05602 --bib publication.bib     # for papers without DOI
     python cli.py add 2402.05602 --doi ... --relation extended --venue-type journal --preferred

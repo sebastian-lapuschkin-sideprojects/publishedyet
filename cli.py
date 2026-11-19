@@ -49,13 +49,22 @@ async def get_json(url):
     return None
 
 
+async def get_text(url):
+    # a web page as text; None if the request fails
+    try:
+        return fetch(url)
+    except Exception as error:
+        print('warning: {} for {}'.format(error, url), file=sys.stderr)
+        return None
+
+
 async def lookup(pid, args, item=None):
     # the database record of a preprint; searched online if it is not in the database and --online is set
     db = args.db.rstrip('/') + '/'
     record = await get_json(db + py.db_path(pid))
     if record is None and args.online:
         known = py.preprint_from_fields(pid, item['fields']) if item and item['fields'] else None
-        record = await py.discover(pid, get_json, known)
+        record = await py.discover(pid, get_json, known, get_text)
     return record
 
 
@@ -129,18 +138,6 @@ async def preprint_metadata(pid):
     return record['preprint']
 
 
-def from_bibfile(path):
-    # the first entry of a bibtex file as a publication of our database format
-    with open(path, encoding='utf-8') as f:
-        entry = py.split_entries(f.read())[0]
-    fields = py.parse_fields(entry['text'])
-    bib = {'type': entry['type']}
-    bib.update((name, value) for name, value in fields.items() if name in py.FIELD_ORDER)
-    bib['author'] = py.split_authors(bib.get('author'))
-    venue_type = {'article': 'journal', 'inproceedings': 'conference', 'incollection': 'book'}.get(entry['type'], 'other')
-    return {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'bibtex', 'bibtex': bib}
-
-
 def save(record, db):
     path = os.path.join(db, py.db_path(record['preprint']['id']))
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -162,7 +159,10 @@ async def add(args):
             sys.exit('Crossref has no journal / proceedings / chapter for ' + args.doi)
         pub = py.from_crossref(found['message'])
     else:
-        pub = from_bibfile(args.bib)
+        with open(args.bib, encoding='utf-8') as f:
+            pub = py.from_bibtex(f.read())
+        if pub is None:
+            sys.exit('no bibtex entry in ' + args.bib)
     pub['relation'] = args.relation
     pub['venue_type'] = args.venue_type or pub['venue_type']
     pub['archival'] = not args.non_archival

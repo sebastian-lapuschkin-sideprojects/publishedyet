@@ -190,6 +190,36 @@ class Dblp(unittest.TestCase):
         self.assertEqual(bib['doi'], '10.1109/TNNLS.2016.2599820')
 
 
+class VenueBibtex(unittest.TestCase):
+
+    def test_pmlr_page(self):
+        page = ('<html><code class="citecode" id="bibtex">@InProceedings{pmlr-v1-x,\n  title = \t {A {CLIP} Paper},\n'
+                '  author = {M&uuml;ller, Klaus-Robert and Doe, Jane},\n  booktitle = {Proceedings of the 42nd International '
+                'Conference on Machine Learning},\n  pages = {1--9},\n  year = {2025},\n  pdf = {x.pdf},\n}</code></html>')
+
+        async def get_text(url):
+            return page
+
+        pub = {'dblp': 'conf/icml/X25', 'bibtex': {'type': 'inproceedings', 'title': 'A CLIP Paper', 'booktitle': 'ICML 2025, ...',
+                                                   'url': 'https://proceedings.mlr.press/v1/x.html'}}
+        asyncio.run(py.venue_bibtex(pub, get_text))
+        self.assertEqual(pub['source'], 'pmlr')
+        self.assertEqual(pub['dblp'], 'conf/icml/X25')
+        self.assertEqual(pub['bibtex']['booktitle'], 'Proceedings of the 42nd International Conference on Machine Learning')
+        self.assertEqual(pub['bibtex']['author'], ['Müller, Klaus-Robert', 'Doe, Jane'])
+        self.assertNotIn('pdf', pub['bibtex'])
+        self.assertEqual(pub['bibtex']['url'], 'https://proceedings.mlr.press/v1/x.html')
+
+    def test_iclr_as_on_openreview(self):
+        pub = {'dblp': 'conf/iclr/HubenCRES24', 'bibtex': {
+            'type': 'inproceedings', 'author': ['Robert Huben'], 'title': 'Sparse Autoencoders', 'year': '2024',
+            'booktitle': 'The Twelfth International Conference on Learning Representations, ICLR 2024, Vienna, Austria, May 7-11, 2024',
+            'publisher': 'OpenReview.net', 'url': 'https://openreview.net/forum?id=F76bwRSLeK'}}
+        asyncio.run(py.venue_bibtex(pub, None))
+        self.assertEqual(pub['bibtex']['booktitle'], 'The Twelfth International Conference on Learning Representations')
+        self.assertNotIn('publisher', pub['bibtex'])
+
+
 class Database(unittest.TestCase):
 
     def test_all_records(self):

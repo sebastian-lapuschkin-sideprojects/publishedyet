@@ -39,6 +39,16 @@ def el(name):
     return js.document.getElementById(name)
 
 
+async def get_text(url):
+    try:
+        response = await pyfetch(url)
+        if response.ok:
+            return await response.string()
+    except Exception as error:
+        js.console.warn('could not load {}: {}'.format(url, error))
+    return None
+
+
 async def get_json(url):
     try:
         response = await pyfetch(url)
@@ -96,7 +106,7 @@ async def search(pids):
             show()
             item = next(item for item in state['items'] if item['id'] == pid)
             known = py.preprint_from_fields(pid, item['fields']) if item['fields'] else None
-            record = await py.discover(pid, get_json, known)
+            record = await py.discover(pid, get_json, known, get_text)
             state['records'][pid] = record
             state['status'][pid] = 'online' if record['publications'] else 'none'
             state['choices'][pid] = py.preferred(record)
