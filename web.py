@@ -429,6 +429,13 @@ def on_export_click(event):
         link.click()
 
 
+async def on_key(event):
+    # cmd+enter (mac) or ctrl+enter in the input field runs, like the button
+    if event.key == 'Enter' and (event.metaKey or event.ctrlKey):
+        event.preventDefault()
+        await run()
+
+
 async def on_file(event):
     files = el('file').files
     if files.length:
@@ -447,7 +454,7 @@ def share_link():
 async def start():
     for name, kind, handler in [('run', 'click', run), ('results', 'click', on_results_click),
                                 ('results', 'change', on_results_change), ('export', 'click', on_export_click),
-                                ('file', 'change', on_file),
+                                ('file', 'change', on_file), ('input', 'keydown', on_key),
                                 ('preprint-style', 'change', lambda event: show_export()),
                                 ('key-style', 'change', lambda event: show_export())]:
         el(name).addEventListener(kind, create_proxy(handler))
