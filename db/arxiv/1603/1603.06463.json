@@ -1,0 +1,40 @@
+{
+  "preprint": {
+    "id": "arxiv:1603.06463",
+    "title": "Controlling Explanatory Heatmap Resolution and Semantics via Decomposition Depth",
+    "authors": [
+      "Sebastian Bach",
+      "Alexander Binder",
+      "Klaus-Robert Müller",
+      "Wojciech Samek"
+    ],
+    "year": "2016"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ICIP",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/icip/BachBMS16",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Sebastian Bach",
+          "Alexander Binder",
+          "Klaus-Robert Müller",
+          "Wojciech Samek"
+        ],
+        "title": "Controlling explanatory heatmap resolution and semantics via decomposition depth",
+        "booktitle": "2016 IEEE International Conference on Image Processing (ICIP)",
+        "pages": "2271--2275",
+        "year": "2016",
+        "publisher": "IEEE",
+        "doi": "10.1109/ICIP.2016.7532763",
+        "url": "https://doi.org/10.1109/ICIP.2016.7532763"
+      }
+    }
+  ]
+}
