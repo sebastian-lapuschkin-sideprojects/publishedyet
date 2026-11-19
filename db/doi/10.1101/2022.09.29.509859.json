@@ -1,0 +1,54 @@
+{
+  "preprint": {
+    "id": "doi:10.1101/2022.09.29.509859",
+    "title": "DeepBIO is an automated and interpretable deep-learning platform for biological sequence prediction, functional annotation, and visualization analysis",
+    "authors": [
+      "Ruheng Wang",
+      "Yi Jiang",
+      "Junru Jin",
+      "Chenglin Yin",
+      "Haoqing Yu",
+      "Fengsheng Wang",
+      "Jiuxin Feng",
+      "Ran Su",
+      "Kenta Nakai",
+      "Quan Zou",
+      "Leyi Wei"
+    ],
+    "year": "2022",
+    "server": "bioRxiv"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "archival": true,
+      "source": "crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Wang, Ruheng",
+          "Jiang, Yi",
+          "Jin, Junru",
+          "Yin, Chenglin",
+          "Yu, Haoqing",
+          "Wang, Fengsheng",
+          "Feng, Jiuxin",
+          "Su, Ran",
+          "Nakai, Kenta",
+          "Zou, Quan",
+          "Wei, Leyi"
+        ],
+        "title": "DeepBIO: an automated and interpretable deep-learning platform for high-throughput biological sequence prediction, functional annotation and visualization analysis",
+        "journal": "Nucleic Acids Research",
+        "year": "2023",
+        "volume": "51",
+        "number": "7",
+        "pages": "3017--3029",
+        "publisher": "Oxford University Press (OUP)",
+        "doi": "10.1093/nar/gkad055",
+        "url": "https://doi.org/10.1093/nar/gkad055"
+      }
+    }
+  ]
+}

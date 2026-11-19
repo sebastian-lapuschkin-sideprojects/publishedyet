@@ -1,0 +1,46 @@
+{
+  "preprint": {
+    "id": "arxiv:2405.14839",
+    "title": "A Textbook Remedy for Domain Shifts: Knowledge Priors for Medical Image Analysis",
+    "authors": [
+      "Yue Yang",
+      "Mona Gandhi",
+      "Yufei Wang",
+      "Yifan Wu",
+      "Michael S. Yao",
+      "Chris Callison-Burch",
+      "James C. Gee",
+      "Mark Yatskar"
+    ],
+    "year": "2024",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "archival": true,
+      "source": "crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Yang, Yue",
+          "Gandhi, Mona",
+          "Wang, Yufei",
+          "Wu, Yifan",
+          "Yao, Michael",
+          "Callison-Burch, Chris",
+          "Gee, James",
+          "Yatskar, Mark"
+        ],
+        "title": "A Textbook Remedy for Domain Shifts: Knowledge Priors for Medical Image Analysis",
+        "booktitle": "Advances in Neural Information Processing Systems 37",
+        "year": "2024",
+        "pages": "90683--90713",
+        "publisher": "Neural Information Processing Systems Foundation, Inc. (NeurIPS)",
+        "doi": "10.52202/079017-2879",
+        "url": "https://doi.org/10.52202/079017-2879"
+      }
+    }
+  ]
+}

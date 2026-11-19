@@ -1,0 +1,36 @@
+{
+  "preprint": {
+    "id": "doi:10.1101/2021.02.19.431935",
+    "title": "An Interpretable Deep Learning Approach for Biomarker Detection in LC-MS Proteomics Data",
+    "authors": [
+      "Sahar Iravani",
+      "Tim Conrad"
+    ],
+    "year": "2021",
+    "server": "bioRxiv"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "archival": true,
+      "source": "crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Iravani, Sahar",
+          "Conrad, Tim O.F."
+        ],
+        "title": "An Interpretable Deep Learning Approach for Biomarker Detection in LC-MS Proteomics Data",
+        "journal": "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
+        "year": "2023",
+        "volume": "20",
+        "number": "1",
+        "pages": "151--161",
+        "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+        "doi": "10.1109/tcbb.2022.3141656",
+        "url": "https://doi.org/10.1109/tcbb.2022.3141656"
+      }
+    }
+  ]
+}

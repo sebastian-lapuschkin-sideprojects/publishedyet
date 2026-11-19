@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:1902.10178",
+    "title": "Unmasking Clever Hans Predictors and Assessing What Machines Really Learn",
+    "authors": [
+      "Sebastian Lapuschkin",
+      "Stephan Wäldchen",
+      "Alexander Binder",
+      "Grégoire Montavon",
+      "Wojciech Samek",
+      "Klaus-Robert Müller"
+    ],
+    "year": "2019",
+    "primary_class": "cs.AI"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "archival": true,
+      "source": "crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Lapuschkin, Sebastian",
+          "Wäldchen, Stephan",
+          "Binder, Alexander",
+          "Montavon, Grégoire",
+          "Samek, Wojciech",
+          "Müller, Klaus-Robert"
+        ],
+        "title": "Unmasking Clever Hans predictors and assessing what machines really learn",
+        "journal": "Nature Communications",
+        "year": "2019",
+        "volume": "10",
+        "number": "1",
+        "publisher": "Springer Science and Business Media LLC",
+        "doi": "10.1038/s41467-019-08987-4",
+        "url": "https://doi.org/10.1038/s41467-019-08987-4"
+      }
+    }
+  ]
+}

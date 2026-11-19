@@ -1,0 +1,46 @@
+{
+  "preprint": {
+    "id": "arxiv:2206.03208",
+    "title": "From Attribution Maps to Human-Understandable Explanations through Concept Relevance Propagation",
+    "authors": [
+      "Reduan Achtibat",
+      "Maximilian Dreyer",
+      "Ilona Eisenbraun",
+      "Sebastian Bosse",
+      "Thomas Wiegand",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2022",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "archival": true,
+      "source": "crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Achtibat, Reduan",
+          "Dreyer, Maximilian",
+          "Eisenbraun, Ilona",
+          "Bosse, Sebastian",
+          "Wiegand, Thomas",
+          "Samek, Wojciech",
+          "Lapuschkin, Sebastian"
+        ],
+        "title": "From attribution maps to human-understandable explanations through Concept Relevance Propagation",
+        "journal": "Nature Machine Intelligence",
+        "year": "2023",
+        "volume": "5",
+        "number": "9",
+        "pages": "1006--1019",
+        "publisher": "Springer Science and Business Media LLC",
+        "doi": "10.1038/s42256-023-00711-8",
+        "url": "https://doi.org/10.1038/s42256-023-00711-8"
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "preprint": {
+    "id": "arxiv:1512.02479",
+    "title": "Explaining NonLinear Classification Decisions with Deep Taylor Decomposition",
+    "authors": [
+      "Grégoire Montavon",
+      "Sebastian Bach",
+      "Alexander Binder",
+      "Wojciech Samek",
+      "Klaus-Robert Müller"
+    ],
+    "year": "2015",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "archival": true,
+      "source": "crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Montavon, Grégoire",
+          "Lapuschkin, Sebastian",
+          "Binder, Alexander",
+          "Samek, Wojciech",
+          "Müller, Klaus-Robert"
+        ],
+        "title": "Explaining nonlinear classification decisions with deep Taylor decomposition",
+        "journal": "Pattern Recognition",
+        "year": "2017",
+        "volume": "65",
+        "pages": "211--222",
+        "publisher": "Elsevier BV",
+        "doi": "10.1016/j.patcog.2016.11.008",
+        "url": "https://doi.org/10.1016/j.patcog.2016.11.008"
+      }
+    }
+  ]
+}

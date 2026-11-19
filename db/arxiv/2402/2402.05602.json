@@ -1,0 +1,47 @@
+{
+  "preprint": {
+    "id": "arxiv:2402.05602",
+    "title": "AttnLRP: Attention-Aware Layer-Wise Relevance Propagation for Transformers",
+    "authors": [
+      "Reduan Achtibat",
+      "Sayed Mohammad Vakilzadeh Hatefi",
+      "Maximilian Dreyer",
+      "Aakriti Jain",
+      "Thomas Wiegand",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek"
+    ],
+    "year": "2024",
+    "primary_class": "cs.CL"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "archival": true,
+      "source": "bibtex",
+      "bibtex": {
+        "type": "inproceedings",
+        "title": "{A}ttn{LRP}: Attention-Aware Layer-Wise Relevance Propagation for Transformers",
+        "author": [
+          "Achtibat, Reduan",
+          "Hatefi, Sayed Mohammad Vakilzadeh",
+          "Dreyer, Maximilian",
+          "Jain, Aakriti",
+          "Wiegand, Thomas",
+          "Lapuschkin, Sebastian",
+          "Samek, Wojciech"
+        ],
+        "booktitle": "Proceedings of the 41st International Conference on Machine Learning",
+        "pages": "135--168",
+        "year": "2024",
+        "editor": "Salakhutdinov, Ruslan and Kolter, Zico and Heller, Katherine and Weller, Adrian and Oliver, Nuria and Scarlett, Jonathan and Berkenkamp, Felix",
+        "volume": "235",
+        "series": "Proceedings of Machine Learning Research",
+        "month": "21--27 Jul",
+        "publisher": "PMLR",
+        "url": "https://proceedings.mlr.press/v235/achtibat24a.html"
+      }
+    }
+  ]
+}
