@@ -32,8 +32,13 @@ search online, to [DBLP](https://sparql.dblp.org), [OpenAlex](https://openalex.o
    rewritten in one uniform style: Google Scholar, arXiv (`@misc`) or DBLP (CoRR).
 4. **Export.** The chosen entries, and for a BibTeX file the fixed file plus a diff of what changed.
    Entries that were not in your file get Google Scholar style keys (`he2016deep`) or DBLP keys.
-5. **Give back.** Confirm a match found online, correct an entry, or add a publication by hand: the
-   page opens a prefilled GitHub issue. A GitHub action turns it into a pull request for review.
+5. **Share.** "share link" copies a link that opens the page with the same preprints, e.g.
+   `https://sebastian-lapuschkin-sideprojects.github.io/publishedyet/#2402.05602,1509.06321`
+   (or `.../publishedyet/2402.05602,1509.06321`). Handy for pointing co-authors to references that
+   need updating. Local edits are not part of the link; propose them for the database instead.
+6. **Give back.** Confirm a match found online, correct an entry, or add a publication by hand: the
+   page opens a prefilled GitHub issue (with a list of what changed, for database entries). A GitHub
+   action turns it into a pull request, whose diff shows the change, for review.
 
 Known gaps of the online search: OpenReview blocks automated requests, and DBLP only covers computer
 science. Non-archival workshop papers and journal extensions with a new title are not found

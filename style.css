@@ -2,7 +2,7 @@
    colours from the viridis colormap: indigo for confirmed, teal for found online. */
 :root {
   --paper: #f4f4f7; --raised: #ffffff; --ink: #1c1b24; --muted: #66647a; --line: #dcdbe6;
-  --accent: #3b528b; --accent-soft: #e7ebf4; --teal: #1f8a84; --teal-soft: #dcf1ee; --shade: #ebebf2;
+  --accent: #3b528b; --accent-soft: #e7ebf4; --teal: #1f8a84; --teal-soft: #dcf1ee; --shade: #ebebf2; --zebra: #ececf3;
   --add: #e3f4e3; --del: #f2e6ec; --hunk: #ecebf1;
   --maxw: 62rem;
   --serif: 'IBM Plex Serif', Georgia, serif;
@@ -11,12 +11,12 @@
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #13131a; --raised: #1b1b25; --ink: #e7e7ef; --muted: #9b9ab0; --line: #2c2b3a;
-  --accent: #9fb3e8; --accent-soft: #222842; --teal: #5ec9a8; --teal-soft: #173230; --shade: #181822;
+  --accent: #9fb3e8; --accent-soft: #222842; --teal: #5ec9a8; --teal-soft: #173230; --shade: #181822; --zebra: #22222e;
   --add: #1b3324; --del: #352030; --hunk: #22212e;
 } }
 :root[data-theme="dark"] {
   --paper: #13131a; --raised: #1b1b25; --ink: #e7e7ef; --muted: #9b9ab0; --line: #2c2b3a;
-  --accent: #9fb3e8; --accent-soft: #222842; --teal: #5ec9a8; --teal-soft: #173230; --shade: #181822;
+  --accent: #9fb3e8; --accent-soft: #222842; --teal: #5ec9a8; --teal-soft: #173230; --shade: #181822; --zebra: #22222e;
   --add: #1b3324; --del: #352030; --hunk: #22212e;
 }
 
@@ -69,8 +69,10 @@ h3 { font-size: 1.05rem; margin: 1.4rem 0 .5rem; }
 /* results: one card per preprint */
 .bar-top { display: flex; gap: .8rem; align-items: center; margin: 1.6rem 0 .6rem; }
 .bar-top .cap { margin-right: auto; }
+.bar-top .done { font: .75rem var(--mono); color: var(--teal); }
 .card { background: var(--raised); border: 1px solid var(--line); border-radius: 12px; margin: 0 0 .7rem; }
-.card .top { display: grid; grid-template-columns: 11rem minmax(0, 1fr) 7.5rem 10rem; gap: .8rem; align-items: center;
+.card.alt { background: var(--zebra); }
+.card .top { display: grid; grid-template-columns: 11rem minmax(0, 1fr) 11rem 9rem; gap: .8rem; align-items: center;
              padding: .55rem .9rem; border-bottom: 1px solid var(--line); }
 .card .id { font: .8rem var(--mono); }
 .card .key { font: .7rem var(--mono); color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -82,7 +84,7 @@ h3 { font-size: 1.05rem; margin: 1.4rem 0 .5rem; }
 .pill.none, .pill.busy { background: var(--shade); color: var(--muted); }
 .actions { display: flex; gap: .35rem; justify-content: flex-end; }
 .opts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; padding: .6rem .9rem; }
-.tile { min-width: 0; border: 1px solid var(--line); border-radius: 8px; padding: .35rem .6rem; background: var(--paper); cursor: pointer; }
+.tile { min-width: 0; border: 1px solid var(--line); border-radius: 8px; padding: .35rem .6rem; background: var(--raised); cursor: pointer; }
 .tile:hover { border-color: var(--accent); }
 .tile.chosen { border: 2px solid var(--accent); background: var(--accent-soft); padding: calc(.35rem - 1px) calc(.6rem - 1px); }
 .tile .name { font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

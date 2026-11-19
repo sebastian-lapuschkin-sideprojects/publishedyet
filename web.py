@@ -19,16 +19,16 @@ import publishedyet as py
 
 REPO = 'https://github.com/sebastian-lapuschkin-sideprojects/publishedyet'
 DB = 'db/'
-STATUS = {  # status of a preprint: (label, css class)
+STATUS = {  # status of a preprint: (label, css class); edits add " / edited"
     'looking': ('looking up', 'busy'), 'searching': ('searching', 'busy'), 'db': ('in database', 'db'),
-    'online': ('found online', 'online'), 'edited': ('edited', 'online'), 'none': ('nothing found', 'none'),
-    'unknown': ('not searched', 'none'),
+    'online': ('found online', 'online'), 'none': ('nothing found', 'none'), 'unknown': ('not searched', 'none'),
 }
 FIELDS = ['author', 'title', 'venue', 'year', 'volume', 'number', 'pages', 'publisher', 'series', 'editor', 'month', 'doi', 'url']
 WIDE = ('author', 'title', 'venue', 'editor', 'url')
 
-# what the page knows; status, records and choices are per preprint id, editing holds card numbers
-state = {'text': '', 'items': [], 'records': {}, 'status': {}, 'choices': {}, 'editing': set()}
+# what the page knows. Per preprint id: status, records, choices, originals (database records as
+# loaded), edited (ids changed by the user). editing holds the numbers of cards with an open panel.
+state = {'text': '', 'items': [], 'records': {}, 'status': {}, 'choices': {}, 'originals': {}, 'edited': set(), 'editing': set()}
 
 
 def el(name):
@@ -65,13 +65,14 @@ def editable(item):
 
 async def run(event=None):
     text = el('input').value
-    state.update(text=text, items=py.scan(text), records={}, status={}, choices={}, editing=set())
+    state.update(text=text, items=py.scan(text), records={}, status={}, choices={}, originals={}, edited=set(), editing=set())
     for item in state['items']:
         state['status'][item['id']] = 'looking'
     show()
     for pid in list(state['status']):
         record = await get_json(DB + py.db_path(pid))
         state['records'][pid] = record
+        state['originals'][pid] = json.loads(json.dumps(record))
         state['status'][pid] = 'db' if record else 'unknown'
         state['choices'][pid] = py.preferred(record)
     show()
@@ -104,6 +105,7 @@ def show():
     counts = '{} preprint(s), {} in the database'.format(
         len(state['status']), sum(1 for status in state['status'].values() if status == 'db'))
     button = '<button class="small" data-action="search-all">search online for the {} not in the database</button>'.format(len(unknown)) if unknown else ''
+    button += ' <button class="small" data-action="share" title="copy a link that opens this page with these preprints">share link</button>'
     el('results').innerHTML = '<div class="bar-top"><span class="cap">{}</span>{}</div>'.format(counts, button) + \
         ''.join(card(i) for i in range(len(state['items'])))
     show_export()
@@ -111,8 +113,8 @@ def show():
 
 def card(i):
     edit = '<div class="edit" id="edit-{}">{}</div>'.format(i, edit_panel(i)) if i in state['editing'] else ''
-    return '<div class="card"><div class="top" id="top-{0}">{1}</div><div class="opts" id="opts-{0}">{2}</div>{3}</div>'.format(
-        i, card_top(i), tiles(i), edit)
+    return '<div class="card{4}"><div class="top" id="top-{0}">{1}</div><div class="opts" id="opts-{0}">{2}</div>{3}</div>'.format(
+        i, card_top(i), tiles(i), edit, ' alt' if i % 2 else '')
 
 
 def refresh(pid):
@@ -139,10 +141,12 @@ def card_top(i):
         actions.append('<button class="small" data-action="search" data-i="{}">search</button>'.format(i))
     if status not in ('looking', 'searching'):
         actions.append('<button class="small" data-action="edit" data-i="{}">{}</button>'.format(i, 'close' if i in state['editing'] else 'edit'))
-    if status in ('online', 'edited') or (status == 'db' and choice != py.preferred(record)):
+    if status == 'online' or pid in state['edited'] or (status == 'db' and choice != py.preferred(record)):
         actions.append('<a class="act" href="{}" target="_blank" title="send this entry to the database (opens a GitHub issue)">propose</a>'
                        .format(escape(proposal_url(pid, record, choice))))
     label, kind = STATUS[status]
+    if pid in state['edited']:
+        label, kind = (label + ' / edited', kind) if status in ('db', 'online') else ('edited', 'online')
     return '<div class="who">{}</div><div class="title" title="{}">{}</div><span class="pill {}">{}</span><span class="actions">{}</span>'.format(
         who, escape(title), escape(title), kind, label, ''.join(actions))
 
@@ -256,7 +260,7 @@ def on_results_change(event):
         place[name] = value
     else:
         place.pop(name, None)
-    state['status'][pid] = 'edited'
+    state['edited'].add(pid)
     refresh(pid)
     if name == 'type':
         for i, other in enumerate(state['items']):
@@ -310,8 +314,34 @@ def proposal_url(pid, record, choice):
         if i == choice:
             pub['preferred'] = True
     title = '[db] ' + py.preprint_label(pid)
-    return REPO + '/issues/new?' + urlencode({'template': 'db-entry.yml', 'title': title,
-                                              'entry': json.dumps(record, indent=2, ensure_ascii=False)})
+    query = {'template': 'db-entry.yml', 'title': title, 'entry': json.dumps(record, indent=2, ensure_ascii=False)}
+    original = json.loads(json.dumps(state['originals'].get(pid)))
+    if original:
+        for i, pub in enumerate(original['publications']):   # the database's implicit preferred one, made explicit
+            pub.pop('preferred', None)
+            if i == py.preferred(state['originals'][pid]):
+                pub['preferred'] = True
+        query['notes'] = 'Changes to the database entry:\n' + '\n'.join('- ' + line for line in changes(original, record))
+    return REPO + '/issues/new?' + urlencode(query)
+
+
+def changes(old, new):
+    # what differs between two records, one line per field, for the proposal
+    show = lambda value: json.dumps(value, ensure_ascii=False)
+    lines = ['preprint {}: {} -> {}'.format(name, show(old['preprint'].get(name)), show(new['preprint'].get(name)))
+             for name in sorted(set(old['preprint']) | set(new['preprint']))
+             if old['preprint'].get(name) != new['preprint'].get(name)]
+    flat = lambda pub: dict(list(pub['bibtex'].items()) + [(k, v) for k, v in pub.items() if k != 'bibtex'])
+    for n in range(max(len(old['publications']), len(new['publications']))):
+        if n >= len(new['publications']):
+            lines.append('publication {} removed'.format(n + 1))
+        elif n >= len(old['publications']):
+            lines.append('publication {} added'.format(n + 1))
+        else:
+            a, b = flat(old['publications'][n]), flat(new['publications'][n])
+            lines += ['publication {} {}: {} -> {}'.format(n + 1, name, show(a.get(name)), show(b.get(name)))
+                      for name in sorted(set(a) | set(b)) if a.get(name) != b.get(name)]
+    return lines or ['none (only the preferred publication)']
 
 
 # ----- events ----------------------------------------------------------------------------
@@ -325,6 +355,10 @@ async def on_results_click(event):
     action = target.getAttribute('data-action')
     if action == 'search-all':
         await search([pid for pid, status in state['status'].items() if status == 'unknown'])
+        return
+    if action == 'share':
+        js.navigator.clipboard.writeText(share_link())
+        target.textContent = 'link copied'
         return
     i = int(target.getAttribute('data-i'))
     item = state['items'][i]
@@ -345,13 +379,13 @@ async def on_results_click(event):
             'bibtex': {'type': 'inproceedings', 'author': list(pre.get('authors') or []), 'title': pre.get('title', ''),
                        'booktitle': '', 'year': ''}})
         state['choices'][pid] = len(record['publications']) - 1
-        state['status'][pid] = 'edited'
+        state['edited'].add(pid)
         state['editing'].add(i)
     elif action == 'remove':
         record = state['records'][pid]
         record['publications'].pop(state['choices'][pid])
         state['choices'][pid] = py.preferred(record)
-        state['status'][pid] = 'edited'
+        state['edited'].add(pid)
     show()
 
 
@@ -375,6 +409,14 @@ async def on_file(event):
         await run()
 
 
+def share_link():
+    # this page with the preprints in the address: .../publishedyet/#2402.05602,1509.06321
+    # Preprints with a published version chosen go in; if there are none, all of them.
+    ids = [pid for pid in state['status'] if state['choices'].get(pid, 'preprint') != 'preprint'] or list(state['status'])
+    plain_ids = [pid.split(':', 1)[1] if pid.startswith(('arxiv:', 'doi:')) else pid for pid in ids]
+    return js.location.origin + js.location.pathname + '#' + ','.join(plain_ids)
+
+
 async def start():
     for name, kind, handler in [('run', 'click', run), ('results', 'click', on_results_click),
                                 ('results', 'change', on_results_change), ('export', 'click', on_export_click),
@@ -384,3 +426,9 @@ async def start():
         el(name).addEventListener(kind, create_proxy(handler))
     el('run').disabled = False
     el('run').textContent = 'run'
+    # opened from a shared link: show those preprints and search the unknown ones right away
+    shared = js.decodeURIComponent(js.location.hash[1:])
+    if shared:
+        el('input').value = '\n'.join(part for part in re.split(r'[,\s]+', shared) if part)
+        await run()
+        await search([pid for pid, status in state['status'].items() if status == 'unknown'])
