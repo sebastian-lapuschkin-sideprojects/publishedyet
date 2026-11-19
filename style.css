@@ -44,6 +44,9 @@ main { padding-block: 2rem 3rem; }
 .lede { margin-bottom: 1.5rem; }
 .lede h1 { font-size: clamp(2rem, 6vw, 2.6rem); margin: .3rem 0 .6rem; }
 .lede p { color: var(--muted); font-size: 1.05rem; max-width: 42rem; margin: 0 0 .4rem; }
+.pitch { list-style: none; padding: 0; margin: 0 0 1rem; font-size: 1.05rem; }
+.pitch li { padding-left: 1.1rem; position: relative; margin: .15rem 0; }
+.pitch li::before { content: "✓"; position: absolute; left: 0; color: var(--teal); font-weight: 600; }
 .lede .privacy { font-size: .85rem; }
 footer.site { border-top: 1px solid var(--line); color: var(--muted); font-size: .85rem; }
 footer.site .wrap { padding-block: 1.5rem; }
