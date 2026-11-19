@@ -4,19 +4,37 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>publishedyet</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
 <link rel="stylesheet" href="style.css">
+<script>
+  // light / dark: follow the system unless the visitor picked one (same as lapuschkin.eats)
+  try { var theme = localStorage.getItem('publishedyet-theme'); if (theme) document.documentElement.setAttribute('data-theme', theme); } catch (e) {}
+</script>
 </head>
 <body>
-<main>
-  <h1>publishedyet</h1>
-  <p class="lead">Has the preprint you cite been published by now? Paste arXiv / bioRxiv ids or a whole BibTeX file.</p>
-  <p class="privacy">Everything runs in your browser; your file is not uploaded anywhere. Only preprint ids leave
-    your computer: to this site's database and, if you search online, to OpenAlex, Crossref and bioRxiv.</p>
+<header class="site"><div class="wrap bar">
+  <a class="brand" href="./">publishedyet<span class="q">?</span></a>
+  <nav>
+    <a href="https://github.com/sebastian-lapuschkin-sideprojects/publishedyet#readme">about</a>
+    <a href="https://github.com/sebastian-lapuschkin-sideprojects/publishedyet">github</a>
+    <button class="tbtn" id="theme" title="light / dark" aria-label="switch light or dark">◐</button>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <div class="lede">
+    <div class="eyebrow">preprint checker</div>
+    <h1>Has it been published yet?</h1>
+    <p>Paste arXiv, bioRxiv or OpenReview ids, or a whole BibTeX file. Preprints get replaced by their published versions; your keys stay.</p>
+    <p class="privacy">Everything runs in your browser; your file is not uploaded anywhere. Only preprint ids leave your computer:
+      to this site's database and, if you search online, to DBLP, OpenAlex, Crossref and bioRxiv.</p>
+  </div>
 
   <textarea id="input" spellcheck="false" placeholder="2402.05602&#10;10.1101/2020.01.01.890160&#10;... or paste your .bib file here"></textarea>
   <div class="controls">
     <label class="file">open a .bib file <input type="file" id="file" accept=".bib,.txt"></label>
-    <button id="run" disabled>Loading Python ...</button>
+    <button id="run" disabled>loading python ...</button>
   </div>
 
   <div id="results"></div>
@@ -24,7 +42,7 @@
   <section id="export" hidden>
     <h2>Export</h2>
     <div class="options">
-      <label>Preprints
+      <label class="cap">preprints
         <select id="preprint-style">
           <option value="">keep as they are</option>
           <option value="scholar">Google Scholar style</option>
@@ -32,7 +50,7 @@
           <option value="dblp">DBLP style (CoRR)</option>
         </select>
       </label>
-      <label>Keys of entries not from your file
+      <label class="cap">keys of entries not from your file
         <select id="key-style">
           <option value="scholar">Google Scholar (author, year, word)</option>
           <option value="dblp">DBLP</option>
@@ -41,23 +59,32 @@
     </div>
     <h3>Chosen entries</h3>
     <textarea id="entries" readonly spellcheck="false"></textarea>
-    <div class="controls"><button data-copy="entries">Copy</button></div>
+    <div class="controls"><button class="small" data-copy="entries">copy</button></div>
     <div id="fixed-box">
       <h3>Your fixed .bib file</h3>
       <p class="hint">Replaced entries stay in the file as comments.</p>
       <textarea id="fixed" readonly spellcheck="false"></textarea>
-      <div class="controls"><button data-copy="fixed">Copy</button> <button id="download">Download</button></div>
+      <div class="controls"><button class="small" data-copy="fixed">copy</button> <button class="small" id="download">download</button></div>
       <h3>What changed</h3>
       <div id="diff"></div>
     </div>
   </section>
-
-  <footer>Code and database: <a href="https://github.com/sebastian-lapuschkin-sideprojects/publishedyet">github.com/sebastian-lapuschkin-sideprojects/publishedyet</a></footer>
 </main>
+
+<footer class="site"><div class="wrap">
+  publishedyet: keeps the references of a paper up to date. Data from its own database, DBLP, OpenAlex, Crossref and bioRxiv.
+</div></footer>
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js"></script>
 <script>
-  // Load Python (Pyodide) and hand over to web.py. This is all the JavaScript there is.
+  document.getElementById('theme').onclick = function () {
+    var root = document.documentElement;
+    var now = root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var next = now === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('publishedyet-theme', next); } catch (e) {}
+  };
+  // Load Python (Pyodide) and hand over to web.py. Apart from the theme switch, this is all the JavaScript there is.
   async function start() {
     const pyodide = await loadPyodide();
     for (const name of ['publishedyet.py', 'web.py']) {

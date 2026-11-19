@@ -78,7 +78,7 @@ def show():
     counts = 'found {} preprint(s), {} in the database'.format(
         len(state['status']), sum(1 for status in state['status'].values() if status == 'db'))
     button = ' <button class="small" data-action="search-all">search online for the {} unknown</button>'.format(len(unknown)) if unknown else ''
-    el('results').innerHTML = '<div class="bar">{}{}</div>'.format(counts, button) + ''.join(row(item) for item in state['items'])
+    el('results').innerHTML = '<div class="bar-top"><span class="cap">{}</span>{}</div>'.format(counts, button) + ''.join(row(item) for item in state['items'])
     show_export()
 
 
@@ -88,7 +88,7 @@ def row(item):
     status = state['status'][pid]
     choice = state['choices'].get(pid, 'preprint')
     pre = record['preprint'] if record else py.preprint_from_fields(pid, item['fields'])
-    left = '<a href="{}" target="_blank">{}</a><div class="title">{}</div>'.format(
+    left = '<a class="id" href="{}" target="_blank">{}</a><div class="title">{}</div>'.format(
         py.preprint_url(pid), escape(py.preprint_label(pid)), escape(pre.get('title', '').replace('{', '').replace('}', '')))
     if item['key']:
         left += '<div class="key">{}</div>'.format(escape(item['key']))
@@ -203,7 +203,7 @@ def on_export_click(event):
     name = event.target.getAttribute('data-copy')
     if name:
         js.navigator.clipboard.writeText(el(name).value)
-        event.target.textContent = 'Copied'
+        event.target.textContent = 'copied'
     elif event.target.id == 'download':
         blob = js.Blob.new(to_js([el('fixed').value]), to_js({'type': 'text/plain'}, dict_converter=js.Object.fromEntries))
         link = js.document.createElement('a')
@@ -226,4 +226,4 @@ async def start():
                                 ('key-style', 'change', lambda event: show_export())]:
         el(name).addEventListener(kind, create_proxy(handler))
     el('run').disabled = False
-    el('run').textContent = 'Run'
+    el('run').textContent = 'run'
