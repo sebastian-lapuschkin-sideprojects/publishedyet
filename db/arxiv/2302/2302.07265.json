@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:2302.07265",
+    "title": "The Meta-Evaluation Problem in Explainable AI: Identifying Reliable Estimators with MetaQuantus",
+    "authors": [
+      "Anna Hedström",
+      "Philine Lou Bommer",
+      "Kristoffer K. Wickstrøm",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin",
+      "Marina M.-C. Höhne"
+    ],
+    "year": "2023"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "TMLR",
+      "archival": true,
+      "preferred": true,
+      "dblp": "journals/tmlr/HedstromBWSLH23",
+      "source": "dblp, written as on OpenReview",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Anna Hedström",
+          "Philine Lou Bommer",
+          "Kristoffer Knutsen Wickstrøm",
+          "Wojciech Samek",
+          "Sebastian Lapuschkin",
+          "Marina M.-C. Höhne"
+        ],
+        "title": "The Meta-Evaluation Problem in Explainable AI: Identifying Reliable Estimators with MetaQuantus",
+        "journal": "Transactions on Machine Learning Research",
+        "issn": "2835-8856",
+        "year": "2023",
+        "url": "https://openreview.net/forum?id=j3FK00HyfU",
+        "month": "6"
+      }
+    }
+  ]
+}
