@@ -1,0 +1,47 @@
+{
+  "preprint": {
+    "id": "arxiv:2501.05398",
+    "title": "Mechanistic understanding and validation of large AI models with SemanticLens",
+    "authors": [
+      "Maximilian Dreyer",
+      "Jim Berend",
+      "Tobias Labarta",
+      "Johanna Vielhaben",
+      "Thomas Wiegand",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek"
+    ],
+    "year": "2025"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "Nat Mach Intell",
+      "archival": true,
+      "preferred": true,
+      "source": "crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Dreyer, Maximilian",
+          "Berend, Jim",
+          "Labarta, Tobias",
+          "Vielhaben, Johanna",
+          "Wiegand, Thomas",
+          "Lapuschkin, Sebastian",
+          "Samek, Wojciech"
+        ],
+        "title": "Mechanistic understanding and validation of large AI models with SemanticLens",
+        "journal": "Nature Machine Intelligence",
+        "year": "2025",
+        "volume": "7",
+        "number": "9",
+        "pages": "1572--1585",
+        "publisher": "Springer Science and Business Media LLC",
+        "doi": "10.1038/s42256-025-01084-w",
+        "url": "https://doi.org/10.1038/s42256-025-01084-w"
+      }
+    }
+  ]
+}
