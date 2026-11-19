@@ -156,7 +156,7 @@ def card_top(i):
                    .format(i, '' if i in state['left_out'] else ' checked'))
     label, kind = STATUS[status]
     if pid in state['edited']:
-        label, kind = (label + ' / edited', kind) if status in ('db', 'online') else ('edited', 'online')
+        label, kind = (label + ' / edited' if status in ('db', 'online') else 'edited'), 'online'
     return '<div class="who">{}</div><div class="title" title="{}">{}</div><span class="pill {}">{}</span><span class="actions">{}</span>'.format(
         who, escape(title), escape(title), kind, label, ''.join(actions))
 
