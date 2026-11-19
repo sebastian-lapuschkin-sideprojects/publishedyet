@@ -1,6 +1,7 @@
 /* Layout and type follow lapuschkin.eats (IBM Plex, ink on paper, one accent);
    colours from the viridis colormap: indigo for confirmed, teal for found online. */
 :root {
+  color-scheme: light;  /* browser-drawn controls (file button, scrollbars) follow the theme */
   --paper: #f4f4f7; --raised: #ffffff; --ink: #1c1b24; --muted: #66647a; --line: #dcdbe6;
   --accent: #3b528b; --accent-soft: #e7ebf4; --teal: #1f8a84; --teal-soft: #dcf1ee; --shade: #ebebf2; --zebra: #ececf3; --warn: #85630a; --warn-soft: #f7edc4;
   --add: #e3f4e3; --del: #f2e6ec; --hunk: #ecebf1;
@@ -10,11 +11,13 @@
   --mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  color-scheme: dark;
   --paper: #13131a; --raised: #1b1b25; --ink: #e7e7ef; --muted: #9b9ab0; --line: #2c2b3a;
   --accent: #9fb3e8; --accent-soft: #222842; --teal: #5ec9a8; --teal-soft: #173230; --shade: #181822; --zebra: #22222e; --warn: #e3c75a; --warn-soft: #3a3418;
   --add: #1b3324; --del: #352030; --hunk: #22212e;
 } }
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --paper: #13131a; --raised: #1b1b25; --ink: #e7e7ef; --muted: #9b9ab0; --line: #2c2b3a;
   --accent: #9fb3e8; --accent-soft: #222842; --teal: #5ec9a8; --teal-soft: #173230; --shade: #181822; --zebra: #22222e; --warn: #e3c75a; --warn-soft: #3a3418;
   --add: #1b3324; --del: #352030; --hunk: #22212e;
