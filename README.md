@@ -16,7 +16,7 @@ The page: <https://sebastian-lapuschkin-sideprojects.github.io/publishedyet/>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.png">
-  <img alt="The page with six preprint ids: four found in the database, one found online, one without a published version" src="docs/screenshot.png" width="690">
+  <img alt="The page with six preprint ids: four found in the database, one found online, one without a published version" src="docs/screenshot.png" width="614">
 </picture>
 
 ## How this came about
