@@ -1,0 +1,49 @@
+{
+  "preprint": {
+    "id": "arxiv:2205.01929",
+    "title": "Explain to Not Forget: Defending Against Catastrophic Forgetting with XAI",
+    "authors": [
+      "Sami Ede",
+      "Serop Baghdadlian",
+      "Leander Weber",
+      "An Nguyen",
+      "Dario Zanca",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2022",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "CD-MAKE",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/cdmake/EdeBWNZSL22",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Sami Ede",
+          "Serop Baghdadlian",
+          "Leander Weber",
+          "An Nguyen",
+          "Dario Zanca",
+          "Wojciech Samek",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "Explain to Not Forget: Defending Against Catastrophic Forgetting with XAI",
+        "booktitle": "Machine Learning and Knowledge Extraction",
+        "series": "Lecture Notes in Computer Science",
+        "volume": "13480",
+        "pages": "1--18",
+        "year": "2022",
+        "publisher": "Springer",
+        "doi": "10.1007/978-3-031-14463-9_1",
+        "url": "https://doi.org/10.1007/978-3-031-14463-9_1"
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "preprint": {
+    "id": "arxiv:2106.13200",
+    "title": "Software for Dataset-wide XAI: From Local Explanations to Global Insights with Zennit, CoRelAy, and ViRelAy",
+    "authors": [
+      "Christopher J. Anders",
+      "David Neumann",
+      "Wojciech Samek",
+      "Klaus-Robert Müller",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2021",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "PLoS One",
+      "archival": true,
+      "preferred": true,
+      "source": "crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Anders, Christopher J.",
+          "Neumann, David",
+          "Samek, Wojciech",
+          "Müller, Klaus-Robert",
+          "Lapuschkin, Sebastian"
+        ],
+        "title": "Software for dataset-wide XAI: From local explanations to global insights with Zennit, CoRelAy, and ViRelAy",
+        "journal": "PLOS One",
+        "year": "2026",
+        "volume": "21",
+        "number": "1",
+        "pages": "e0336683",
+        "publisher": "Public Library of Science (PLoS)",
+        "doi": "10.1371/journal.pone.0336683",
+        "url": "https://doi.org/10.1371/journal.pone.0336683"
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:2404.09601",
+    "title": "Reactive Model Correction: Mitigating Harm to Task-Relevant Features via Conditional Bias Suppression",
+    "authors": [
+      "Dilyara Bareeva",
+      "Maximilian Dreyer",
+      "Frederik Pahde",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2024",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "workshop",
+      "venue_short": "CVPR Workshops",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/cvpr/BareevaDPSL22",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Dilyara Bareeva",
+          "Maximilian Dreyer",
+          "Frederik Pahde",
+          "Wojciech Samek",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "Reactive Model Correction: Mitigating Harm to Task-Relevant Features via Conditional Bias Suppression",
+        "booktitle": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "pages": "3532--3541",
+        "year": "2024",
+        "publisher": "IEEE",
+        "doi": "10.1109/CVPRW63382.2024.00357",
+        "url": "https://doi.org/10.1109/CVPRW63382.2024.00357"
+      }
+    }
+  ]
+}

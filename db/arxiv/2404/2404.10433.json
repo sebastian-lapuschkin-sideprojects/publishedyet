@@ -1,0 +1,59 @@
+{
+  "preprint": {
+    "id": "arxiv:2404.10433",
+    "title": "Explainable concept mappings of MRI: Revealing the mechanisms underlying deep learning-based brain disease classification",
+    "authors": [
+      "Christian Tinauer",
+      "Anna Damulina",
+      "Maximilian Sackl",
+      "Martin Soellradl",
+      "Reduan Achtibat",
+      "Maximilian Dreyer",
+      "Frederik Pahde",
+      "Sebastian Lapuschkin",
+      "Reinhold Schmidt",
+      "Stefan Ropele",
+      "Wojciech Samek",
+      "Christian Langkammer"
+    ],
+    "year": "2024",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "xAI (2)",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/xai/TinauerDSSADPLS24",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Christian Tinauer",
+          "Anna Damulina",
+          "Maximilian Sackl",
+          "Martin Soellradl",
+          "Reduan Achtibat",
+          "Maximilian Dreyer",
+          "Frederik Pahde",
+          "Sebastian Lapuschkin",
+          "Reinhold Schmidt",
+          "Stefan Ropele",
+          "Wojciech Samek",
+          "Christian Langkammer"
+        ],
+        "title": "Explainable Concept Mappings of MRI: Revealing the Mechanisms Underlying Deep Learning-Based Brain Disease Classification",
+        "booktitle": "Explainable Artificial Intelligence",
+        "series": "Communications in Computer and Information Science",
+        "volume": "2154",
+        "pages": "202--216",
+        "year": "2024",
+        "publisher": "Springer",
+        "doi": "10.1007/978-3-031-63797-1_11",
+        "url": "https://doi.org/10.1007/978-3-031-63797-1_11"
+      }
+    }
+  ]
+}

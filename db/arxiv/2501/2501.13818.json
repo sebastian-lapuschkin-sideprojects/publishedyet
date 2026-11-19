@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:2501.13818",
+    "title": "Ensuring Medical AI Safety: Interpretability-Driven Detection and Mitigation of Spurious Model Behavior and Associated Data",
+    "authors": [
+      "Frederik Pahde",
+      "Thomas Wiegand",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek"
+    ],
+    "year": "2025",
+    "primary_class": "cs.AI"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "Mach. Learn.",
+      "archival": true,
+      "preferred": true,
+      "dblp": "journals/ml/PahdeWLS25",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Frederik Pahde",
+          "Thomas Wiegand",
+          "Sebastian Lapuschkin",
+          "Wojciech Samek"
+        ],
+        "title": "Ensuring medical AI safety: interpretability-driven detection and mitigation of spurious model behavior and associated data",
+        "journal": "Machine Learning",
+        "volume": "114",
+        "number": "9",
+        "pages": "206",
+        "year": "2025",
+        "doi": "10.1007/S10994-025-06834-W",
+        "url": "https://doi.org/10.1007/S10994-025-06834-W",
+        "publisher": "Springer Science and Business Media LLC"
+      }
+    }
+  ]
+}

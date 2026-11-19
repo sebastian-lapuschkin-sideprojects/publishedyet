@@ -1,0 +1,41 @@
+{
+  "preprint": {
+    "id": "arxiv:2311.16681",
+    "title": "Understanding the (Extra-)Ordinary: Validating Deep Model Decisions with Prototypical Concept-based Explanations",
+    "authors": [
+      "Maximilian Dreyer",
+      "Reduan Achtibat",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2023",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "workshop",
+      "venue_short": "CVPR Workshops",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/cvpr/DreyerASL22",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Maximilian Dreyer",
+          "Reduan Achtibat",
+          "Wojciech Samek",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "Understanding the (Extra-)Ordinary: Validating Deep Model Decisions with Prototypical Concept-based Explanations",
+        "booktitle": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "pages": "3491--3501",
+        "year": "2024",
+        "publisher": "IEEE",
+        "doi": "10.1109/CVPRW63382.2024.00353",
+        "url": "https://doi.org/10.1109/CVPRW63382.2024.00353"
+      }
+    }
+  ]
+}

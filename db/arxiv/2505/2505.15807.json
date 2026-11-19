@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:2505.15807",
+    "title": "The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation",
+    "authors": [
+      "Patrick Kahardipraja",
+      "Reduan Achtibat",
+      "Thomas Wiegand",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2025",
+    "primary_class": "cs.CL"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "NeurIPS",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/nips/KahardiprajaAWS25",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Patrick Kahardipraja",
+          "Reduan Achtibat",
+          "Thomas Wiegand",
+          "Wojciech Samek",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation",
+        "booktitle": "Advances in Neural Information Processing Systems 38",
+        "year": "2025",
+        "url": "https://doi.org/10.52202/085713-3940",
+        "doi": "10.52202/085713-3940",
+        "pages": "130953--130997",
+        "publisher": "Neural Information Processing Systems Foundation, Inc. (NeurIPS)"
+      }
+    }
+  ]
+}

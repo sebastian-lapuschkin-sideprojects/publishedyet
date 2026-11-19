@@ -1,0 +1,50 @@
+{
+  "preprint": {
+    "id": "arxiv:1908.06943",
+    "title": "Resolving challenges in deep learning-based analyses of histopathological images using explanation methods",
+    "authors": [
+      "Miriam Hägele",
+      "Philipp Seegerer",
+      "Sebastian Lapuschkin",
+      "Michael Bockmayr",
+      "Wojciech Samek",
+      "Frederick Klauschen",
+      "Klaus-Robert Müller",
+      "Alexander Binder"
+    ],
+    "year": "2019",
+    "primary_class": "eess.IV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "Sci Rep",
+      "archival": true,
+      "preferred": true,
+      "source": "crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Hägele, Miriam",
+          "Seegerer, Philipp",
+          "Lapuschkin, Sebastian",
+          "Bockmayr, Michael",
+          "Samek, Wojciech",
+          "Klauschen, Frederick",
+          "Müller, Klaus-Robert",
+          "Binder, Alexander"
+        ],
+        "title": "Resolving challenges in deep learning-based analyses of histopathological images using explanation methods",
+        "journal": "Scientific Reports",
+        "year": "2020",
+        "volume": "10",
+        "number": "1",
+        "pages": "6423",
+        "publisher": "Springer Science and Business Media LLC",
+        "doi": "10.1038/s41598-020-62724-2",
+        "url": "https://doi.org/10.1038/s41598-020-62724-2"
+      }
+    }
+  ]
+}

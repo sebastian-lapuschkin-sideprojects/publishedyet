@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:2503.05522",
+    "title": "Post-Hoc Concept Disentanglement: From Correlated to Isolated Concept Representations",
+    "authors": [
+      "Eren Erogullari",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek",
+      "Frederik Pahde"
+    ],
+    "year": "2025",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "xAI (1)",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/xai/ErogullariLSP25",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Eren Erogullari",
+          "Sebastian Lapuschkin",
+          "Wojciech Samek",
+          "Frederik Pahde"
+        ],
+        "title": "Post-hoc Concept Disentanglement: From Correlated to Isolated Concept Representations",
+        "booktitle": "Explainable Artificial Intelligence",
+        "series": "Communications in Computer and Information Science",
+        "volume": "2576",
+        "pages": "68--89",
+        "year": "2026",
+        "publisher": "Springer",
+        "doi": "10.1007/978-3-032-08317-3_4",
+        "url": "https://doi.org/10.1007/978-3-032-08317-3_4"
+      }
+    }
+  ]
+}

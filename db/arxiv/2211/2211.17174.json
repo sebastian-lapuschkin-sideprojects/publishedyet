@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:2211.17174",
+    "title": "Optimizing Explanations by Network Canonization and Hyperparameter Search",
+    "authors": [
+      "Frederik Pahde",
+      "Galip Ümit Yolcu",
+      "Alexander Binder",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2022",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "workshop",
+      "venue_short": "CVPR Workshops",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/cvpr/PahdeYBSL23",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Frederik Pahde",
+          "Galip Ümit Yolcu",
+          "Alexander Binder",
+          "Wojciech Samek",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "Optimizing Explanations by Network Canonization and Hyperparameter Search",
+        "booktitle": "2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "pages": "3819--3828",
+        "year": "2023",
+        "publisher": "IEEE",
+        "doi": "10.1109/CVPRW59228.2023.00396",
+        "url": "https://doi.org/10.1109/CVPRW59228.2023.00396"
+      }
+    }
+  ]
+}

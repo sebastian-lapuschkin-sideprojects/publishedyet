@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:2004.10484",
+    "title": "Understanding Integrated Gradients with SmoothTaylor for Deep Neural Network Attribution",
+    "authors": [
+      "Gary S. W. Goh",
+      "Sebastian Lapuschkin",
+      "Leander Weber",
+      "Wojciech Samek",
+      "Alexander Binder"
+    ],
+    "year": "2020",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ICPR",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/icpr/GohLWSB20",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Gary S. W. Goh",
+          "Sebastian Lapuschkin",
+          "Leander Weber",
+          "Wojciech Samek",
+          "Alexander Binder"
+        ],
+        "title": "Understanding Integrated Gradients with SmoothTaylor for Deep Neural Network Attribution",
+        "booktitle": "2020 25th International Conference on Pattern Recognition (ICPR)",
+        "pages": "4949--4956",
+        "year": "2021",
+        "publisher": "IEEE",
+        "doi": "10.1109/ICPR48806.2021.9413242",
+        "url": "https://doi.org/10.1109/ICPR48806.2021.9413242"
+      }
+    }
+  ]
+}

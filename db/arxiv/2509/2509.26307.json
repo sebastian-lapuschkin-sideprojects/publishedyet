@@ -1,0 +1,42 @@
+{
+  "preprint": {
+    "id": "arxiv:2509.26307",
+    "title": "Attribution-Guided Decoding",
+    "authors": [
+      "Piotr Komorowski",
+      "Elena Golimblevskaia",
+      "Reduan Achtibat",
+      "Thomas Wiegand",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek"
+    ],
+    "year": "2025",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ICLR",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/iclr/KomorowskiGAWLS26",
+      "source": "dblp, written as on OpenReview",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Piotr Komorowski",
+          "Elena Golimblevskaia",
+          "Reduan Achtibat",
+          "Thomas Wiegand",
+          "Sebastian Lapuschkin",
+          "Wojciech Samek"
+        ],
+        "title": "Attribution-Guided Decoding",
+        "booktitle": "The Fourteenth International Conference on Learning Representations",
+        "year": "2026",
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/da30215ee52c1daaaaddada8137cfd0b-Abstract-Conference.html"
+      }
+    }
+  ]
+}

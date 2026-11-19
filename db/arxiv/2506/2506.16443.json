@@ -1,0 +1,51 @@
+{
+  "preprint": {
+    "id": "arxiv:2506.16443",
+    "title": "Leveraging Influence Functions for Resampling Data in Physics-Informed Neural Networks",
+    "authors": [
+      "Jonas R. Naujoks",
+      "Aleksander Krasowski",
+      "Moritz Weckbecker",
+      "Galip Ümit Yolcu",
+      "Thomas Wiegand",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek",
+      "René P. Klausen"
+    ],
+    "year": "2025",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "xAI (2)",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/xai/NaujoksKWY0LSK25",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Jonas R. Naujoks",
+          "Aleksander Krasowski",
+          "Moritz Weckbecker",
+          "Galip Ümit Yolcu",
+          "Thomas Wiegand",
+          "Sebastian Lapuschkin",
+          "Wojciech Samek",
+          "René P. Klausen"
+        ],
+        "title": "Leveraging Influence Functions for Resampling Data in Physics-Informed Neural Networks",
+        "booktitle": "Explainable Artificial Intelligence",
+        "series": "Communications in Computer and Information Science",
+        "volume": "2577",
+        "pages": "383--395",
+        "year": "2026",
+        "publisher": "Springer",
+        "doi": "10.1007/978-3-032-08324-1_17",
+        "url": "https://doi.org/10.1007/978-3-032-08324-1_17"
+      }
+    }
+  ]
+}

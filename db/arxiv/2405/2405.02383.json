@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:2405.02383",
+    "title": "A Fresh Look at Sanity Checks for Saliency Maps",
+    "authors": [
+      "Anna Hedström",
+      "Leander Weber",
+      "Sebastian Lapuschkin",
+      "Marina Höhne"
+    ],
+    "year": "2024",
+    "primary_class": "stat.ML"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "xAI (1)",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/xai/HedstromWLH24",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Anna Hedström",
+          "Leander Weber",
+          "Sebastian Lapuschkin",
+          "Marina M.-C. Höhne"
+        ],
+        "title": "A Fresh Look at Sanity Checks for Saliency Maps",
+        "booktitle": "Explainable Artificial Intelligence",
+        "series": "Communications in Computer and Information Science",
+        "volume": "2153",
+        "pages": "403--420",
+        "year": "2024",
+        "publisher": "Springer",
+        "doi": "10.1007/978-3-031-63787-2_21",
+        "url": "https://doi.org/10.1007/978-3-031-63787-2_21"
+      }
+    }
+  ]
+}

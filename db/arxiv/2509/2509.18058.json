@@ -1,0 +1,48 @@
+{
+  "preprint": {
+    "id": "arxiv:2509.18058",
+    "title": "Strategic Dishonesty Can Undermine AI Safety Evaluations of Frontier LLMs",
+    "authors": [
+      "Alexander Panfilov",
+      "Evgenii Kortukov",
+      "Kristina Nikolić",
+      "Matthias Bethge",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek",
+      "Ameya Prabhu",
+      "Maksym Andriushchenko",
+      "Jonas Geiping"
+    ],
+    "year": "2025",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ICLR",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/iclr/PanfilovKNBLSPA26",
+      "source": "dblp, written as on OpenReview",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Alexander Panfilov",
+          "Evgenii Kortukov",
+          "Kristina Nikolic",
+          "Matthias Bethge",
+          "Sebastian Lapuschkin",
+          "Wojciech Samek",
+          "Ameya Prabhu",
+          "Maksym Andriushchenko",
+          "Jonas Geiping"
+        ],
+        "title": "Strategic Dishonesty Can Undermine AI Safety Evaluations of Frontier LLMs",
+        "booktitle": "The Fourteenth International Conference on Learning Representations",
+        "year": "2026",
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/51510f7458011efb04791417c67798f1-Abstract-Conference.html"
+      }
+    }
+  ]
+}

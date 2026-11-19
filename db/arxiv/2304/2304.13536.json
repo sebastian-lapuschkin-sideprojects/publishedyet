@@ -1,0 +1,45 @@
+{
+  "preprint": {
+    "id": "arxiv:2304.13536",
+    "title": "Bridging the Gap: Gaze Events as Interpretable Concepts to Explain Deep Neural Sequence Models",
+    "authors": [
+      "Daniel G. Krakowczyk",
+      "Paul Prasse",
+      "David R. Reich",
+      "Sebastian Lapuschkin",
+      "Tobias Scheffer",
+      "Lena A. Jäger"
+    ],
+    "year": "2023",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ETRA",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/etra/KrakowczykPRLSJ23",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Daniel G. Krakowczyk",
+          "Paul Prasse",
+          "David R. Reich",
+          "Sebastian Lapuschkin",
+          "Tobias Scheffer",
+          "Lena A. Jäger"
+        ],
+        "title": "Bridging the Gap: Gaze Events as Interpretable Concepts to Explain Deep Neural Sequence Models",
+        "booktitle": "2023 Symposium on Eye Tracking Research and Applications",
+        "pages": "3:1--3:8",
+        "year": "2023",
+        "publisher": "ACM",
+        "doi": "10.1145/3588015.3588412",
+        "url": "https://doi.org/10.1145/3588015.3588412"
+      }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "preprint": {
+    "id": "arxiv:2410.05114",
+    "title": "Synthetic Generation of Dermatoscopic Images with GAN and Closed-Form Factorization",
+    "authors": [
+      "Rohan Reddy Mekala",
+      "Frederik Pahde",
+      "Simon Baur",
+      "Sneha Chandrashekar",
+      "Madeline Diep",
+      "Markus Wenzel",
+      "Eric L. Wisotzky",
+      "Galip Ümit Yolcu",
+      "Sebastian Lapuschkin",
+      "Jackie Ma",
+      "Peter Eisert",
+      "Mikael Lindvall",
+      "Adam Porter",
+      "Wojciech Samek"
+    ],
+    "year": "2024",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "workshop",
+      "venue_short": "ECCV Workshops (20)",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/eccv/MekalaPBCDWWYLMELPS24",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Rohan Reddy Mekala",
+          "Frederik Pahde",
+          "Simon Baur",
+          "Sneha Chandrashekar",
+          "Madeline Diep",
+          "Markus Wenzel",
+          "Eric L. Wisotzky",
+          "Galip Ümit Yolcu",
+          "Sebastian Lapuschkin",
+          "Jackie Ma",
+          "Peter Eisert",
+          "Mikael Lindvall",
+          "Adam A. Porter",
+          "Wojciech Samek"
+        ],
+        "title": "Synthetic Generation of Dermatoscopic Images with GAN and Closed-Form Factorization",
+        "booktitle": "Computer Vision – ECCV 2024 Workshops",
+        "series": "Lecture Notes in Computer Science",
+        "volume": "15642",
+        "pages": "368--384",
+        "year": "2025",
+        "publisher": "Springer",
+        "doi": "10.1007/978-3-031-91907-7_22",
+        "url": "https://doi.org/10.1007/978-3-031-91907-7_22"
+      }
+    }
+  ]
+}

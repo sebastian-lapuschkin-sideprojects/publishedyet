@@ -1,0 +1,41 @@
+{
+  "preprint": {
+    "id": "arxiv:1708.07689",
+    "title": "Understanding and Comparing Deep Neural Networks for Age and Gender Classification",
+    "authors": [
+      "Sebastian Lapuschkin",
+      "Alexander Binder",
+      "Klaus-Robert Müller",
+      "Wojciech Samek"
+    ],
+    "year": "2017",
+    "primary_class": "stat.ML"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "workshop",
+      "venue_short": "ICCV Workshops",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/iccvw/SamekBLM17",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Wojciech Samek",
+          "Alexander Binder",
+          "Sebastian Lapuschkin",
+          "Klaus-Robert Müller"
+        ],
+        "title": "Understanding and Comparing Deep Neural Networks for Age and Gender Classification",
+        "booktitle": "2017 IEEE International Conference on Computer Vision Workshops (ICCVW)",
+        "pages": "1629--1638",
+        "year": "2017",
+        "publisher": "IEEE Computer Society",
+        "doi": "10.1109/ICCVW.2017.191",
+        "url": "https://doi.org/10.1109/ICCVW.2017.191"
+      }
+    }
+  ]
+}

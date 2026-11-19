@@ -1,0 +1,47 @@
+{
+  "preprint": {
+    "id": "arxiv:2604.14090",
+    "title": "From Weights to Activations: Is Steering the Next Frontier of Adaptation?",
+    "authors": [
+      "Simon Ostermann",
+      "Daniil Gurgurov",
+      "Tanja Baeumel",
+      "Michael A. Hedderich",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek",
+      "Vera Schmitt"
+    ],
+    "year": "2026",
+    "primary_class": "cs.CL"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ACL (1)",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/acl/OstermannGBHLSS26",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Simon Ostermann",
+          "Daniil Gurgurov",
+          "Tanja Baeumel",
+          "Michael A. Hedderich",
+          "Sebastian Lapuschkin",
+          "Wojciech Samek",
+          "Vera Schmitt"
+        ],
+        "title": "From Weights to Activations: Is Steering the Next Frontier of Adaptation?",
+        "booktitle": "Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+        "pages": "29854--29879",
+        "year": "2026",
+        "publisher": "Association for Computational Linguistics",
+        "doi": "10.18653/V1/2026.ACL-LONG.1377",
+        "url": "https://doi.org/10.18653/V1/2026.ACL-LONG.1377"
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "preprint": {
+    "id": "arxiv:1808.04260",
+    "title": "iNNvestigate neural networks!",
+    "authors": [
+      "Maximilian Alber",
+      "Sebastian Lapuschkin",
+      "Philipp Seegerer",
+      "Miriam Hägele",
+      "Kristof T. Schütt",
+      "Grégoire Montavon",
+      "Wojciech Samek",
+      "Klaus-Robert Müller",
+      "Sven Dähne",
+      "Pieter-Jan Kindermans"
+    ],
+    "year": "2018",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "J. Mach. Learn. Res.",
+      "archival": true,
+      "preferred": true,
+      "dblp": "journals/jmlr/AlberLSHSMSMDK19",
+      "source": "dblp",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Maximilian Alber",
+          "Sebastian Lapuschkin",
+          "Philipp Seegerer",
+          "Miriam Hägele",
+          "Kristof T. Schütt",
+          "Grégoire Montavon",
+          "Wojciech Samek",
+          "Klaus-Robert Müller",
+          "Sven Dähne",
+          "Pieter-Jan Kindermans"
+        ],
+        "title": "iNNvestigate Neural Networks!",
+        "journal": "J. Mach. Learn. Res.",
+        "volume": "20",
+        "pages": "93:1--93:8",
+        "year": "2019",
+        "url": "https://jmlr.org/papers/v20/18-540.html"
+      }
+    }
+  ]
+}

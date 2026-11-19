@@ -1,0 +1,45 @@
+{
+  "preprint": {
+    "id": "arxiv:1910.09840",
+    "title": "Towards Best Practice in Explaining Neural Network Decisions with LRP",
+    "authors": [
+      "Maximilian Kohlbrenner",
+      "Alexander Bauer",
+      "Shinichi Nakajima",
+      "Alexander Binder",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2019",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "IJCNN",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/ijcnn/Kohlbrenner0NBS20",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Maximilian Kohlbrenner",
+          "Alexander Bauer",
+          "Shinichi Nakajima",
+          "Alexander Binder",
+          "Wojciech Samek",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "Towards Best Practice in Explaining Neural Network Decisions with LRP",
+        "booktitle": "2020 International Joint Conference on Neural Networks (IJCNN)",
+        "pages": "1--7",
+        "year": "2020",
+        "publisher": "IEEE",
+        "doi": "10.1109/IJCNN48605.2020.9206975",
+        "url": "https://doi.org/10.1109/IJCNN48605.2020.9206975"
+      }
+    }
+  ]
+}

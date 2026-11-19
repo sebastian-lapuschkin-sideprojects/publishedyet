@@ -1,0 +1,42 @@
+{
+  "preprint": {
+    "id": "arxiv:2203.08008",
+    "title": "Beyond Explaining: Opportunities and Challenges of XAI-Based Model Improvement",
+    "authors": [
+      "Leander Weber",
+      "Sebastian Lapuschkin",
+      "Alexander Binder",
+      "Wojciech Samek"
+    ],
+    "year": "2022",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "Inf. Fusion",
+      "archival": true,
+      "preferred": true,
+      "dblp": "journals/inffus/WeberLBS23",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Leander Weber",
+          "Sebastian Lapuschkin",
+          "Alexander Binder",
+          "Wojciech Samek"
+        ],
+        "title": "Beyond explaining: Opportunities and challenges of XAI-based model improvement",
+        "journal": "Information Fusion",
+        "volume": "92",
+        "pages": "154--176",
+        "year": "2023",
+        "doi": "10.1016/J.INFFUS.2022.11.013",
+        "url": "https://doi.org/10.1016/J.INFFUS.2022.11.013",
+        "publisher": "Elsevier BV"
+      }
+    }
+  ]
+}

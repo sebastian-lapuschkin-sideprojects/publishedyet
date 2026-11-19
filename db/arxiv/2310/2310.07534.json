@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:2310.07534",
+    "title": "Human-Centered Evaluation of XAI Methods",
+    "authors": [
+      "Karam Dawoud",
+      "Wojciech Samek",
+      "Peter Eisert",
+      "Sebastian Lapuschkin",
+      "Sebastian Bosse"
+    ],
+    "year": "2023",
+    "primary_class": "cs.AI"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "workshop",
+      "venue_short": "ICDM (Workshops)",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/icdm/DawoudSELB23",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Karam Tomotaki-Dawoud",
+          "Wojciech Samek",
+          "Peter Eisert",
+          "Sebastian Lapuschkin",
+          "Sebastian Bosse"
+        ],
+        "title": "Human-Centered Evaluation of XAI Methods",
+        "booktitle": "2023 IEEE International Conference on Data Mining Workshops (ICDMW)",
+        "pages": "912--921",
+        "year": "2023",
+        "publisher": "IEEE",
+        "doi": "10.1109/ICDMW60847.2023.00122",
+        "url": "https://doi.org/10.1109/ICDMW60847.2023.00122"
+      }
+    }
+  ]
+}

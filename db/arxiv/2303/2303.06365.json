@@ -1,0 +1,42 @@
+{
+  "preprint": {
+    "id": "arxiv:2303.06365",
+    "title": "Explainable AI for Time Series via Virtual Inspection Layers",
+    "authors": [
+      "Johanna Vielhaben",
+      "Sebastian Lapuschkin",
+      "Grégoire Montavon",
+      "Wojciech Samek"
+    ],
+    "year": "2023",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "Pattern Recognit.",
+      "archival": true,
+      "preferred": true,
+      "dblp": "journals/pr/VielhabenLMS24",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Johanna Vielhaben",
+          "Sebastian Lapuschkin",
+          "Grégoire Montavon",
+          "Wojciech Samek"
+        ],
+        "title": "Explainable AI for time series via Virtual Inspection Layers",
+        "journal": "Pattern Recognition",
+        "volume": "150",
+        "pages": "110309",
+        "year": "2024",
+        "doi": "10.1016/J.PATCOG.2024.110309",
+        "url": "https://doi.org/10.1016/J.PATCOG.2024.110309",
+        "publisher": "Elsevier BV"
+      }
+    }
+  ]
+}

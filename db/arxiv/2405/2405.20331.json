@@ -1,0 +1,45 @@
+{
+  "preprint": {
+    "id": "arxiv:2405.20331",
+    "title": "CoSy: Evaluating Textual Explanations of Neurons",
+    "authors": [
+      "Laura Kopf",
+      "Philine Lou Bommer",
+      "Anna Hedström",
+      "Sebastian Lapuschkin",
+      "Marina M. -C. Höhne",
+      "Kirill Bykov"
+    ],
+    "year": "2024",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "NeurIPS",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/nips/KopfBHLHB24",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Laura Kopf",
+          "Philine Lou Bommer",
+          "Anna Hedström",
+          "Sebastian Lapuschkin",
+          "Marina M.-C. Höhne",
+          "Kirill Bykov"
+        ],
+        "title": "CoSy: Evaluating Textual Explanations of Neurons",
+        "booktitle": "Advances in Neural Information Processing Systems 37",
+        "year": "2024",
+        "url": "https://doi.org/10.52202/079017-1093",
+        "doi": "10.52202/079017-1093",
+        "pages": "34656--34685",
+        "publisher": "Neural Information Processing Systems Foundation, Inc. (NeurIPS)"
+      }
+    }
+  ]
+}

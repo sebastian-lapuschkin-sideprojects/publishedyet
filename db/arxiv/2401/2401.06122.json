@@ -1,0 +1,49 @@
+{
+  "preprint": {
+    "id": "arxiv:2401.06122",
+    "title": "Manipulating Feature Visualizations with Gradient Slingshots",
+    "authors": [
+      "Dilyara Bareeva",
+      "Marina M. -C. Höhne",
+      "Alexander Warnecke",
+      "Lukas Pirch",
+      "Klaus-Robert Müller",
+      "Konrad Rieck",
+      "Sebastian Lapuschkin",
+      "Kirill Bykov"
+    ],
+    "year": "2024",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "NeurIPS",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/nips/BareevaHWPMRLB25",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Dilyara Bareeva",
+          "Marina M.-C. Höhne",
+          "Alexander Warnecke",
+          "Lukas Pirch",
+          "Klaus-Robert Müller",
+          "Konrad Rieck",
+          "Sebastian Lapuschkin",
+          "Kirill Bykov"
+        ],
+        "title": "Manipulating Feature Visualizations with Gradient Slingshots",
+        "booktitle": "Advances in Neural Information Processing Systems 38",
+        "year": "2025",
+        "url": "https://doi.org/10.52202/085713-5560",
+        "doi": "10.52202/085713-5560",
+        "pages": "184849--184886",
+        "publisher": "Neural Information Processing Systems Foundation, Inc. (NeurIPS)"
+      }
+    }
+  ]
+}

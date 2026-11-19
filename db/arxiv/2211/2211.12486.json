@@ -1,0 +1,45 @@
+{
+  "preprint": {
+    "id": "arxiv:2211.12486",
+    "title": "Shortcomings of Top-Down Randomization-Based Sanity Checks for Evaluations of Deep Neural Network Explanations",
+    "authors": [
+      "Alexander Binder",
+      "Leander Weber",
+      "Sebastian Lapuschkin",
+      "Grégoire Montavon",
+      "Klaus-Robert Müller",
+      "Wojciech Samek"
+    ],
+    "year": "2022",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "CVPR",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/cvpr/BinderWLMMS23",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Alexander Binder",
+          "Leander Weber",
+          "Sebastian Lapuschkin",
+          "Grégoire Montavon",
+          "Klaus-Robert Müller",
+          "Wojciech Samek"
+        ],
+        "title": "Shortcomings of Top-Down Randomization-Based Sanity Checks for Evaluations of Deep Neural Network Explanations",
+        "booktitle": "2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "pages": "16143--16152",
+        "year": "2023",
+        "publisher": "IEEE",
+        "doi": "10.1109/CVPR52729.2023.01549",
+        "url": "https://doi.org/10.1109/CVPR52729.2023.01549"
+      }
+    }
+  ]
+}

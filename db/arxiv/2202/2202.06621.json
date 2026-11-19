@@ -1,0 +1,39 @@
+{
+  "preprint": {
+    "id": "arxiv:2202.06621",
+    "title": "Measurably Stronger Explanation Reliability via Model Canonization",
+    "authors": [
+      "Franz Motzkus",
+      "Leander Weber",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2022",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ICIP",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/icip/MotzkusWL22",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Franz Motzkus",
+          "Leander Weber",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "Measurably Stronger Explanation Reliability Via Model Canonization",
+        "booktitle": "2022 IEEE International Conference on Image Processing (ICIP)",
+        "pages": "516--520",
+        "year": "2022",
+        "publisher": "IEEE",
+        "doi": "10.1109/ICIP46576.2022.9897282",
+        "url": "https://doi.org/10.1109/ICIP46576.2022.9897282"
+      }
+    }
+  ]
+}

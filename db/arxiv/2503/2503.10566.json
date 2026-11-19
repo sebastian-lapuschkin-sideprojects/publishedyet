@@ -1,0 +1,46 @@
+{
+  "preprint": {
+    "id": "arxiv:2503.10566",
+    "title": "ASIDE: Architectural Separation of Instructions and Data in Language Models",
+    "authors": [
+      "Egor Zverev",
+      "Evgenii Kortukov",
+      "Alexander Panfilov",
+      "Alexandra Volkova",
+      "Soroush Tabesh",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek",
+      "Christoph H. Lampert"
+    ],
+    "year": "2025",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ICLR",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/iclr/ZverevKPVTLSL26",
+      "source": "dblp, written as on OpenReview",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Egor Zverev",
+          "Evgenii Kortukov",
+          "Alexander Panfilov",
+          "Alexandra Volkova",
+          "Soroush Tabesh",
+          "Sebastian Lapuschkin",
+          "Wojciech Samek",
+          "Christoph Lampert"
+        ],
+        "title": "ASIDE: Architectural Separation of Instructions and Data in Language Models",
+        "booktitle": "The Fourteenth International Conference on Learning Representations",
+        "year": "2026",
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/b77b5f1a2878fedd4705bfeafd24ca35-Abstract-Conference.html"
+      }
+    }
+  ]
+}

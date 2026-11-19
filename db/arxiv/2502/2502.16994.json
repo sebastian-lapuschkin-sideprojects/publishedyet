@@ -1,0 +1,49 @@
+{
+  "preprint": {
+    "id": "arxiv:2502.16994",
+    "title": "FADE: Why Bad Descriptions Happen to Good Features",
+    "authors": [
+      "Bruno Puri",
+      "Aakriti Jain",
+      "Elena Golimblevskaia",
+      "Patrick Kahardipraja",
+      "Thomas Wiegand",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2025",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ACL (Findings)",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/acl/PuriJGKWSL25",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Bruno Puri",
+          "Aakriti Jain",
+          "Elena Golimblevskaia",
+          "Patrick Kahardipraja",
+          "Thomas Wiegand",
+          "Wojciech Samek",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "FADE: Why Bad Descriptions Happen to Good Features",
+        "booktitle": "Findings of the Association for Computational Linguistics: ACL 2025",
+        "series": "Findings of ACL",
+        "volume": "ACL 2025",
+        "pages": "17138--17160",
+        "year": "2025",
+        "publisher": "Association for Computational Linguistics",
+        "doi": "10.18653/V1/2025.FINDINGS-ACL.881",
+        "url": "https://doi.org/10.18653/V1/2025.FINDINGS-ACL.881"
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "preprint": {
+    "id": "arxiv:2401.17441",
+    "title": "Explaining Predictive Uncertainty by Exposing Second-Order Effects",
+    "authors": [
+      "Florian Bley",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek",
+      "Grégoire Montavon"
+    ],
+    "year": "2024",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "Pattern Recognit.",
+      "archival": true,
+      "preferred": true,
+      "dblp": "journals/pr/BleyLSM25",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Florian Bley",
+          "Sebastian Lapuschkin",
+          "Wojciech Samek",
+          "Grégoire Montavon"
+        ],
+        "title": "Explaining predictive uncertainty by exposing second-order effects",
+        "journal": "Pattern Recognition",
+        "volume": "160",
+        "pages": "111171",
+        "year": "2025",
+        "doi": "10.1016/J.PATCOG.2024.111171",
+        "url": "https://doi.org/10.1016/J.PATCOG.2024.111171",
+        "publisher": "Elsevier BV"
+      }
+    }
+  ]
+}

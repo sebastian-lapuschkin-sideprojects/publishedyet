@@ -1,0 +1,43 @@
+{
+  "preprint": {
+    "id": "arxiv:2303.12641",
+    "title": "Reveal to Revise: An Explainable AI Life Cycle for Iterative Bias Correction of Deep Models",
+    "authors": [
+      "Frederik Pahde",
+      "Maximilian Dreyer",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2023",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "MICCAI (2)",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/miccai/PahdeDSL23",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Frederik Pahde",
+          "Maximilian Dreyer",
+          "Wojciech Samek",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "Reveal to Revise: An Explainable AI Life Cycle for Iterative Bias Correction of Deep Models",
+        "booktitle": "Medical Image Computing and Computer Assisted Intervention – MICCAI 2023",
+        "series": "Lecture Notes in Computer Science",
+        "volume": "14221",
+        "pages": "596--606",
+        "year": "2023",
+        "publisher": "Springer",
+        "doi": "10.1007/978-3-031-43895-0_56",
+        "url": "https://doi.org/10.1007/978-3-031-43895-0_56"
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "preprint": {
+    "id": "arxiv:1604.08201",
+    "title": "Interpretable Deep Neural Networks for Single-Trial EEG Classification",
+    "authors": [
+      "Irene Sturm",
+      "Sebastian Bach",
+      "Wojciech Samek",
+      "Klaus-Robert Müller"
+    ],
+    "year": "2016",
+    "primary_class": "cs.NE"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "Journal of Neuroscience Methods",
+      "archival": true,
+      "preferred": true,
+      "source": "crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Sturm, Irene",
+          "Lapuschkin, Sebastian",
+          "Samek, Wojciech",
+          "Müller, Klaus-Robert"
+        ],
+        "title": "Interpretable deep neural networks for single-trial EEG classification",
+        "journal": "Journal of Neuroscience Methods",
+        "year": "2016",
+        "volume": "274",
+        "pages": "141--145",
+        "publisher": "Elsevier BV",
+        "doi": "10.1016/j.jneumeth.2016.10.008",
+        "url": "https://doi.org/10.1016/j.jneumeth.2016.10.008"
+      }
+    }
+  ]
+}

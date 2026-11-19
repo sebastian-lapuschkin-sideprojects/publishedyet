@@ -1,0 +1,45 @@
+{
+  "preprint": {
+    "id": "arxiv:2007.08790",
+    "title": "Explanation-Guided Training for Cross-Domain Few-Shot Classification",
+    "authors": [
+      "Jiamei Sun",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek",
+      "Yunqing Zhao",
+      "Ngai-Man Cheung",
+      "Alexander Binder"
+    ],
+    "year": "2020",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "ICPR",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/icpr/SunLSZCB20",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Jiamei Sun",
+          "Sebastian Lapuschkin",
+          "Wojciech Samek",
+          "Yunqing Zhao",
+          "Ngai-Man Cheung",
+          "Alexander Binder"
+        ],
+        "title": "Explanation-Guided Training for Cross-Domain Few-Shot Classification",
+        "booktitle": "2020 25th International Conference on Pattern Recognition (ICPR)",
+        "pages": "7609--7616",
+        "year": "2021",
+        "publisher": "IEEE",
+        "doi": "10.1109/ICPR48806.2021.9412941",
+        "url": "https://doi.org/10.1109/ICPR48806.2021.9412941"
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "preprint": {
+    "id": "arxiv:2506.10713",
+    "title": "Deep Learning-based Multi Project InP Wafer Simulation for Unsupervised Surface Defect Detection",
+    "authors": [
+      "Emílio Dolgener Cantú",
+      "Rolf Klemens Wittmann",
+      "Oliver Abdeen",
+      "Patrick Wagner",
+      "Wojciech Samek",
+      "Moritz Baier",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2025",
+    "primary_class": "cs.CV"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "journal",
+      "venue_short": "J. Frankl. Inst.",
+      "archival": true,
+      "preferred": true,
+      "dblp": "journals/jfi/CantuWAWSBL26",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "article",
+        "author": [
+          "Emílio Dolgener Cantú",
+          "Rolf Klemens Wittmann",
+          "Oliver Abdeen",
+          "Patrick Wagner",
+          "Wojciech Samek",
+          "Moritz Baier",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "Deep learning-based multi project InP wafer simulation towards unsupervised surface defect detection",
+        "journal": "Journal of the Franklin Institute",
+        "volume": "363",
+        "number": "2",
+        "pages": "108316",
+        "year": "2026",
+        "doi": "10.1016/J.JFRANKLIN.2025.108316",
+        "url": "https://doi.org/10.1016/J.JFRANKLIN.2025.108316",
+        "publisher": "Elsevier BV"
+      }
+    }
+  ]
+}

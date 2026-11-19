@@ -1,0 +1,47 @@
+{
+  "preprint": {
+    "id": "arxiv:2408.12568",
+    "title": "Pruning By Explaining Revisited: Optimizing Attribution Methods to Prune CNNs and Transformers",
+    "authors": [
+      "Sayed Mohammad Vakilzadeh Hatefi",
+      "Maximilian Dreyer",
+      "Reduan Achtibat",
+      "Thomas Wiegand",
+      "Wojciech Samek",
+      "Sebastian Lapuschkin"
+    ],
+    "year": "2024",
+    "primary_class": "cs.AI"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "workshop",
+      "venue_short": "ECCV Workshops (21)",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/eccv/HatefiDAWSL24",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Sayed Mohammad Vakilzadeh Hatefi",
+          "Maximilian Dreyer",
+          "Reduan Achtibat",
+          "Thomas Wiegand",
+          "Wojciech Samek",
+          "Sebastian Lapuschkin"
+        ],
+        "title": "Pruning by Explaining Revisited: Optimizing Attribution Methods to Prune CNNs and Transformers",
+        "booktitle": "Computer Vision – ECCV 2024 Workshops",
+        "series": "Lecture Notes in Computer Science",
+        "volume": "15643",
+        "pages": "152--169",
+        "year": "2025",
+        "publisher": "Springer",
+        "doi": "10.1007/978-3-031-92648-8_10",
+        "url": "https://doi.org/10.1007/978-3-031-92648-8_10"
+      }
+    }
+  ]
+}

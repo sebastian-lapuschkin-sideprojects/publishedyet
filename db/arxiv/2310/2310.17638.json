@@ -1,0 +1,61 @@
+{
+  "preprint": {
+    "id": "arxiv:2310.17638",
+    "title": "Generative Fractional Diffusion Models",
+    "authors": [
+      "Gabriel Nobis",
+      "Maximilian Springenberg",
+      "Marco Aversa",
+      "Michael Detzel",
+      "Rembert Daems",
+      "Roderick Murray-Smith",
+      "Shinichi Nakajima",
+      "Sebastian Lapuschkin",
+      "Stefano Ermon",
+      "Tolga Birdal",
+      "Manfred Opper",
+      "Christoph Knochenhauer",
+      "Luis Oala",
+      "Wojciech Samek"
+    ],
+    "year": "2023",
+    "primary_class": "cs.LG"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "NeurIPS",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/nips/NobisSADDMNLEBO24",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Gabriel Nobis",
+          "Maximilian Springenberg",
+          "Marco Aversa",
+          "Michael Detzel",
+          "Rembert Daems",
+          "Roderick Murray-Smith",
+          "Shinichi Nakajima",
+          "Sebastian Lapuschkin",
+          "Stefano Ermon",
+          "Tolga Birdal",
+          "Manfred Opper",
+          "Christoph Knochenhauer",
+          "Luis Oala",
+          "Wojciech Samek"
+        ],
+        "title": "Generative Fractional Diffusion Models",
+        "booktitle": "Advances in Neural Information Processing Systems 37",
+        "year": "2024",
+        "url": "https://doi.org/10.52202/079017-0802",
+        "doi": "10.52202/079017-0802",
+        "pages": "25469--25509",
+        "publisher": "Neural Information Processing Systems Foundation, Inc. (NeurIPS)"
+      }
+    }
+  ]
+}
