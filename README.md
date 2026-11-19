@@ -72,7 +72,7 @@ On the page, paste the contents of `demo/refs.bib` into the text field.
 
 ## Database format
 
-`db/arxiv/2402/2402.05602.json` (arXiv, sharded by year and month), `db/arxiv/hep-th/9901001.json`
+`db/arxiv/2402/2402.05602.json` (arXiv, sharded by year and month; its full content below), `db/arxiv/hep-th/9901001.json`
 (old arXiv ids), `db/doi/10.1101/2022.09.29.509859.json` (bioRxiv / medRxiv):
 
 ```json
@@ -80,7 +80,15 @@ On the page, paste the contents of `demo/refs.bib` into the text field.
   "preprint": {
     "id": "arxiv:2402.05602",
     "title": "AttnLRP: Attention-Aware Layer-Wise Relevance Propagation for Transformers",
-    "authors": ["Reduan Achtibat", "..."],
+    "authors": [
+      "Reduan Achtibat",
+      "Sayed Mohammad Vakilzadeh Hatefi",
+      "Maximilian Dreyer",
+      "Aakriti Jain",
+      "Thomas Wiegand",
+      "Sebastian Lapuschkin",
+      "Wojciech Samek"
+    ],
     "year": "2024",
     "primary_class": "cs.CL"
   },
@@ -89,18 +97,27 @@ On the page, paste the contents of `demo/refs.bib` into the text field.
       "relation": "same",
       "venue_type": "conference",
       "archival": true,
-      "preferred": true,
-      "dblp": "conf/...",
+      "dblp": "conf/icml/AchtibatHDJWLS24",
       "source": "bibtex",
       "bibtex": {
         "type": "inproceedings",
-        "author": ["Achtibat, Reduan", "..."],
         "title": "{A}ttn{LRP}: Attention-Aware Layer-Wise Relevance Propagation for Transformers",
+        "author": [
+          "Achtibat, Reduan",
+          "Hatefi, Sayed Mohammad Vakilzadeh",
+          "Dreyer, Maximilian",
+          "Jain, Aakriti",
+          "Wiegand, Thomas",
+          "Lapuschkin, Sebastian",
+          "Samek, Wojciech"
+        ],
         "booktitle": "Proceedings of the 41st International Conference on Machine Learning",
-        "series": "Proceedings of Machine Learning Research",
-        "volume": "235",
         "pages": "135--168",
         "year": "2024",
+        "editor": "Salakhutdinov, Ruslan and Kolter, Zico and Heller, Katherine and Weller, Adrian and Oliver, Nuria and Scarlett, Jonathan and Berkenkamp, Felix",
+        "volume": "235",
+        "series": "Proceedings of Machine Learning Research",
+        "month": "21--27 Jul",
         "publisher": "PMLR",
         "url": "https://proceedings.mlr.press/v235/achtibat24a.html"
       }
