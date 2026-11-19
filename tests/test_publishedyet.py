@@ -234,6 +234,17 @@ class VenueBibtex(unittest.TestCase):
         self.assertEqual(py.missing_fields(pub), [])
 
 
+class CrossrefNames(unittest.TestCase):
+
+    def test_volume_not_series(self):
+        item = {'type': 'book-chapter', 'DOI': '10.1007/978-3-319-44781-0_8', 'title': ['LRP with Local Renormalization Layers'],
+                'container-title': ['Lecture Notes in Computer Science', 'Artificial Neural Networks and Machine Learning – ICANN 2016'],
+                'author': [{'family': 'Binder', 'given': 'Alexander'}], 'issued': {'date-parts': [[2016]]}, 'page': '63-71'}
+        bib = py.from_crossref(item)['bibtex']
+        self.assertEqual(bib['booktitle'], 'Artificial Neural Networks and Machine Learning – ICANN 2016')
+        self.assertEqual(bib['series'], 'Lecture Notes in Computer Science')
+
+
 class Completeness(unittest.TestCase):
 
     def test_missing_fields(self):

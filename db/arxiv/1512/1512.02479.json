@@ -18,6 +18,7 @@
       "venue_type": "journal",
       "venue_short": "Pattern Recognit.",
       "archival": true,
+      "preferred": true,
       "source": "crossref",
       "bibtex": {
         "type": "article",
@@ -36,6 +37,27 @@
         "publisher": "Elsevier BV",
         "doi": "10.1016/j.patcog.2016.11.008",
         "url": "https://doi.org/10.1016/j.patcog.2016.11.008"
+      }
+    },
+    {
+      "relation": "same",
+      "venue_type": "workshop",
+      "venue_short": "ICML Viz Workshop",
+      "archival": false,
+      "source": "workshop website (icmlviz.github.io), Google Scholar",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Montavon, Grégoire",
+          "Bach, Sebastian",
+          "Binder, Alexander",
+          "Samek, Wojciech",
+          "Müller, Klaus-Robert"
+        ],
+        "title": "Deep Taylor Decomposition of Neural Networks",
+        "booktitle": "ICML 2016 Workshop on Visualization for Deep Learning",
+        "year": "2016",
+        "url": "https://icmlviz.github.io/icmlviz2016/assets/papers/13.pdf"
       }
     }
   ]

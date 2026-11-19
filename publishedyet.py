@@ -464,8 +464,13 @@ def from_crossref(item):
     bib = {'type': bibtype,
            'author': [', '.join(n for n in [a.get('family'), a.get('given')] if n) or a.get('name', '')
                       for a in item.get('author', [])],
-           'title': strip_tags((item.get('title') or [''])[0]),
-           venue_field: strip_tags((item.get('container-title') or [''])[0])}
+           'title': strip_tags((item.get('title') or [''])[0])}
+    # chapters in book series name the series first and the volume after it:
+    # ['Lecture Notes in Computer Science', 'Artificial Neural Networks and Machine Learning - ICANN 2016']
+    containers = [strip_tags(name) for name in item.get('container-title') or [] if name]
+    bib[venue_field] = containers[-1] if containers else ''
+    if len(containers) > 1:
+        bib['series'] = containers[0]
     for date in ('published-print', 'issued', 'published-online'):
         year = ((item.get(date) or {}).get('date-parts') or [[None]])[0][0]
         if year:
