@@ -226,19 +226,30 @@ async def from_issue(args):
 
 
 def summary(record, path, existed):
-    # the text of the pull request: what merging it does to the database
+    # the text of the pull request: what merging it does to the database, with links to check it
     pre = record['preprint']
     lines = ['**{}** `{}`'.format('Changes the database entry' if existed else 'Adds a new file to the database:', path), '',
-             'Preprint: {}, *{}* ({})'.format(py.preprint_label(pre['id']), pre.get('title'), pre.get('year')), '',
-             'Publications:']
+             'Preprint: [{}]({}), *{}* ({})'.format(py.preprint_label(pre['id']), py.preprint_url(pre['id']),
+                                                   (pre.get('title') or '').replace('{', '').replace('}', ''), pre.get('year')),
+             '', 'Publications:']
     for i, pub in enumerate(record['publications']):
         bib = pub['bibtex']
         venue = bib.get(py.VENUE_FIELD.get(bib['type'], 'howpublished')) or ''
         notes = [pub.get('venue_type'), 'archival' if pub.get('archival', True) else 'non-archival',
                  'extended version' if pub.get('relation') == 'extended' else None,
                  'preferred' if py.preferred(record) == i else None]
-        lines.append('- {} {}: {} ({})'.format(pub.get('venue_short') or '', bib.get('year', ''), venue,
-                                              ', '.join(note for note in notes if note)).replace('-  ', '- '))
+        lines.append('- **{} {}**: {} ({})'.format(pub.get('venue_short') or '', bib.get('year', ''), venue,
+                                                  ', '.join(note for note in notes if note)).replace('** ', '**', 1))
+        lines.append('  *{}*'.format(bib.get('title', '').replace('{', '').replace('}', '')))
+        links = []
+        if bib.get('url'):
+            links.append('[paper]({})'.format(bib['url']))
+        if bib.get('doi') and 'doi.org' not in (bib.get('url') or ''):
+            links.append('[doi:{0}](https://doi.org/{0})'.format(bib['doi']))
+        if pub.get('dblp'):
+            links.append('[DBLP](https://dblp.org/rec/{})'.format(pub['dblp']))
+        if links:
+            lines.append('  ' + ' · '.join(links))
     if not record['publications']:
         lines.append('- none')
     if existed:
