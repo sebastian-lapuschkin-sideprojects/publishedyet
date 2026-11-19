@@ -58,13 +58,17 @@ automatically and need a database entry. Papers that only exist on OpenReview ge
 
 ## Command line
 
-The same code runs locally, without anything to install beyond Python 3.9+:
+The same code runs locally, without anything to install beyond Python 3.9+. To try it, use the
+demo bibliography in `demo/`: `demo/refs.bib` cites preprints from the database in mixed styles,
+plus one published paper and one preprint without a published version. `demo/refs_fixed.bib` is
+what the second command makes of it.
 
     python cli.py show 2402.05602 10.1101/2022.09.29.509859
-    python cli.py fix refs.bib -o refs_fixed.bib --preprint-style scholar   # prints the diff
-    python cli.py fix refs.bib --online                                       # also search online
+    python cli.py fix demo/refs.bib -o demo/refs_fixed.bib --preprint-style scholar   # prints the diff
+    python cli.py fix your.bib --online                                                 # also search online
 
 By default it uses the `db/` folder next to it (`--db` takes another folder or the site's url + `/db`).
+On the page, paste the contents of `demo/refs.bib` into the text field.
 
 ## Database format
 
@@ -145,4 +149,5 @@ Settings > Actions > General, "Allow GitHub Actions to create and approve pull r
     publishedyet.py         the core: reading and writing BibTeX, database lookup, online search
     cli.py                  the command line tool
     db/                     the database
+    demo/                   a demo bibliography and what publishedyet makes of it
     tests/                  offline tests, with a sample BibTeX library and saved API responses
