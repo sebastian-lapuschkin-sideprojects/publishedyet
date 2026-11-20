@@ -1,0 +1,45 @@
+{
+  "preprint": {
+    "id": "arxiv:2403.08319",
+    "title": "Knowledge Conflicts for LLMs: A Survey",
+    "authors": [
+      "Xu, Rongwu",
+      "Qi, Zehan",
+      "Wang, Cunxiang",
+      "Wang, Hongru",
+      "Zhang, Yue",
+      "Xu, Wei"
+    ],
+    "year": "2024"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "EMNLP",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/emnlp/XuQGW0ZX24",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Rongwu Xu",
+          "Zehan Qi",
+          "Zhijiang Guo",
+          "Cunxiang Wang",
+          "Hongru Wang",
+          "Yue Zhang",
+          "Wei Xu"
+        ],
+        "title": "Knowledge Conflicts for LLMs: A Survey",
+        "booktitle": "Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing",
+        "pages": "8541--8565",
+        "year": "2024",
+        "publisher": "Association for Computational Linguistics",
+        "doi": "10.18653/V1/2024.EMNLP-MAIN.486",
+        "url": "https://doi.org/10.18653/V1/2024.EMNLP-MAIN.486"
+      }
+    }
+  ]
+}
