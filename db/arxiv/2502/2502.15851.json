@@ -1,0 +1,49 @@
+{
+  "preprint": {
+    "id": "arxiv:2502.15851",
+    "title": "Control Illusion: The Failure of Instruction Hierarchies in Large Language Models",
+    "authors": [
+      "Yilin Geng",
+      "Haonan Li",
+      "Honglin Mu",
+      "Xudong Han",
+      "Timothy Baldwin",
+      "Omri Abend",
+      "Eduard Hovy",
+      "Lea Frermann"
+    ],
+    "year": "2025",
+    "primary_class": "cs.CL"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "AAAI",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/aaai/GengLMHBAHF26",
+      "source": "dblp, venue name from crossref",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Yilin Geng",
+          "Haonan Li",
+          "Honglin Mu",
+          "Xudong Han",
+          "Timothy Baldwin",
+          "Omri Abend",
+          "Eduard H. Hovy",
+          "Lea Frermann"
+        ],
+        "title": "Control Illusion: The Failure of Instruction Hierarchies in Large Language Models",
+        "booktitle": "Proceedings of the AAAI Conference on Artificial Intelligence",
+        "pages": "30816--30824",
+        "year": "2026",
+        "publisher": "AAAI Press",
+        "doi": "10.1609/AAAI.V40I36.40339",
+        "url": "https://doi.org/10.1609/AAAI.V40I36.40339"
+      }
+    }
+  ]
+}
