@@ -128,7 +128,9 @@ def show():
     if unreadable:
         counts += ', {} not readable'.format(unreadable)
     button = '<button class="small" data-action="share" title="copy a link that opens this page with the ticked preprints">{} share link</button>'.format(LINK_ICON)
-    el('results').innerHTML = '<div class="bar-top"><span class="cap">{}</span>{}</div>'.format(counts, button) + \
+    everything = ('<label class="pick" title="tick or untick all entries for the export and share links">'
+                  'export/share all: <input type="checkbox" id="pick-all" data-action="pick-all"{}></label>').format(' checked' if all_picked() else '')
+    el('results').innerHTML = '<div class="bar-top"><span class="cap">{}</span>{}{}</div>'.format(counts, button, everything) + \
         ''.join(card(i) for i in range(len(state['items'])))
     show_export()
 
@@ -417,6 +419,10 @@ async def on_results_click(event):
             js.navigator.clipboard.writeText(link)
         target.innerHTML = LINK_ICON + (' link copied' if link else ' nothing ticked')
         return
+    if action == 'pick-all':
+        state['left_out'] = set() if target.checked else {i for i, item in enumerate(state['items']) if item['id']}
+        show()
+        return
     i = int(target.getAttribute('data-i'))
     item = state['items'][i]
     pid = item['id']
@@ -426,6 +432,7 @@ async def on_results_click(event):
     elif action == 'pick':
         state['left_out'] ^= {i}
         el('card-{}'.format(i)).classList.toggle('left-out', i in state['left_out'])
+        el('pick-all').checked = all_picked()
         show_export()
         return
     elif action == 'edit':
@@ -473,6 +480,11 @@ async def on_file(event):
     if files.length:
         el('input').value = await files.item(0).text()
         await run()
+
+
+def all_picked():
+    # are all readable entries ticked for export/share?
+    return not any(i in state['left_out'] for i, item in enumerate(state['items']) if item['id'])
 
 
 def share_link():
