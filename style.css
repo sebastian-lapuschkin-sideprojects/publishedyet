@@ -113,6 +113,8 @@ h3 { font-size: 1.05rem; margin: 1.4rem 0 .5rem; }
 .edit .problems { color: var(--warn); font-size: .8rem; margin: 0; }
 .tile .incomplete { color: var(--warn); }
 .edit .hint, .edit .controls { margin: 0; }
+.edit .paste summary { cursor: pointer; font: .72rem var(--mono); color: var(--accent); }
+.edit .paste textarea { margin: .4rem 0; }
 @media (max-width: 760px) {
   .card .top { grid-template-columns: minmax(0, 1fr) auto; }
   .card .title { grid-column: 1 / -1; }

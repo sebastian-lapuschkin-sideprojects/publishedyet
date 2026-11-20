@@ -280,7 +280,13 @@ def edit_panel(i):
         return ''.join(out) + '<p class="hint wide">These fields describe the preprint itself.</p>'
     pub = record['publications'][choice]
     bib = pub['bibtex']
-    out = [select(i, 'bib', 'type', bib['type'], py.BIBTEX_TYPES),
+    empty = not (bib.get('year') or bib.get(venue_field(bib['type'])))   # just added: open the paste box
+    paste = ('<details class="wide paste"{0}><summary>paste a BibTeX entry to fill in the fields below</summary>'
+             '<textarea id="paste-{1}" rows="6" spellcheck="false" placeholder="@inproceedings{{key, author = {{...}}, title = {{...}}, ...}}"></textarea>'
+             '<div class="controls"><button class="small" data-action="from-bibtex" data-i="{1}">fill in</button> '
+             '<span class="hint" id="paste-note-{1}"></span></div></details>').format(' open' if empty else '', i)
+    out = [paste,
+           select(i, 'bib', 'type', bib['type'], py.BIBTEX_TYPES),
            select(i, 'meta', 'venue_type', pub.get('venue_type'), py.VENUE_TYPES),
            select(i, 'meta', 'relation', pub.get('relation'), py.RELATIONS),
            select(i, 'meta', 'archival', 'yes' if pub.get('archival', True) else 'no', ['yes', 'no']),
@@ -476,6 +482,14 @@ async def on_results_click(event):
     elif action == 'retry':
         await search([pid])
         return
+    elif action == 'from-bibtex':   # the fields of the chosen publication from a pasted entry
+        parsed = py.from_bibtex(el('paste-{}'.format(i)).value)
+        if not parsed:
+            el('paste-note-{}'.format(i)).innerText = 'no BibTeX entry found in the text'
+            return
+        pub = editable(item)['publications'][state['choices'][pid]]
+        pub.update(venue_type=parsed['venue_type'], source='bibtex, pasted', bibtex=parsed['bibtex'])
+        state['edited'].add(pid)
     elif action == 'edit':
         state['editing'] ^= {i}
     elif action == 'add':
