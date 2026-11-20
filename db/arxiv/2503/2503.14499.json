@@ -1,0 +1,80 @@
+{
+  "preprint": {
+    "id": "arxiv:2503.14499",
+    "title": "Measuring AI Ability to Complete Long Tasks",
+    "authors": [
+      "Thomas Kwa",
+      "Ben West",
+      "Joel Becker",
+      "Amy Deng",
+      "Katharyn Garcia",
+      "Max Hasin",
+      "Sami Jawhar",
+      "Megan Kinniment",
+      "Nate Rush",
+      "Sydney Von Arx",
+      "Ryan Bloom",
+      "Thomas Broadley",
+      "Haoxing Du",
+      "Brian Goodrich",
+      "Nikola Jurkovic",
+      "Luke Harold Miles",
+      "Seraphina Nix",
+      "Tao Lin",
+      "Neev Parikh",
+      "David Rein",
+      "Lucas Jun Koba Sato",
+      "Hjalmar Wijk",
+      "Daniel M. Ziegler",
+      "Elizabeth Barnes",
+      "Lawrence Chan"
+    ],
+    "year": "2025",
+    "primary_class": "cs.AI"
+  },
+  "publications": [
+    {
+      "relation": "same",
+      "venue_type": "conference",
+      "venue_short": "NeurIPS",
+      "archival": true,
+      "preferred": true,
+      "dblp": "conf/nips/KwaWBDGHJKRABBD25",
+      "source": "dblp",
+      "bibtex": {
+        "type": "inproceedings",
+        "author": [
+          "Thomas Kwa",
+          "Ben West",
+          "Joel Becker",
+          "Amy Deng",
+          "Katharyn Garcia",
+          "Max Hasin",
+          "Sami Jawhar",
+          "Megan Kinniment",
+          "Nate Rush",
+          "Sydney von Arx",
+          "Ryan Bloom",
+          "Thomas Broadley",
+          "Haoxing Du",
+          "Brian Goodrich",
+          "Nikola Jurkovic",
+          "Luke Harold Miles",
+          "Seraphina Nix",
+          "Tao Lin",
+          "Neev Parikh",
+          "David Rein",
+          "Lucas Jun Koba Sato",
+          "Hjalmar Wijk",
+          "Daniel M. Ziegler",
+          "Elizabeth Barnes",
+          "Lawrence Chan"
+        ],
+        "title": "Measuring AI Ability to Complete Long Software Tasks",
+        "booktitle": "Advances in Neural Information Processing Systems 38: Annual Conference on Neural Information Processing Systems 2025, NeurIPS 2025, San Diego, CA, USA, December 2-7, 2025 / Mexico City, Mexico, November 30 - December 5, 2025.",
+        "year": "2025",
+        "url": "http://papers.nips.cc/paper_files/paper/2025/hash/85069585133c4c168c865e65d72e9775-Abstract-Conference.html"
+      }
+    }
+  ]
+}
