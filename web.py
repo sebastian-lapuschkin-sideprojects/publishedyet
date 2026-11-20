@@ -26,37 +26,50 @@ STATUS = {  # status of a preprint: (label, css class); edits add " / edited"
 }
 LINK_ICON = ('<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>'
              '<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>')   # the "link" icon of Feather (MIT)
+TIMEOUT = 30   # seconds a source may take to answer
+SOURCES = {'sparql.dblp.org': 'DBLP', 'api.openalex.org': 'OpenAlex', 'api.crossref.org': 'Crossref',
+           'api.biorxiv.org': 'bioRxiv', 'proceedings.mlr.press': 'PMLR'}
 FIELDS = ['author', 'title', 'venue', 'year', 'volume', 'number', 'pages', 'publisher', 'series', 'editor', 'month', 'doi', 'url']
 WIDE = ('author', 'title', 'venue', 'editor', 'url')
 
 # what the page knows. Per preprint id: status, records, choices, originals (database records as
-# loaded), edited (ids changed by the user). Per card number: editing (panel open), left_out (not exported).
+# loaded), edited (ids changed by the user), problems (of the online search). Per card number:
+# editing (panel open), left_out (not exported).
 state = {'text': '', 'items': [], 'records': {}, 'status': {}, 'choices': {}, 'originals': {}, 'edited': set(),
-         'editing': set(), 'left_out': set()}
+         'problems': {}, 'editing': set(), 'left_out': set()}
 
 
 def el(name):
     return js.document.getElementById(name)
 
 
-async def get_text(url):
+async def fetch(url, kind, problems=None):
+    # kind 'json' or 'text'. Returns None if there is nothing. Rate limits, blocks, time-outs and
+    # sources that do not answer are noted in problems, so the card can say why it found nothing.
+    # (404 is no problem: the database or a source simply does not have this id.)
     try:
-        response = await pyfetch(url)
+        response = await asyncio.wait_for(pyfetch(url), TIMEOUT)
         if response.ok:
-            return await response.string()
-    except Exception as error:
-        js.console.warn('could not load {}: {}'.format(url, error))
+            return await asyncio.wait_for(response.json() if kind == 'json' else response.string(), TIMEOUT)
+        if response.status == 404:
+            return None
+        problem = {429: 'rate limited', 403: 'blocked'}.get(response.status, 'error {}'.format(response.status))
+    except asyncio.TimeoutError:
+        problem = 'timed out'
+    except Exception:
+        problem = 'no answer'     # also how refusals without CORS headers and bot walls look from here
+    js.console.warn('{}: {}'.format(problem, url))
+    if problems is not None:
+        problems.append('{}: {}'.format(SOURCES.get(url.split('/')[2], url.split('/')[2]), problem))
     return None
+
+
+async def get_text(url):
+    return await fetch(url, 'text')
 
 
 async def get_json(url):
-    try:
-        response = await pyfetch(url)
-        if response.ok:
-            return await response.json()
-    except Exception as error:
-        js.console.warn('could not load {}: {}'.format(url, error))
-    return None
+    return await fetch(url, 'json')
 
 
 def venue_field(bibtype):
@@ -80,7 +93,7 @@ def editable(item):
 async def run(event=None):
     text = el('input').value
     state.update(text=text, items=py.scan(text), records={}, status={}, choices={}, originals={}, edited=set(),
-                 editing=set(), left_out=set())
+                 problems={}, editing=set(), left_out=set())
     for item in state['items']:
         if item['id']:
             state['status'][item['id']] = 'looking'
@@ -103,10 +116,26 @@ async def search(pids):
         while queue:
             pid = queue.pop(0)
             state['status'][pid] = 'searching'
+            problems = state['problems'][pid] = []
             show()
             item = next(item for item in state['items'] if item['id'] == pid)
             known = py.preprint_from_fields(pid, item['fields']) if item['fields'] else None
-            record = await py.discover(pid, get_json, known, get_text)
+
+            def fetcher(kind):   # as get_json and get_text, but problems show on the card at once
+                async def get(url):
+                    count = len(problems)
+                    result = await fetch(url, kind, problems)
+                    if len(problems) > count:
+                        refresh(pid)
+                    return result
+                return get
+
+            try:
+                record = await py.discover(pid, fetcher('json'), known, fetcher('text'))
+            except Exception as error:   # a bug or an unexpected answer: say so instead of searching forever
+                js.console.error('search for {} failed: {}'.format(pid, error))
+                problems.append('search: failed ({})'.format(error))
+                record = {'preprint': known or {'id': pid}, 'publications': []}
             state['records'][pid] = record
             state['status'][pid] = 'online' if record['publications'] else 'none'
             state['choices'][pid] = py.preferred(record)
@@ -183,12 +212,21 @@ def card_top(i):
     label, kind = STATUS[status]
     if pid in state['edited']:
         label, kind = (label + ' / edited' if status in ('db', 'online') else 'edited'), 'online'
+    # sources that were rate limited, blocked or did not answer during the online search
+    problems = state['problems'].get(pid) if pid not in state['edited'] else None
+    tip = 'problems during the search: ' + '; '.join(problems) if problems else ''
+    if problems and status == 'searching':
+        label, kind = 'searching · ' + problems[-1].split(': ', 1)[1], 'warn'
+    elif problems and status == 'none':
+        label, kind = 'search incomplete', 'warn'
+        tip += '. Nothing found, but the search was not complete; try again later.'
+        actions.insert(0, '<button class="small" data-action="retry" data-i="{}" title="search online again">retry</button>'.format(i))
     title_class = 'title'
-    if status == 'none' and not title and pid not in state['edited']:   # no source knows this id at all
+    if status == 'none' and not title and pid not in state['edited'] and not problems:   # no source knows this id at all
         label, kind, title_class = 'unknown id', 'warn', 'title warn'
         title = 'no source knows this preprint; please check the id'
-    return '<div class="who">{}</div><div class="{}" title="{}">{}</div><span class="pill {}">{}</span><span class="actions">{}</span>'.format(
-        who, title_class, escape(title), escape(title), kind, label, ''.join(actions))
+    return '<div class="who">{}</div><div class="{}" title="{}">{}</div><span class="pill {}" title="{}">{}</span><span class="actions">{}</span>'.format(
+        who, title_class, escape(title), escape(title), kind, escape(tip), label, ''.join(actions))
 
 
 def tiles(i):
@@ -434,6 +472,9 @@ async def on_results_click(event):
         el('card-{}'.format(i)).classList.toggle('left-out', i in state['left_out'])
         el('pick-all').checked = all_picked()
         show_export()
+        return
+    elif action == 'retry':
+        await search([pid])
         return
     elif action == 'edit':
         state['editing'] ^= {i}
