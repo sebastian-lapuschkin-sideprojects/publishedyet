@@ -13,7 +13,7 @@
     {
       "relation": "same",
       "venue_type": "journal",
-      "venue_short": "IEEE/ACM Trans. Comput. Biol. and Bioinf.",
+      "venue_short": "IEEE/ACM Transactions on Computational Biology and Bioinformatics",
       "archival": true,
       "source": "crossref",
       "bibtex": {

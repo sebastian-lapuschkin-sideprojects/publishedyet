@@ -481,7 +481,7 @@ def from_crossref(item):
                 'doi': item['DOI'], 'url': 'https://doi.org/' + item['DOI']})
     bib = dict((name, value) for name, value in bib.items() if value)
     pub = {'relation': 'same', 'venue_type': venue_type, 'archival': True, 'source': 'crossref', 'bibtex': bib}
-    short = strip_tags((item.get('short-container-title') or [''])[0])
+    short = bib.get('journal') or strip_tags((item.get('short-container-title') or [''])[0])   # journals by their full name
     if short:
         pub['venue_short'] = short
     return pub
@@ -624,7 +624,7 @@ async def venue_bibtex(pub, get_text):
             ('journal', 'Transactions on Machine Learning Research'), ('issn', '2835-8856'),
             ('year', bib.get('year')), ('url', bib.get('url'))] if value)
         pub['source'] = 'dblp, written as on OpenReview'
-        pub['venue_short'] = 'TMLR'
+        pub['venue_short'] = 'Transactions on Machine Learning Research'
     return pub
 
 
@@ -743,6 +743,8 @@ async def discover(pid, get_json, known=None, get_text=None):
             seen.append((plain(pub['bibtex'].get('title')), pub['bibtex'].get('year')))
     for pub in publications:
         await venue_bibtex(pub, get_text)
+        if pub['bibtex'].get('journal'):   # journals go by their full name, on the tiles too ('Pattern Recognition', not DBLP's 'Pattern Recognit.')
+            pub['venue_short'] = pub['bibtex']['journal']
     return {'preprint': pre, 'publications': publications, 'unconfirmed': True}
 
 

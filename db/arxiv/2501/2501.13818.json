@@ -15,7 +15,7 @@
     {
       "relation": "same",
       "venue_type": "journal",
-      "venue_short": "Mach. Learn.",
+      "venue_short": "Machine Learning",
       "archival": true,
       "preferred": true,
       "dblp": "journals/ml/PahdeWLS25",

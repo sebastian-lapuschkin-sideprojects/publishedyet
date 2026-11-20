@@ -230,7 +230,7 @@ class VenueBibtex(unittest.TestCase):
         self.assertEqual(pub['bibtex']['journal'], 'Transactions on Machine Learning Research')
         self.assertEqual(pub['bibtex']['issn'], '2835-8856')
         self.assertNotIn('volume', pub['bibtex'])
-        self.assertEqual(pub['venue_short'], 'TMLR')
+        self.assertEqual(pub['venue_short'], 'Transactions on Machine Learning Research')
         self.assertEqual(py.missing_fields(pub), [])
 
 

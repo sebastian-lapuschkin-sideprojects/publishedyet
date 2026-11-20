@@ -22,6 +22,7 @@
     {
       "relation": "same",
       "venue_type": "journal",
+      "venue_short": "Nucleic Acids Research",
       "archival": true,
       "source": "crossref",
       "bibtex": {

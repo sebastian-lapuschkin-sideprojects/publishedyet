@@ -19,7 +19,7 @@
     {
       "relation": "same",
       "venue_type": "journal",
-      "venue_short": "JMLR",
+      "venue_short": "Journal of Machine Learning Research",
       "archival": true,
       "preferred": true,
       "dblp": "journals/jmlr/HedstromWKBMSLH23",
