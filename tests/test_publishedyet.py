@@ -172,6 +172,16 @@ class Discovery(unittest.TestCase):
 
 class Dblp(unittest.TestCase):
 
+    def test_short_booktitle(self):
+        # DBLP's proceedings titles without place and dates
+        self.assertEqual(py.short_booktitle('Findings of the Association for Computational Linguistics: ACL 2023, Toronto, Canada, July 9-14, 2023.'),
+                         'Findings of the Association for Computational Linguistics: ACL 2023')
+        self.assertEqual(py.short_booktitle('Advances in Neural Information Processing Systems 38: Annual Conference on Neural Information '
+                                            'Processing Systems 2025, NeurIPS 2025, San Diego, CA, USA, December 2-7, 2025.'),
+                         'Advances in Neural Information Processing Systems 38')
+        kept = 'Machine Learning, Optimization, and Data Science - 9th International Conference, LOD 2023, Grasmere, UK, September 22-26, 2023, Part I'
+        self.assertEqual(py.short_booktitle(kept), kept)   # the dates are not at the end: leave it
+
     def test_from_dblp(self):
         # a row as DBLP_DETAILS returns it (taken from sparql.dblp.org)
         row = {'pub': 'https://dblp.org/rec/journals/tnn/SamekBMLM17', 'type': 'http://purl.org/net/nknouf/ns/bibtex#Article',

@@ -543,6 +543,17 @@ def sparql_rows(result):
             for row in ((result or {}).get('results') or {}).get('bindings', [])]
 
 
+MONTHS = 'January|February|March|April|May|June|July|August|September|October|November|December'
+
+
+def short_booktitle(title):
+    # DBLP's proceedings titles end in place and dates; cite them without:
+    # 'Findings of ... ACL 2023, Toronto, Canada, July 9-14, 2023.' -> 'Findings of ... ACL 2023'
+    # 'Advances in Neural Information Processing Systems 38: Annual Conference on ...' -> '... Systems 38'
+    title = title.rstrip('.').split(': Annual Conference on Neural Information Processing Systems')[0]
+    return re.sub(r'(?:, [^,]+){1,3}, (?:%s) \d[^,]*, \d{4}$' % MONTHS, '', title)
+
+
 def from_dblp(row):
     # a row of DBLP_DETAILS as a publication of our database format
     kind = row['type'].split('#')[-1].lower()
@@ -554,6 +565,11 @@ def from_dblp(row):
            'number': row.get('number'), 'pages': (row.get('pages') or '').replace('-', '--'), 'year': row['year'],
            'publisher': row.get('publisher'), 'doi': doi_of(row.get('doi')), 'url': row.get('url')}
     bib = dict((name, value) for name, value in bib.items() if value)
+    if bib.get('booktitle'):
+        bib['booktitle'] = short_booktitle(bib['booktitle'])
+    if bib.get('series', '').startswith('Findings of'):   # DBLP's 'Findings of ACL', volume 'ACL 2023': not how ACL cites them
+        bib.pop('series')
+        bib.pop('volume', None)
     venue_type = {'article': 'journal', 'incollection': 'book'}.get(bib['type'], 'conference')
     if 'workshop' in bib.get('booktitle', '').lower():
         venue_type = 'workshop'
