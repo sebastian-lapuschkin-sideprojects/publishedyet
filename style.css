@@ -141,3 +141,9 @@ h3 { font-size: 1.05rem; margin: 1.4rem 0 .5rem; }
 .prose ul { padding-left: 1.2rem; }
 .prose li { margin: .3rem 0; }
 code { font-family: var(--mono); background: var(--accent-soft); padding: .05em .35em; border-radius: 4px; font-size: .88em; }
+dialog { max-width: 38rem; width: calc(100% - 2rem); border: 1px solid var(--line); border-radius: 12px; padding: 1.2rem 1.4rem;
+         background: var(--raised); color: var(--ink); }
+dialog::backdrop { background: rgba(0, 0, 0, .45); }
+dialog h3 { margin-top: 0; }
+dialog textarea { min-height: 0; font: .72rem/1.4 var(--mono); }
+dialog form { text-align: right; margin-top: .6rem; }

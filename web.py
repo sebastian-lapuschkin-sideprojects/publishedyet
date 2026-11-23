@@ -27,6 +27,7 @@ STATUS = {  # status of a preprint: (label, css class); edits add " / edited"
 LINK_ICON = ('<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>'
              '<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>')   # the "link" icon of Feather (MIT)
 TIMEOUT = 30   # seconds a source may take to answer
+URL_LIMIT = 8000   # GitHub refuses longer links (proposals of papers with very many authors)
 SOURCES = {'sparql.dblp.org': 'DBLP', 'api.openalex.org': 'OpenAlex', 'api.crossref.org': 'Crossref',
            'api.biorxiv.org': 'bioRxiv', 'proceedings.mlr.press': 'PMLR'}
 FIELDS = ['author', 'title', 'venue', 'year', 'volume', 'number', 'pages', 'publisher', 'series', 'editor', 'month', 'doi', 'url']
@@ -205,8 +206,13 @@ def card_top(i):
     if status not in ('looking', 'searching', 'unknown'):
         actions.append('<button class="small" data-action="edit" data-i="{}">{}</button>'.format(i, 'close' if i in state['editing'] else 'edit'))
     if status == 'online' or pid in state['edited'] or (status == 'db' and choice != py.preferred(record)):
-        actions.append('<a class="act" href="{}" target="_blank" title="send this entry to the database (opens a GitHub issue)">propose</a>'
-                       .format(escape(proposal_url(pid, record, choice))))
+        url = proposal_url(proposal(pid, record, choice))
+        if len(url) <= URL_LIMIT:
+            actions.append('<a class="act" href="{}" target="_blank" title="send this entry to the database (opens a GitHub issue)">propose</a>'
+                           .format(escape(url)))
+        else:   # too long for a link to GitHub: copy and paste instead
+            actions.append('<button class="small" data-action="propose-long" data-i="{}" title="send this entry to the database '
+                           '(too long for a link: copy it and paste it into a GitHub issue)">propose</button>'.format(i))
     actions.append('<label class="pick" title="include this entry in the export and in share links">export/share: <input type="checkbox" data-action="pick" data-i="{}"{}></label>'
                    .format(i, '' if i in state['left_out'] else ' checked'))
     label, kind = STATUS[status]
@@ -397,8 +403,38 @@ def diff_html(lines):
 
 # ----- proposing entries for the database ----------------------------------------------
 
-def proposal_url(pid, record, choice):
-    # a link to a prefilled GitHub issue holding the record as json; a GitHub action turns it into a pull request
+def proposal_url(query):
+    # a link to the prefilled GitHub issue; long entries (author lists of large teams) without line breaks and indentation
+    url = REPO + '/issues/new?' + urlencode(query)
+    if len(url) > URL_LIMIT:
+        url = REPO + '/issues/new?' + urlencode(dict(query, entry=json.dumps(json.loads(query['entry']), ensure_ascii=False, separators=(',', ':'))))
+    return url
+
+
+def show_long_proposal(query):
+    # too long for any link: the entry goes to the clipboard, and the user pastes it into the GitHub form
+    js.navigator.clipboard.writeText(query['entry'])
+    form = dict((name, value) for name, value in query.items() if name != 'entry')
+    if len(REPO + '/issues/new?' + urlencode(form)) > URL_LIMIT:
+        form.pop('notes', None)
+    authors = max([len(json.loads(query['entry'])['preprint'].get('authors') or [])] +
+                  [len(pub['bibtex'].get('author') or []) for pub in json.loads(query['entry'])['publications']])
+    dialog = el('dialog')
+    dialog.innerHTML = (
+        '<h3>This entry is too long for a link</h3>'
+        '<p>GitHub accepts links of up to about {limit:,} characters; this entry needs more (it lists {authors} authors). '
+        'So it goes the other way round:</p><ol>'
+        '<li>The entry is now in your clipboard (or copy it from the box below).</li>'
+        '<li><a href="{url}" target="_blank">Open the proposal form on GitHub</a>; the title is filled in already.</li>'
+        '<li>Paste the entry into the field <b>Entry</b> and submit.</li></ol>'
+        '<textarea readonly rows="8" spellcheck="false">{entry}</textarea>'
+        '<form method="dialog"><button class="small">close</button></form>').format(
+        limit=URL_LIMIT, authors=authors, url=escape(REPO + '/issues/new?' + urlencode(form)), entry=escape(query['entry']))
+    dialog.showModal()
+
+
+def proposal(pid, record, choice):
+    # the fields of a GitHub issue holding the record as json; a GitHub action turns it into a pull request
     record = json.loads(json.dumps(record))
     record.pop('unconfirmed', None)
     for i, pub in enumerate(record['publications']):
@@ -413,7 +449,7 @@ def proposal_url(pid, record, choice):
             if i == py.preferred(state['originals'][pid]):
                 pub['preferred'] = True
         query['notes'] = 'Changes to the database entry:\n' + '\n'.join('- ' + line for line in changes(original, record))
-    return REPO + '/issues/new?' + urlencode(query)
+    return query
 
 
 def proposal_title(pid, record):
@@ -481,6 +517,9 @@ async def on_results_click(event):
         return
     elif action == 'retry':
         await search([pid])
+        return
+    elif action == 'propose-long':
+        show_long_proposal(proposal(pid, state['records'][pid], state['choices'].get(pid, 'preprint')))
         return
     elif action == 'from-bibtex':   # the fields of the chosen publication from a pasted entry
         parsed = py.from_bibtex(el('paste-{}'.format(i)).value)
