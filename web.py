@@ -404,11 +404,8 @@ def diff_html(lines):
 # ----- proposing entries for the database ----------------------------------------------
 
 def proposal_url(query):
-    # a link to the prefilled GitHub issue; long entries (author lists of large teams) without line breaks and indentation
-    url = REPO + '/issues/new?' + urlencode(query)
-    if len(url) > URL_LIMIT:
-        url = REPO + '/issues/new?' + urlencode(dict(query, entry=json.dumps(json.loads(query['entry']), ensure_ascii=False, separators=(',', ':'))))
-    return url
+    # a link to the prefilled GitHub issue (longer than URL_LIMIT for papers of large teams: see show_long_proposal)
+    return REPO + '/issues/new?' + urlencode(query)
 
 
 def show_long_proposal(query):
