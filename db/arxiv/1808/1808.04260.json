@@ -25,7 +25,7 @@
       "archival": true,
       "preferred": true,
       "dblp": "journals/jmlr/AlberLSHSMSMDK19",
-      "source": "dblp, journal name written out",
+      "source": "dblp, written as on jmlr.org",
       "bibtex": {
         "type": "article",
         "author": [
@@ -43,9 +43,10 @@
         "title": "iNNvestigate Neural Networks!",
         "journal": "Journal of Machine Learning Research",
         "volume": "20",
-        "pages": "93:1--93:8",
+        "pages": "1--8",
         "year": "2019",
-        "url": "https://jmlr.org/papers/v20/18-540.html"
+        "url": "https://jmlr.org/papers/v20/18-540.html",
+        "number": "93"
       }
     }
   ]

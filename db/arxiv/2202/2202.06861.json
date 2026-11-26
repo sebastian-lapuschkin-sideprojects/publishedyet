@@ -23,7 +23,7 @@
       "archival": true,
       "preferred": true,
       "dblp": "journals/jmlr/HedstromWKBMSLH23",
-      "source": "dblp, journal name written out",
+      "source": "dblp, written as on jmlr.org",
       "bibtex": {
         "type": "article",
         "author": [
@@ -39,9 +39,10 @@
         "title": "Quantus: An Explainable AI Toolkit for Responsible Evaluation of Neural Network Explanations and Beyond",
         "journal": "Journal of Machine Learning Research",
         "volume": "24",
-        "pages": "34:1--34:11",
+        "pages": "1--11",
         "year": "2023",
-        "url": "https://jmlr.org/papers/v24/22-0142.html"
+        "url": "https://jmlr.org/papers/v24/22-0142.html",
+        "number": "34"
       }
     }
   ]

@@ -617,7 +617,8 @@ async def venue_bibtex(pub, get_text):
     """
     Where we can, cite a publication the way its venue asks for: PMLR's paper pages (ICML,
     AISTATS, COLT, ...) carry their BibTeX, and ICLR's and TMLR's on OpenReview follow fixed
-    patterns that we write from DBLP's data (OpenReview itself blocks automated requests).
+    patterns that we write from DBLP's data (OpenReview itself blocks automated requests), as
+    does JMLR's (jmlr.org does not let other sites' pages read its BibTeX files).
     """
     bib = pub['bibtex']
     url = bib.get('url') or ''
@@ -641,6 +642,14 @@ async def venue_bibtex(pub, get_text):
             ('year', bib.get('year')), ('url', bib.get('url'))] if value)
         pub['source'] = 'dblp, written as on OpenReview'
         pub['venue_short'] = 'Transactions on Machine Learning Research'
+    elif (pub.get('dblp') or '').startswith('journals/jmlr/'):
+        # as jmlr.org writes its papers: the article number as number, pages counted within the
+        # article (DBLP: 'J. Mach. Learn. Res.', pages '93:1-93:8'); older volumes have plain pages
+        match = re.match(r'(\d+):(\d+)-+\1:(\d+)$', bib.get('pages') or '')
+        if match:
+            bib['number'], bib['pages'] = match.group(1), '{}--{}'.format(match.group(2), match.group(3))
+        bib['journal'] = 'Journal of Machine Learning Research'
+        pub['source'] = 'dblp, written as on jmlr.org'
     return pub
 
 

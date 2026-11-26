@@ -243,6 +243,18 @@ class VenueBibtex(unittest.TestCase):
         self.assertEqual(pub['venue_short'], 'Transactions on Machine Learning Research')
         self.assertEqual(py.missing_fields(pub), [])
 
+    def test_jmlr_as_on_jmlr_org(self):
+        pub = {'dblp': 'journals/jmlr/AlberLSHSMSMDK19', 'bibtex': {
+            'type': 'article', 'author': ['Maximilian Alber'], 'title': 'iNNvestigate Neural Networks!',
+            'journal': 'J. Mach. Learn. Res.', 'volume': '20', 'pages': '93:1-93:8', 'year': '2019'}}
+        asyncio.run(py.venue_bibtex(pub, None))
+        self.assertEqual(pub['bibtex']['journal'], 'Journal of Machine Learning Research')
+        self.assertEqual((pub['bibtex']['number'], pub['bibtex']['pages']), ('93', '1--8'))
+        old = {'dblp': 'journals/jmlr/LeCun03', 'bibtex': {'type': 'article', 'journal': 'J. Mach. Learn. Res.', 'pages': '1--48'}}
+        asyncio.run(py.venue_bibtex(old, None))
+        self.assertEqual(old['bibtex']['pages'], '1--48')
+        self.assertNotIn('number', old['bibtex'])
+
 
 class CrossrefNames(unittest.TestCase):
 
