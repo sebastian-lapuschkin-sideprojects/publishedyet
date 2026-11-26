@@ -19,14 +19,14 @@
       "archival": true,
       "preferred": true,
       "dblp": "conf/iccvw/SamekBLM17",
-      "source": "dblp, venue name from crossref",
+      "source": "dblp, venue name from crossref, author order as printed in the paper",
       "bibtex": {
         "type": "inproceedings",
         "author": [
-          "Wojciech Samek",
-          "Alexander Binder",
           "Sebastian Lapuschkin",
-          "Klaus-Robert Müller"
+          "Alexander Binder",
+          "Klaus-Robert Müller",
+          "Wojciech Samek"
         ],
         "title": "Understanding and Comparing Deep Neural Networks for Age and Gender Classification",
         "booktitle": "2017 IEEE International Conference on Computer Vision Workshops (ICCVW)",
