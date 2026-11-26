@@ -43,7 +43,8 @@
     <li>writing the preprints that remain in one uniform style instead of a mix of Google Scholar,
       arXiv and DBLP entries;</li>
     <li>giving new entries citation keys in one style (Google Scholar's <code>author2024word</code> or DBLP's);</li>
-    <li>citing papers the way their venue asks (PMLR's entries for ICML, OpenReview's form for ICLR);</li>
+    <li>citing papers the way their venue asks (PMLR's entries for ICML, OpenReview's form for ICLR and TMLR,
+      JMLR's article numbers);</li>
     <li>getting names right where sources mangle them (umlauts and accents, hyphenated first names
       such as Klaus-Robert, which BibTeX shortens to K.-R.);</li>
     <li>spotting entries that lack pages, volume or a DOI;</li>
@@ -85,7 +86,8 @@
   <p>A search hit counts as the same paper if its title is at least 90&nbsp;% similar to the
     preprint's and the preprint's first author is among its authors. Details then come from DBLP or
     from Crossref (via the DOI). Where possible, the venue's own BibTeX is used: PMLR's for ICML and
-    other PMLR conferences, and the form OpenReview uses for ICLR.</p>
+    other PMLR conferences, the form OpenReview uses for ICLR and TMLR, and JMLR's form, with the
+    article number, for JMLR papers.</p>
   <p>Matches found online are marked <i>found online</i> until someone confirms them for the database.
     Entries missing data that a complete citation would have (pages, volume, …) are marked <i>incomplete</i>.</p>
   <p>Each source gets 30 seconds to answer. If one is rate limited (too many requests, e.g. OpenAlex's
